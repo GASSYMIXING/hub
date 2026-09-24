@@ -157,17 +157,19 @@ body::before {
     padding: 0 0 8px;
 }
 
-..hero-logo {
+.hero-logo {
     display: block;
 
-    width: min(100%, 1100px);
+    width: 100%;
+    max-width: 1400px;
 
-    height: auto;
-
-    margin: 0;
+    height: 320px;
 
     object-fit: contain;
 
+    object-position: center bottom;
+
+    margin: 0 auto;
 }
 
 .hero-sub {
