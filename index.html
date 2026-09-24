@@ -113,7 +113,9 @@ body::before {
 }
 
 
-/* 顶部大 LOGO */
+/* =========================================================
+   LOGO INTRO
+========================================================= */
 
 .hero-logo {
     display: block;
@@ -132,15 +134,42 @@ body::before {
 
     opacity: 0;
 
-    transition:
-        opacity 0.15s ease;
+    translate: -120vw 0;
+
+    will-change:
+        translate,
+        opacity;
 }
 
 
-/* Logo 完整加载后显示 */
+/* Logo 完整加载后开始入场 */
 
 .hero-logo.loaded {
-    opacity: 1;
+    animation:
+        logoEnter
+        0.95s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        forwards;
+}
+
+
+@keyframes logoEnter {
+
+    0% {
+        opacity: 0;
+        translate: -120vw 0;
+    }
+
+    68% {
+        opacity: 1;
+        translate: 12px 0;
+    }
+
+    100% {
+        opacity: 1;
+        translate: 0 0;
+    }
+
 }
 
 
@@ -192,6 +221,104 @@ body::before {
 
 .hero-meta-right {
     text-align: right;
+}
+
+
+/* =========================================================
+   TEXT INTRO
+========================================================= */
+
+.type-reveal {
+    clip-path:
+        inset(
+            0
+            100%
+            0
+            0
+        );
+
+    opacity: 0;
+
+    will-change:
+        clip-path,
+        opacity;
+}
+
+
+/* 第一排左侧 */
+
+body.intro-start .hero-desc.type-reveal {
+    animation:
+        typeReveal
+        0.62s
+        steps(16, end)
+        0.38s
+        forwards;
+}
+
+
+/* 第一排右侧 */
+
+body.intro-start .hero-update.type-reveal {
+    animation:
+        typeReveal
+        0.50s
+        steps(8, end)
+        0.44s
+        forwards;
+}
+
+
+/* 第二排左侧 */
+
+body.intro-start .hero-meta-left.type-reveal {
+    animation:
+        typeReveal
+        0.55s
+        steps(10, end)
+        0.50s
+        forwards;
+}
+
+
+/* 第二排右侧 */
+
+body.intro-start .hero-meta-right.type-reveal {
+    animation:
+        typeReveal
+        0.42s
+        steps(9, end)
+        0.56s
+        forwards;
+}
+
+
+@keyframes typeReveal {
+
+    0% {
+        opacity: 1;
+
+        clip-path:
+            inset(
+                0
+                100%
+                0
+                0
+            );
+    }
+
+    100% {
+        opacity: 1;
+
+        clip-path:
+            inset(
+                0
+                0
+                0
+                0
+            );
+    }
+
 }
 
 
@@ -284,6 +411,74 @@ body::before {
         outline-color 0.22s ease;
 
     will-change: transform;
+}
+
+
+/* =========================================================
+   FIRST TWO CARD INTRO
+========================================================= */
+
+.intro-card {
+    opacity: 0;
+
+    translate: 0 120px;
+
+    will-change:
+        translate,
+        opacity;
+}
+
+
+/* 第一张 */
+
+body.intro-start .intro-card-1 {
+    animation:
+        cardRise
+        0.50s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        0.95s
+        forwards;
+}
+
+
+/* 第二张，稍微晚一点 */
+
+body.intro-start .intro-card-2 {
+    animation:
+        cardRise
+        0.50s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        1.05s
+        forwards;
+}
+
+
+@keyframes cardRise {
+
+    0% {
+        opacity: 0;
+
+        translate:
+            0
+            120px;
+    }
+
+    72% {
+        opacity: 1;
+
+        translate:
+            0
+            -8px;
+    }
+
+    100% {
+        opacity: 1;
+
+        translate:
+            0
+            0;
+    }
+
 }
 
 
@@ -737,7 +932,10 @@ body::before {
         src="/hero-logo.png"
         alt="GASBOX"
         fetchpriority="high"
-        onload="this.classList.add('loaded')"
+        onload="
+            this.classList.add('loaded');
+            document.body.classList.add('intro-start');
+        "
     >
 
 
@@ -745,12 +943,12 @@ body::before {
 
     <div class="hero-sub">
 
-        <div class="hero-desc">
+        <div class="hero-desc type-reveal">
             直播软件、插件、工具与资源整理。
         </div>
 
 
-        <div class="hero-update">
+        <div class="hero-update type-reveal">
             持续更新中...
         </div>
 
@@ -761,12 +959,12 @@ body::before {
 
     <div class="hero-meta">
 
-        <div>
+        <div class="hero-meta-left type-reveal">
             所有资源均来自于网络
         </div>
 
 
-        <div class="hero-meta-right">
+        <div class="hero-meta-right type-reveal">
             GASBOX.CN
         </div>
 
@@ -798,7 +996,7 @@ body::before {
 
 
 <a
-    class="card blue"
+    class="card blue intro-card intro-card-1"
     href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/OBS-Setup.exe"
 >
 
@@ -827,7 +1025,7 @@ body::before {
 
 
 <a
-    class="card green"
+    class="card green intro-card intro-card-2"
     href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Studio-One-7.exe"
 >
 
