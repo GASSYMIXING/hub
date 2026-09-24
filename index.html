@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAS AUDIO HUB</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f3f3;
+      color: #222;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      display: block;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #222;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .name {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .desc {
+      margin-top: 8px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .download {
+      margin-top: 18px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #999;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>GAS AUDIO</h1>
+  <div class="subtitle">Audio Plug-ins & Tools</div>
+
+  <div class="grid">
+
+    <a class="card" href="#">
+      <div class="name">GASBOOM</div>
+      <div class="desc">Loudness / Inflator</div>
+      <div class="download">DOWNLOAD</div>
+    </a>
+
+    <a class="card" href="#">
+      <div class="name">GASTELE</div>
+      <div class="desc">Telephone Tone</div>
+      <div class="download">DOWNLOAD</div>
+    </a>
+
+    <a class="card" href="#">
+      <div class="name">GASAIR</div>
+      <div class="desc">Air Enhancer</div>
+      <div class="download">DOWNLOAD</div>
+    </a>
+
+    <a class="card" href="#">
+      <div class="name">GASPOLISH</div>
+      <div class="desc">Final Polish</div>
+      <div class="download">DOWNLOAD</div>
+    </a>
+
+  </div>
+
+  <footer>
+    GAS AUDIO
+  </footer>
+
+</div>
+
+</body>
+</html>
