@@ -160,16 +160,18 @@ body::before {
 .hero-logo {
     display: block;
 
-    width: 100%;
-    max-width: 1400px;
+    width: min(100%, 1650px);
 
-    height: 320px;
+    height: 420px;
 
     object-fit: contain;
 
-    object-position: center bottom;
+    object-position: left bottom;
 
-    margin: 0 auto;
+    margin: 0;
+
+    transform: translateX(-10px);
+
 }
 
 .hero-sub {
