@@ -104,6 +104,59 @@ body::before {
 
 
 /* =========================================================
+   PC MUSIC CONTROL
+========================================================= */
+
+.music-control {
+    position: fixed;
+
+    top: 22px;
+    right: 24px;
+
+    z-index: 10000;
+
+    width: 44px;
+    height: 44px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    opacity: 0.82;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.music-control:hover {
+    opacity: 1;
+
+    transform:
+        scale(1.08);
+}
+
+.music-control img {
+    display: block;
+
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
    HERO
 ========================================================= */
 
@@ -219,8 +272,18 @@ body::before {
     text-transform: uppercase;
 }
 
+.hero-meta-left {
+    min-width: 0;
+}
+
 .hero-meta-right {
     text-align: right;
+
+    white-space: nowrap;
+
+    flex-shrink: 0;
+
+    min-width: max-content;
 }
 
 
@@ -857,6 +920,10 @@ body.intro-start .intro-card-2 {
         width: calc(100% - 24px);
     }
 
+    .music-control {
+        display: none;
+    }
+
     .hero-logo {
         width: 100%;
 
@@ -873,15 +940,23 @@ body.intro-start .intro-card-2 {
         font-size: 12px;
     }
 
-.hero-meta {
-    gap: 18px;
+    .hero-meta {
+        gap: 18px;
 
-    margin-top: 22px;
+        margin-top: 22px;
 
-    padding-right: 12px;
+        padding-right: 20px;
 
-    font-size: 10px;
-}
+        font-size: 10px;
+    }
+
+    .hero-meta-right {
+        white-space: nowrap;
+
+        flex-shrink: 0;
+
+        min-width: max-content;
+    }
 
     .card {
         min-height: 145px;
@@ -928,6 +1003,32 @@ body.intro-start .intro-card-2 {
 
 
 <body>
+
+
+<!-- =====================================================
+     PC MUSIC
+===================================================== -->
+
+<button
+    class="music-control"
+    id="musicToggle"
+    type="button"
+    aria-label="播放背景音乐"
+>
+    <img
+        id="musicIcon"
+        src="/speakeroff.png"
+        alt=""
+    >
+</button>
+
+<audio
+    id="bgm"
+    loop
+    preload="none"
+></audio>
+
+
 
 <div class="page">
 
@@ -1492,6 +1593,147 @@ window.addEventListener(
         }
 
     }
+);
+
+
+/* =========================================================
+   PC BACKGROUND MUSIC
+========================================================= */
+
+const desktopMedia =
+    window.matchMedia(
+        "(min-width: 761px)"
+    );
+
+const musicToggle =
+    document.getElementById(
+        "musicToggle"
+    );
+
+const musicIcon =
+    document.getElementById(
+        "musicIcon"
+    );
+
+const bgm =
+    document.getElementById(
+        "bgm"
+    );
+
+let musicLoaded =
+    false;
+
+
+/* 只有 PC 第一次点击时才加载音乐 */
+
+async function toggleMusic() {
+
+    if (
+        !desktopMedia.matches
+    ) {
+        return;
+    }
+
+
+    if (
+        !musicLoaded
+    ) {
+
+        bgm.src =
+            "/bgm.mp3";
+
+        bgm.load();
+
+        musicLoaded =
+            true;
+    }
+
+
+    if (
+        bgm.paused
+    ) {
+
+        try {
+
+            await bgm.play();
+
+            musicIcon.src =
+                "/speakeron.png";
+
+            musicToggle.setAttribute(
+                "aria-label",
+                "暂停背景音乐"
+            );
+
+        }
+
+        catch (error) {
+
+            musicIcon.src =
+                "/speakeroff.png";
+
+        }
+
+    }
+
+    else {
+
+        bgm.pause();
+
+        musicIcon.src =
+            "/speakeroff.png";
+
+        musicToggle.setAttribute(
+            "aria-label",
+            "播放背景音乐"
+        );
+
+    }
+
+}
+
+
+musicToggle.addEventListener(
+    "click",
+    toggleMusic
+);
+
+
+/* 如果从 PC 缩小到手机宽度，停止音乐并卸载 */
+
+function syncMusicViewport() {
+
+    if (
+        !desktopMedia.matches
+    ) {
+
+        bgm.pause();
+
+        bgm.removeAttribute(
+            "src"
+        );
+
+        bgm.load();
+
+        musicLoaded =
+            false;
+
+        musicIcon.src =
+            "/speakeroff.png";
+
+        musicToggle.setAttribute(
+            "aria-label",
+            "播放背景音乐"
+        );
+
+    }
+
+}
+
+
+desktopMedia.addEventListener(
+    "change",
+    syncMusicViewport
 );
 
 </script>
