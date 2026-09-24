@@ -157,17 +157,17 @@ body::before {
     padding: 0 0 8px;
 }
 
-.hero h1 {
+..hero-logo {
+    display: block;
+
+    width: min(100%, 1100px);
+
+    height: auto;
+
     margin: 0;
 
-    font-size: clamp(78px, 13vw, 190px);
-    line-height: 0.78;
+    object-fit: contain;
 
-    font-weight: 900;
-
-    letter-spacing: -9px;
-
-    white-space: nowrap;
 }
 
 .hero-sub {
@@ -747,9 +747,11 @@ body::before {
 
 <section class="hero">
 
-    <h1>
-        GASBOX
-    </h1>
+    <img
+    class="hero-logo"
+    src="/hero-logo.png"
+    alt="GASBOX"
+>
 
     <div class="hero-sub">
 
