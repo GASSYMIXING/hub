@@ -1,135 +1,1002 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GAS AUDIO HUB</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
+<title>直播工具下载</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Microsoft YaHei",
+        Arial,
+        sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+}
+
+
+/* =========================
+   顶部
+========================= */
+
+.header {
+    background: #ffffff;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 60px 20px 45px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 36px;
+    letter-spacing: -1px;
+}
+
+.header p {
+    margin: 12px 0 0;
+    color: #777;
+    font-size: 15px;
+}
+
+
+/* =========================
+   导航
+========================= */
+
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 15px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid #ececec;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #444;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: 0.2s;
+}
+
+.nav a:hover {
+    background: #eeeeee;
+}
+
+
+/* =========================
+   主体
+========================= */
+
+.container {
+    width: calc(100% - 40px);
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+
+.section {
+    margin-bottom: 60px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.section-title h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.section-title span {
+    margin-left: 12px;
+    font-size: 13px;
+    color: #999;
+}
+
+
+/* =========================
+   卡片
+========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.card {
+    background: #ffffff;
+    border: 1px solid #ececec;
+    border-radius: 16px;
+    padding: 22px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 17px;
+    min-height: 105px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    border-color: #dddddd;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+}
+
+
+/* =========================
+   软件图标
+========================= */
+
+.icon {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #222 0%,
+            #555 100%
+        );
+}
+
+
+/* 每个工具稍微区别一下 */
+
+.obs {
+    background: linear-gradient(135deg,#171717,#4a4a4a);
+}
+
+.studio {
+    background: linear-gradient(135deg,#2346ff,#7d8fff);
+}
+
+.threed {
+    background: linear-gradient(135deg,#6448ff,#9c7cff);
+}
+
+.rgb {
+    background: linear-gradient(135deg,#ff4c73,#7c4dff);
+}
+
+.move {
+    background: linear-gradient(135deg,#00a86b,#44d49c);
+}
+
+.mask {
+    background: linear-gradient(135deg,#333,#888);
+}
+
+.vst {
+    background: linear-gradient(135deg,#ff7a18,#ffb347);
+}
+
+.audio {
+    background: linear-gradient(135deg,#e84393,#fd79a8);
+}
+
+.screen {
+    background: linear-gradient(135deg,#0984e3,#74b9ff);
+}
+
+.lut {
+    background: linear-gradient(135deg,#00b894,#55efc4);
+}
+
+
+/* =========================
+   卡片文字
+========================= */
+
+.card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-name {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 7px;
+}
+
+.card-download {
+    font-size: 13px;
+    color: #888;
+}
+
+.arrow {
+    font-size: 18px;
+    color: #bbb;
+}
+
+
+/* =========================
+   Footer
+========================= */
+
+.footer {
+    border-top: 1px solid #e2e2e2;
+    text-align: center;
+    padding: 35px 20px 45px;
+    color: #999;
+    font-size: 12px;
+    line-height: 2;
+}
+
+.footer a {
+    color: #666;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================
+   免责声明弹窗
+========================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.45);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 620px;
+
+    border-radius: 18px;
+    padding: 30px;
+
+    max-height: 80vh;
+    overflow-y: auto;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.25);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+}
+
+.modal-content p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.close-button {
+    margin-top: 20px;
+
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+
+    background: #111;
+    color: white;
+
+    padding: 13px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background: #333;
+}
+
+
+/* =========================
+   平板
+========================= */
+
+@media (max-width: 850px) {
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    body {
-      margin: 0;
-      padding: 40px 20px;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f3f3f3;
-      color: #222;
+}
+
+
+/* =========================
+   手机
+========================= */
+
+@media (max-width: 560px) {
+
+    .header {
+        padding: 45px 20px 35px;
+    }
+
+    .header h1 {
+        font-size: 29px;
+    }
+
+    .nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+    }
+
+    .nav a {
+        white-space: nowrap;
     }
 
     .container {
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #777;
-      margin-bottom: 40px;
+        width: calc(100% - 28px);
+        padding-top: 35px;
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 
-    .card {
-      display: block;
-      padding: 25px;
-      background: white;
-      border-radius: 12px;
-      text-decoration: none;
-      color: #222;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      transition: 0.2s;
+    .section {
+        margin-bottom: 45px;
     }
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-    }
+}
 
-    .icon {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin-bottom: 15px;
-    }
+</style>
 
-    .name {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    .desc {
-      margin-top: 8px;
-      color: #777;
-      font-size: 14px;
-    }
-
-    .download {
-      margin-top: 18px;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      color: #999;
-      font-size: 13px;
-    }
-  </style>
 </head>
 
 <body>
 
-<div class="container">
 
-  <h1>GAS AUDIO</h1>
-  <div class="subtitle">Audio Plug-ins & Tools</div>
+<!-- =========================
+     顶部
+========================= -->
 
-  <div class="grid">
+<header class="header">
 
-    <a class="card" href="#">
-      <div class="name">GASBOOM</div>
-      <div class="desc">Loudness / Inflator</div>
-      <div class="download">DOWNLOAD</div>
-    </a>
+    <h1>直播工具下载</h1>
 
-    <a class="card" href="#">
-      <div class="name">GASTELE</div>
-      <div class="desc">Telephone Tone</div>
-      <div class="download">DOWNLOAD</div>
-    </a>
+    <p>
+        常用直播软件 · 插件 · 工具 · 资源
+    </p>
 
-    <a class="card" href="#">
-      <div class="name">GASAIR</div>
-      <div class="desc">Air Enhancer</div>
-      <div class="download">DOWNLOAD</div>
-    </a>
+</header>
 
-    <a class="card" href="#">
-      <div class="name">GASPOLISH</div>
-      <div class="desc">Final Polish</div>
-      <div class="download">DOWNLOAD</div>
-    </a>
 
-  </div>
+<!-- =========================
+     分类导航
+========================= -->
 
-  <footer>
-    GAS AUDIO
-  </footer>
+<nav class="nav">
+
+    <a href="#software">软件</a>
+
+    <a href="#plugins">插件</a>
+
+    <a href="#tools">工具</a>
+
+    <a href="#resources">资源</a>
+
+</nav>
+
+
+<!-- =========================
+     主体
+========================= -->
+
+<main class="container">
+
+
+<!-- 软件类 -->
+
+<section
+    class="section"
+    id="software"
+>
+
+<div class="section-title">
+
+    <h2>软件</h2>
+
+    <span>Software</span>
 
 </div>
+
+
+<div class="grid">
+
+
+<!-- OBS -->
+
+<a
+    class="card"
+    href="OBS-Setup.exe"
+    download
+>
+
+<div class="icon obs">
+OBS
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+OBS
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+<!-- Studio One 7 -->
+
+<a
+    class="card"
+    href="Studio-One-7.exe"
+    download
+>
+
+<div class="icon studio">
+S1
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+Studio One 7
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     插件类
+========================= -->
+
+<section
+    class="section"
+    id="plugins"
+>
+
+<div class="section-title">
+
+<h2>插件</h2>
+
+<span>Plugins</span>
+
+</div>
+
+
+<div class="grid">
+
+
+<!-- OBS 3D -->
+
+<a
+    class="card"
+    href="OBS-3D.zip"
+    download
+>
+
+<div class="icon threed">
+3D
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+OBS 3D 插件
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+<!-- OBS RGB -->
+
+<a
+    class="card"
+    href="OBS-RGB.zip"
+    download
+>
+
+<div class="icon rgb">
+RGB
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+OBS RGB 插件
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+<!-- OBS 移动 -->
+
+<a
+    class="card"
+    href="OBS-Move.zip"
+    download
+>
+
+<div class="icon move">
+MOVE
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+OBS 移动插件
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+<!-- OBS 蒙版 -->
+
+<a
+    class="card"
+    href="OBS-Mask.zip"
+    download
+>
+
+<div class="icon mask">
+MASK
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+OBS 蒙版插件
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+<!-- VST 插件包 -->
+
+<a
+    class="card"
+    href="VST-Plugins.zip"
+    download
+>
+
+<div class="icon vst">
+VST
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+VST 插件包
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+<!-- 调音师工具箱 -->
+
+<a
+    class="card"
+    href="Audio-Toolbox.zip"
+    download
+>
+
+<div class="icon audio">
+AUDIO
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+调音师工具箱
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     工具类
+========================= -->
+
+<section
+    class="section"
+    id="tools"
+>
+
+<div class="section-title">
+
+<h2>工具</h2>
+
+<span>Tools</span>
+
+</div>
+
+
+<div class="grid">
+
+
+<a
+    class="card"
+    href="Virtual-Screen.zip"
+    download
+>
+
+<div class="icon screen">
+SCREEN
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+虚拟屏软件
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+     资源类
+========================= -->
+
+<section
+    class="section"
+    id="resources"
+>
+
+<div class="section-title">
+
+<h2>资源</h2>
+
+<span>Resources</span>
+
+</div>
+
+
+<div class="grid">
+
+
+<a
+    class="card"
+    href="Live-LUT.zip"
+    download
+>
+
+<div class="icon lut">
+LUT
+</div>
+
+<div class="card-info">
+
+<div class="card-name">
+直播调试 LUT
+</div>
+
+<div class="card-download">
+点击下载
+</div>
+
+</div>
+
+<div class="arrow">
+↓
+</div>
+
+</a>
+
+
+</div>
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================
+     Footer
+========================= -->
+
+<footer class="footer">
+
+<div>
+
+本站为非官方软件导航站，
+软件版权归原作者及开发商所有。
+下载和安装前请自行核实来源与安全性。
+
+</div>
+
+<div>
+
+<a onclick="openDisclaimer()">
+查看完整免责声明
+</a>
+
+</div>
+
+<div style="margin-top:10px;">
+
+© 2026 直播工具下载
+
+</div>
+
+</footer>
+
+
+
+<!-- =========================
+     免责声明
+========================= -->
+
+<div
+    class="modal"
+    id="disclaimerModal"
+>
+
+<div class="modal-content">
+
+<h2>免责声明</h2>
+
+<p>
+本站仅用于整理和分享直播、音频、视频及相关常用软件工具，
+方便用户快速查找和访问。
+</p>
+
+<p>
+本站与所收录软件的开发商、发行商及品牌方不存在任何官方合作或隶属关系。
+所有软件名称、商标、图标及相关版权均归其原权利人所有。
+</p>
+
+<p>
+本站优先提供软件官方网站、官方发布页面或公开下载地址。
+若本站提供第三方下载或文件镜像，
+仅用于学习、交流和下载便利，
+不代表本站对软件的安全性、稳定性、兼容性及后续更新作出任何保证。
+</p>
+
+<p>
+用户在下载、安装和使用相关软件前，
+应自行核实软件来源、版本及系统兼容性，
+并自行承担因安装或使用软件所产生的风险，
+包括但不限于数据丢失、系统异常、软件冲突等问题。
+</p>
+
+<p>
+如本站收录内容涉及版权、商标或其他合法权益问题，
+请联系本站处理，
+核实后将及时修改或移除相关内容。
+</p>
+
+<p>
+<strong>
+使用本站即视为已阅读并理解以上说明。
+</strong>
+</p>
+
+
+<button
+    class="close-button"
+    onclick="closeDisclaimer()"
+>
+
+关闭
+
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* 打开免责声明 */
+
+function openDisclaimer() {
+
+    document
+        .getElementById("disclaimerModal")
+        .style.display = "flex";
+
+}
+
+
+/* 关闭免责声明 */
+
+function closeDisclaimer() {
+
+    document
+        .getElementById("disclaimerModal")
+        .style.display = "none";
+
+}
+
+
+/* 点击弹窗外关闭 */
+
+window.onclick = function(event) {
+
+    const modal =
+        document.getElementById(
+            "disclaimerModal"
+        );
+
+    if (event.target === modal) {
+
+        closeDisclaimer();
+
+    }
+
+}
+
+</script>
+
 
 </body>
 </html>
