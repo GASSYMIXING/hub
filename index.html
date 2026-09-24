@@ -6,174 +6,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>直播工具下载</title>
+<title>GASBOX / 直播工具下载</title>
 
-<link rel="icon" type="image/png" href="/favicon.png?v=4">
-<link rel="shortcut icon" type="image/png" href="/favicon.png?v=4">
-
+<link rel="icon" type="image/png" href="/favicon.png?v=6">
 
 <style>
 
 /* =========================================================
-   PIXEL FONT
-========================================================= */
-
-@font-face {
-
-    font-family: "PixelCN";
-
-    src:
-        url("fonts/pixel-cn.ttf")
-        format("truetype");
-
-    font-weight: normal;
-
-    font-style: normal;
-
-    font-display: swap;
-
-}
-
-
-/* =========================================================
-   ROOT
+   RESET
 ========================================================= */
 
 * {
-
     box-sizing: border-box;
-
 }
 
 html {
-
     scroll-behavior: smooth;
-
 }
 
 :root {
-
-    --bg:
-        #070707;
-
-    --panel:
-        #0c0c0c;
-
-    --panel-2:
-        #111111;
-
-    --line:
-        #4a4a4a;
-
-    --line-soft:
-        #292929;
-
-    --white:
-        #f5f3ec;
-
-    --gray:
-        #a0a0a0;
-
-    --dim:
-        #686868;
-
-    --green:
-        #b6ff5c;
-
-    --red:
-        #4b1018;
-
+    --paper: #f4f2ec;
+    --ink: #0a0a0a;
+    --blue: #98a9f5;
+    --green: #b4f487;
+    --yellow: #ffd978;
+    --pink: #ff9ac6;
+    --lavender: #c9b6ff;
+    --cyan: #9ce3e6;
+    --orange: #ffb26d;
+    --gray: #ecebe7;
 }
-
-
-/* =========================================================
-   BODY
-========================================================= */
 
 body {
-
     margin: 0;
 
-    min-height: 100vh;
-
     background:
-
         radial-gradient(
-            circle at 73% 20%,
-            rgba(90,12,22,0.28),
-            transparent 31%
+            circle at 30% 15%,
+            rgba(0,0,0,0.025),
+            transparent 28%
         ),
+        var(--paper);
 
-        #070707;
-
-    color:
-        var(--white);
+    color: var(--ink);
 
     font-family:
-        "Microsoft YaHei",
-        "PingFang SC",
         Arial,
+        "Helvetica Neue",
+        Helvetica,
+        "Microsoft YaHei",
         sans-serif;
-
 }
 
 
 /* =========================================================
-   CRT SCANLINES
+   PAPER TEXTURE
 ========================================================= */
 
-body::after {
-
+body::before {
     content: "";
 
     position: fixed;
-
     inset: 0;
-
-    z-index: 99999;
 
     pointer-events: none;
 
-    opacity: 0.14;
+    z-index: 9999;
 
-    background:
+    opacity: 0.12;
 
-        repeating-linear-gradient(
-            to bottom,
-            rgba(255,255,255,0.055) 0px,
-            rgba(255,255,255,0.055) 1px,
-            transparent 1px,
-            transparent 4px
+    background-image:
+        repeating-radial-gradient(
+            circle at 0 0,
+            rgba(0,0,0,0.20) 0px,
+            rgba(0,0,0,0.20) 0.45px,
+            transparent 0.6px,
+            transparent 3px
         );
 
-    mix-blend-mode: overlay;
-
+    mix-blend-mode: multiply;
 }
 
 
 /* =========================================================
-   SHELL
+   PAGE
 ========================================================= */
 
-.shell {
-
-    width:
-        calc(100% - 40px);
-
-    max-width:
-        1500px;
-
-    margin:
-        0 auto;
-
-    border-left:
-        1px solid
-        var(--line);
-
-    border-right:
-        1px solid
-        var(--line);
-
+.page {
+    width: min(calc(100% - 48px), 1320px);
+    margin: 0 auto;
 }
 
 
@@ -182,89 +103,47 @@ body::after {
 ========================================================= */
 
 .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
 
-    min-height:
-        43px;
+    min-height: 54px;
 
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        space-between;
-
-    padding:
-        0 18px;
-
-    border-bottom:
-        1px solid
-        var(--line);
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        10px;
-
-    letter-spacing:
-        1px;
-
-    color:
-        #bdbdbd;
-
+    font-size: 11px;
+    text-transform: uppercase;
 }
 
+.top-left {
+    text-align: left;
+}
 
-.top-left,
+.top-center {
+    text-align: center;
+}
+
 .top-right {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        15px;
-
+    text-align: right;
 }
 
+.logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-.online {
+    width: 38px;
+    height: 22px;
 
-    display:
-        flex;
+    background: #ff32bb;
+    color: white;
 
-    align-items:
-        center;
+    font-size: 10px;
+    font-weight: 700;
 
-    gap:
-        7px;
-
+    transform: rotate(45deg);
 }
 
-
-.status-dot {
-
-    width:
-        7px;
-
-    height:
-        7px;
-
-    border-radius:
-        50%;
-
-    background:
-        var(--green);
-
-    box-shadow:
-        0 0 8px
-        rgba(182,255,92,0.85);
-
+.logo-mark span {
+    transform: rotate(-45deg);
 }
 
 
@@ -273,1059 +152,348 @@ body::after {
 ========================================================= */
 
 .hero {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        1.35fr 0.85fr;
-
-    min-height:
-        330px;
-
-    border-bottom:
-        1px solid
-        var(--line);
-
+    padding: 0 0 8px;
 }
-
-
-.hero-left {
-
-    padding:
-        32px
-        26px
-        38px;
-
-    border-right:
-        1px solid
-        var(--line);
-
-}
-
-
-.breadcrumb {
-
-    margin-bottom:
-        24px;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        10px;
-
-    letter-spacing:
-        1px;
-
-    color:
-        #aaa;
-
-}
-
 
 .hero h1 {
+    margin: 0;
+
+    font-size: clamp(78px, 13vw, 190px);
+    line-height: 0.78;
+
+    font-weight: 900;
+
+    letter-spacing: -9px;
+
+    white-space: nowrap;
+}
+
+.hero-sub {
+    margin-top: 24px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    gap: 30px;
+
+    font-size: 13px;
+}
+
+.hero-desc {
+    max-width: 520px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   STACK
+========================================================= */
+
+.stack {
+    position: relative;
+
+    padding-top: 18px;
+    padding-bottom: 70px;
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.category-label {
+    position: relative;
 
     margin:
-        0;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        clamp(
-            48px,
-            6.3vw,
-            86px
-        );
-
-    font-weight:
-        normal;
-
-    line-height:
-        1.05;
-
-    letter-spacing:
-        -3px;
-
-    color:
-        var(--white);
-
-    text-shadow:
-
-        3px 3px 0
-        rgba(0,0,0,0.85),
-
-        0 0 16px
-        rgba(255,255,255,0.08);
-
-}
-
-
-.hero-description {
-
-    max-width:
-        650px;
-
-    margin-top:
-        26px;
-
-    font-size:
-        14px;
-
-    line-height:
-        1.9;
-
-    color:
-        #c5c5c5;
-
-}
-
-
-/* =========================================================
-   HERO RIGHT
-========================================================= */
-
-.hero-right {
-
-    position:
-        relative;
-
-    overflow:
-        hidden;
-
-    padding:
-        30px;
-
-    background:
-
-        radial-gradient(
-            circle at 72% 34%,
-            rgba(255,255,255,0.07),
-            transparent 30%
-        ),
-
-        linear-gradient(
-            135deg,
-            rgba(83,10,20,0.45),
-            rgba(10,10,10,0.25) 53%,
-            rgba(255,255,255,0.025)
-        );
-
-}
-
-
-.hero-right-inner {
-
-    position:
-        relative;
-
-    z-index:
-        2;
-
-    height:
-        100%;
-
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-    justify-content:
-        space-between;
-
-}
-
-
-.hero-right-text {
-
-    font-size:
-        13px;
-
-    line-height:
-        1.9;
-
-    color:
-        #e1e1e1;
-
-}
-
-
-.ascii {
-
-    margin:
-        30px 0;
-
-    font-family:
-        "PixelCN",
-        "Courier New",
-        monospace;
-
-    font-size:
-        10px;
-
-    line-height:
-        1.45;
-
-    white-space:
-        pre;
-
-    color:
-        rgba(255,255,255,0.52);
-
-}
-
-
-.hero-meta {
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        9px;
-
-    color:
-        #aaa;
-
-    letter-spacing:
-        1px;
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-.nav {
-
-    position:
-        sticky;
-
-    top:
-        0;
-
-    z-index:
-        500;
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    background:
-        rgba(7,7,7,0.94);
-
-    backdrop-filter:
-        blur(14px);
-
-    -webkit-backdrop-filter:
-        blur(14px);
-
-    border-bottom:
-        1px solid
-        var(--line);
-
-}
-
-
-.nav a {
-
-    min-height:
-        58px;
-
-    display:
-        flex;
-
-    justify-content:
-        center;
-
-    align-items:
-        center;
-
-    padding:
-        8px;
-
-    border-right:
-        1px solid
-        var(--line);
-
-    text-decoration:
-        none;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        11px;
-
-    color:
-        var(--white);
-
-    transition:
-        background 0.15s ease,
-        color 0.15s ease;
-
-}
-
-
-.nav a:last-child {
-
-    border-right:
-        0;
-
-}
-
-
-.nav a:hover {
-
-    background:
-        #dad8d1;
-
-    color:
-        #080808;
-
-}
-
-
-/* 当前分类 */
-
-.nav a.active {
-
-    background:
-        var(--white);
-
-    color:
-        #070707;
-
-}
-
-
-.nav a.active::before {
-
-    content:
-        "■";
-
-    margin-right:
-        8px;
-
-    font-size:
-        7px;
-
-}
-
-
-/* =========================================================
-   FEATURE BOARD
-========================================================= */
-
-.board {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        1.05fr 1.55fr;
-
-    border-bottom:
-        1px solid
-        var(--line);
-
-}
-
-
-/* =========================================================
-   QUICK GRID
-========================================================= */
-
-.quick {
-
-    border-right:
-        1px solid
-        var(--line);
-
-}
-
-
-.panel-label {
-
-    min-height:
-        48px;
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
-    padding:
-        0 15px;
-
-    border-bottom:
-        1px solid
-        var(--line);
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        9px;
-
-    color:
-        #999;
-
-}
-
-
-.quick-grid {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-}
-
-
-.quick-item {
-
-    position:
-        relative;
-
-    min-height:
-        155px;
-
-    padding:
-        16px;
-
-    text-decoration:
-        none;
-
-    color:
-        var(--white);
-
-    border-right:
-        1px solid
-        var(--line);
-
-    border-bottom:
-        1px solid
-        var(--line);
-
-    background:
-        rgba(255,255,255,0.008);
-
-    overflow:
-        hidden;
-
-    transition:
-        background 0.12s,
-        color 0.12s;
-
-}
-
-
-.quick-item:nth-child(even) {
-
-    border-right:
-        0;
-
-}
-
-
-/* CRT FLASH */
-
-.quick-item::after,
-.download-card::after {
-
-    content: "";
-
-    position:
-        absolute;
-
-    inset:
-        0;
-
-    opacity:
-        0;
-
-    pointer-events:
-        none;
-
-    background:
-        linear-gradient(
-            180deg,
-            transparent,
-            rgba(255,255,255,0.28),
-            transparent
-        );
-
-    transform:
-        translateY(-100%);
-
-}
-
-
-.quick-item:hover::after,
-.download-card:hover::after {
-
-    animation:
-        crt-flash
-        0.34s
-        ease-out;
-
-}
-
-
-@keyframes crt-flash {
-
-    0% {
-
-        opacity:
-            0;
-
-        transform:
-            translateY(-100%);
-
-    }
-
-    22% {
-
-        opacity:
-            0.45;
-
-    }
-
-    100% {
-
-        opacity:
-            0;
-
-        transform:
-            translateY(110%);
-
-    }
-
-}
-
-
-.quick-item:hover {
-
-    background:
-        var(--white);
-
-    color:
-        #070707;
-
-}
-
-
-.quick-index {
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        9px;
-
-    margin-bottom:
-        38px;
-
-}
-
-
-.quick-name {
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        14px;
-
-    line-height:
-        1.5;
-
-}
-
-
-.quick-type {
-
-    position:
-        absolute;
-
-    bottom:
-        14px;
-
-    left:
-        15px;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        8px;
-
-    color:
-        #888;
-
-}
-
-
-.quick-download {
-
-    position:
-        absolute;
-
-    bottom:
-        14px;
-
-    right:
-        15px;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        8px;
-
-    color:
-        #888;
-
-}
-
-
-.quick-item:hover .quick-type,
-.quick-item:hover .quick-download {
-
-    color:
-        #333;
-
-}
-
-
-/* =========================================================
-   FEATURE
-========================================================= */
-
-.feature {
-
-    position:
-        relative;
-
-    min-height:
-        620px;
-
-    overflow:
-        hidden;
-
-    background:
-
-        radial-gradient(
-            circle at 64% 20%,
-            rgba(255,255,255,0.09),
-            transparent 31%
-        ),
-
-        linear-gradient(
-            130deg,
-            rgba(87,10,19,0.50),
-            rgba(12,12,12,0.1) 47%,
-            rgba(255,255,255,0.03)
-        );
-
-}
-
-
-.feature-inner {
-
-    height:
-        100%;
-
-    padding:
-        45px 42px;
-
-    display:
-        flex;
-
-    flex-direction:
-        column;
-
-}
-
-
-.feature-small {
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        9px;
-
-    color:
-        #aaa;
-
-}
-
-
-.feature-title {
-
-    margin-top:
-        auto;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        clamp(
-            48px,
-            7vw,
-            92px
-        );
-
-    line-height:
-        1.03;
-
-    letter-spacing:
-        -3px;
-
-    text-shadow:
-        3px 3px 0
-        #000;
-
-}
-
-
-.feature-description {
-
-    max-width:
-        650px;
-
-    margin-top:
-        38px;
-
-    font-size:
-        13px;
-
-    line-height:
-        1.9;
-
-    color:
-        #c9c9c9;
-
-}
-
-
-.feature-label {
-
-    position:
-        absolute;
-
-    right:
-        0;
-
-    top:
-        48%;
-
-    padding:
-        13px 15px;
-
-    border:
-        1px solid
-        var(--white);
-
-    border-right:
-        0;
-
-    background:
-        #090909;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        10px;
-
-}
-
-
-/* =========================================================
-   CATALOG
-========================================================= */
-
-.catalog {
-
-    scroll-margin-top:
-        58px;
-
-    border-bottom:
-        1px solid
-        var(--line);
-
-}
-
-
-.catalog-header {
-
-    min-height:
-        76px;
-
-    padding:
-        0 22px;
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
-    border-bottom:
-        1px solid
-        var(--line);
-
-}
-
-
-.catalog-title {
-
-    display:
-        flex;
-
-    align-items:
-        baseline;
-
-    gap:
+        38px
+        0
+        12px
         12px;
 
+    z-index: 100;
+
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.category-label span {
+    margin-left: 10px;
+
+    color: rgba(0,0,0,0.40);
 }
 
 
-.catalog-title h2 {
+/*
+   只有「资源」这一类额外留出空间。
 
-    margin:
-        0;
+   因为它下面的第一张卡片左边向上翘，
+   避免卡片压到 RESOURCES 分类文字。
+*/
 
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        24px;
-
-    font-weight:
-        normal;
-
-}
-
-
-.catalog-title span {
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        8px;
-
-    color:
-        #888;
-
-}
-
-
-.catalog-count {
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        8px;
-
-    color:
-        #777;
-
-}
-
-
-.catalog-grid {
-
-    display:
-        grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
+.category-label.resources-label {
+    margin-bottom: 30px;
 }
 
 
 /* =========================================================
-   DOWNLOAD CARDS
+   CARD BASE
 ========================================================= */
 
-.download-card {
+.card {
+    position: relative;
 
-    position:
-        relative;
+    display: block;
 
-    min-height:
-        177px;
+    width: 96%;
+
+    min-height: 170px;
+
+    margin-top: -12px;
 
     padding:
-        17px;
+        26px
+        28px
+        24px;
 
-    overflow:
-        hidden;
+    color: var(--ink);
 
-    border-right:
-        1px solid
-        var(--line);
+    text-decoration: none;
 
-    border-bottom:
-        1px solid
-        var(--line);
+    border-radius: 17px;
 
-    text-decoration:
-        none;
+    box-shadow:
+        0 3px 0 rgba(0,0,0,0.13),
+        0 8px 20px rgba(0,0,0,0.08);
 
-    background:
-        #090909;
-
-    color:
-        var(--white);
+    transform-origin: 50% 72%;
 
     transition:
-        background 0.12s,
-        color 0.12s;
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.52s ease,
+        filter 0.40s ease,
+        outline-color 0.22s ease;
 
+    will-change: transform;
 }
 
 
-.download-card:nth-child(3n) {
+/* =========================================================
+   CARD POSITIONS
+========================================================= */
 
-    border-right:
-        0;
+.card:nth-of-type(4n + 1) {
+    width: 95%;
+    margin-left: 0.7%;
 
+    transform:
+        rotate(-1.5deg);
+}
+
+.card:nth-of-type(4n + 2) {
+    width: 97%;
+    margin-left: 2%;
+
+    transform:
+        rotate(1.5deg);
+}
+
+.card:nth-of-type(4n + 3) {
+    width: 96%;
+    margin-left: 0.4%;
+
+    transform:
+        rotate(-1.5deg);
+}
+
+.card:nth-of-type(4n + 4) {
+    width: 94%;
+    margin-left: 2.8%;
+
+    transform:
+        rotate(1.5deg);
 }
 
 
-.download-card:hover {
+/* =========================================================
+   CARD COLORS
+========================================================= */
 
-    background:
-        var(--white);
+.card.blue {
+    background: var(--blue);
+}
 
-    color:
-        #070707;
+.card.green {
+    background: var(--green);
+}
 
+.card.yellow {
+    background: var(--yellow);
+}
+
+.card.pink {
+    background: var(--pink);
+}
+
+.card.lavender {
+    background: var(--lavender);
+}
+
+.card.cyan {
+    background: var(--cyan);
+}
+
+.card.orange {
+    background: var(--orange);
+}
+
+.card.white {
+    background: #ffffff;
+}
+
+.card.gray {
+    background: var(--gray);
 }
 
 
-.download-index {
+/* =========================================================
+   CARD TEXT
+========================================================= */
 
-    margin-bottom:
-        38px;
+.card-index {
+    position: absolute;
 
-    font-family:
-        "PixelCN",
-        monospace;
+    top: 18px;
+    right: 58px;
+
+    font-size: 10px;
+
+    color: rgba(0,0,0,0.20);
+}
+
+.card-name {
+    max-width: 86%;
+
+    margin-top: 4px;
 
     font-size:
-        9px;
+        clamp(
+            34px,
+            5vw,
+            68px
+        );
 
+    line-height: 0.98;
+
+    letter-spacing: -3px;
+
+    font-weight: 800;
+}
+
+.card-desc {
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    color: rgba(0,0,0,0.55);
+}
+
+.card-meta {
+    position: absolute;
+
+    left: 28px;
+    bottom: 18px;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    color: rgba(0,0,0,0.42);
 }
 
 
-.download-name {
+/* =========================================================
+   ARROW
+========================================================= */
 
-    font-family:
-        "PixelCN",
-        monospace;
+.card-arrow {
+    position: absolute;
 
-    font-size:
-        14px;
+    top: 15px;
+    right: 20px;
 
-    line-height:
-        1.55;
+    width: 30px;
+    height: 30px;
 
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+
+    line-height: 1;
+
+    opacity: 1;
 }
 
 
-.download-sub {
+/* =========================================================
+   HOVER
+========================================================= */
 
-    margin-top:
-        8px;
+.card:hover {
 
-    font-size:
-        11px;
+    outline:
+        2px dashed
+        var(--ink);
 
-    color:
-        #888;
+    outline-offset:
+        -7px;
 
+    box-shadow:
+        0 6px 0 rgba(0,0,0,0.11),
+        0 18px 34px rgba(0,0,0,0.13);
+
+    filter:
+        saturate(1.025);
 }
 
 
-.download-bottom {
+/* 左高右低 → 再多翘 1° */
 
-    position:
-        absolute;
-
-    bottom:
-        14px;
-
-    left:
-        17px;
-
-    right:
-        17px;
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        8px;
-
-    color:
-        #7d7d7d;
-
+.card:nth-of-type(4n + 1):hover {
+    transform:
+        rotate(-2.5deg)
+        translateY(-2px);
 }
 
 
-.download-card:hover
-.download-sub,
+/* 右高左低 → 再多翘 1° */
 
-.download-card:hover
-.download-bottom {
+.card:nth-of-type(4n + 2):hover {
+    transform:
+        rotate(2.5deg)
+        translateY(-2px);
+}
 
-    color:
-        #333;
 
+/* 左高右低 */
+
+.card:nth-of-type(4n + 3):hover {
+    transform:
+        rotate(-2.5deg)
+        translateY(-2px);
+}
+
+
+/* 右高左低 */
+
+.card:nth-of-type(4n + 4):hover {
+    transform:
+        rotate(2.5deg)
+        translateY(-2px);
 }
 
 
@@ -1334,59 +502,55 @@ body::after {
 ========================================================= */
 
 .footer {
-
     padding:
-        42px 24px;
+        40px
+        0
+        60px;
 
-    text-align:
-        center;
+    display: grid;
 
+    grid-template-columns:
+        1.2fr
+        1fr;
+
+    gap: 60px;
+
+    border-top:
+        1px solid
+        rgba(0,0,0,0.2);
+}
+
+.footer-big {
     font-size:
-        11px;
+        clamp(
+            34px,
+            5vw,
+            70px
+        );
 
-    line-height:
-        2;
+    line-height: 0.95;
 
-    color:
-        #8c8c8c;
+    letter-spacing: -3px;
 
+    font-weight: 800;
 }
 
+.footer-side {
+    font-size: 13px;
 
-.footer-title {
-
-    margin-bottom:
-        8px;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    color:
-        #bbb;
-
+    line-height: 1.8;
 }
-
 
 .footer a {
+    color: inherit;
 
-    color:
-        white;
+    text-decoration: none;
 
-    cursor:
-        pointer;
-
-    text-decoration:
-        none;
-
+    cursor: pointer;
 }
 
-
 .footer a:hover {
-
-    text-decoration:
-        underline;
-
+    text-decoration: underline;
 }
 
 
@@ -1395,203 +559,76 @@ body::after {
 ========================================================= */
 
 .modal {
+    display: none;
 
-    display:
-        none;
+    position: fixed;
 
-    position:
-        fixed;
+    inset: 0;
 
-    inset:
-        0;
+    z-index: 99999;
 
-    z-index:
-        999999;
+    align-items: center;
+    justify-content: center;
 
-    justify-content:
-        center;
-
-    align-items:
-        center;
-
-    padding:
-        20px;
+    padding: 20px;
 
     background:
-        rgba(0,0,0,0.86);
-
+        rgba(0,0,0,0.50);
 }
-
 
 .modal-content {
+    width: 100%;
+    max-width: 680px;
 
-    width:
-        100%;
+    max-height: 82vh;
 
-    max-width:
-        650px;
+    overflow-y: auto;
 
-    max-height:
-        82vh;
+    padding: 32px;
 
-    overflow:
-        auto;
+    background: var(--paper);
 
-    padding:
-        28px;
+    border-radius: 16px;
 
-    border:
-        1px solid
-        var(--line);
-
-    background:
-        #101010;
-
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.26);
 }
-
 
 .modal-content h2 {
+    margin-top: 0;
 
-    margin:
-        0 0 20px;
-
-    font-family:
-        "PixelCN",
-        monospace;
-
-    font-size:
-        20px;
-
+    font-size: 30px;
 }
-
 
 .modal-content p {
+    font-size: 14px;
 
-    font-size:
-        13px;
+    line-height: 1.9;
 
-    line-height:
-        1.9;
-
-    color:
-        #c7c7c7;
-
+    color: rgba(0,0,0,0.70);
 }
-
 
 .close-button {
+    width: 100%;
 
-    width:
-        100%;
+    margin-top: 20px;
 
-    margin-top:
-        18px;
+    padding: 14px;
 
-    padding:
-        14px;
+    border: 1px solid #111;
 
-    border:
-        1px solid
-        var(--white);
+    background: #111;
 
-    background:
-        var(--white);
+    color: white;
 
-    color:
-        #050505;
+    cursor: pointer;
 
-    font-family:
-        "PixelCN",
-        monospace;
-
-    cursor:
-        pointer;
-
+    font: inherit;
 }
-
 
 .close-button:hover {
-
-    background:
-        #090909;
-
-    color:
-        white;
-
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media
-(max-width: 1050px) {
-
-    .hero {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .hero-left {
-
-        border-right:
-            0;
-
-        border-bottom:
-            1px solid
-            var(--line);
-
-    }
-
-
-    .board {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .quick {
-
-        border-right:
-            0;
-
-        border-bottom:
-            1px solid
-            var(--line);
-
-    }
-
-
-    .catalog-grid {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-
-    }
-
-
-    .download-card:nth-child(3n) {
-
-        border-right:
-            1px solid
-            var(--line);
-
-    }
-
-
-    .download-card:nth-child(2n) {
-
-        border-right:
-            0;
-
-    }
-
+    background: transparent;
+    color: #111;
 }
 
 
@@ -1599,148 +636,67 @@ body::after {
    MOBILE
 ========================================================= */
 
-@media
-(max-width: 680px) {
+@media (max-width: 760px) {
 
-    .shell {
-
-        width:
-            100%;
-
-        border-left:
-            0;
-
-        border-right:
-            0;
-
+    .page {
+        width: calc(100% - 24px);
     }
 
-
-    .top-right {
-
-        display:
-            none;
-
+    .topbar {
+        grid-template-columns: 1fr auto;
     }
 
+    .top-center {
+        display: none;
+    }
 
     .hero h1 {
+        font-size: 64px;
+        letter-spacing: -4px;
 
-        font-size:
-            42px;
-
-        letter-spacing:
-            -2px;
-
+        white-space: normal;
     }
 
-
-    .hero-left,
-    .hero-right {
-
-        padding-left:
-            16px;
-
-        padding-right:
-            16px;
-
+    .hero-sub {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
-
-    .ascii {
-
-        font-size:
-            8px;
-
-    }
-
-
-    .nav {
-
-        grid-template-columns:
-            repeat(2, 1fr);
-
-    }
-
-
-    .nav a:nth-child(2) {
-
-        border-right:
-            0;
-
-    }
-
-
-    .nav a:nth-child(-n+2) {
-
-        border-bottom:
-            1px solid
-            var(--line);
-
-    }
-
-
-    .quick-grid {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .quick-item {
-
-        border-right:
-            0;
-
-    }
-
-
-    .catalog-grid {
-
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .download-card {
-
-        border-right:
-            0 !important;
-
-    }
-
-
-    .feature {
-
-        min-height:
-            500px;
-
-    }
-
-
-    .feature-inner {
+    .card {
+        min-height: 145px;
 
         padding:
-            34px 18px;
+            22px
+            20px;
 
+        margin-top: -6px;
+
+        border-radius: 14px;
     }
 
+    .card-name {
+        font-size: 34px;
 
-    .feature-title {
-
-        font-size:
-            48px;
-
+        letter-spacing: -2px;
     }
 
+    .card-meta {
+        left: 20px;
+    }
 
-    .feature-label {
+    .card-arrow {
+        top: 13px;
+        right: 16px;
+    }
 
-        display:
-            none;
+    .card-index {
+        top: 17px;
+        right: 52px;
+    }
 
+    .footer {
+        grid-template-columns: 1fr;
+        gap: 34px;
     }
 
 }
@@ -1752,44 +708,31 @@ body::after {
 
 <body>
 
-<div class="shell">
+<div class="page">
 
 
 <!-- =====================================================
-     TOP BAR
+     TOP
 ===================================================== -->
 
 <div class="topbar">
 
     <div class="top-left">
+        SAME SAME BUT DIFFERENT
+    </div>
 
-        <div class="online">
+    <div class="top-center">
 
-            <span class="status-dot"></span>
-
+        <div class="logo-mark">
             <span>
-                ONLINE
+                GB
             </span>
-
         </div>
-
-        <span>
-            GASBOX / TOOL INDEX
-        </span>
 
     </div>
 
-
     <div class="top-right">
-
-        <span id="clock">
-            TIME --:--:--
-        </span>
-
-        <span id="scrollValue">
-            SCROLL 00%
-        </span>
-
+        GASBOX.CN
     </div>
 
 </div>
@@ -1802,381 +745,44 @@ body::after {
 
 <section class="hero">
 
-
-<div class="hero-left">
-
-    <div class="breadcrumb">
-        HOME / LIVE STREAM / TOOL ARCHIVE
-    </div>
-
-
     <h1>
-        直播工具<br>
-        下载站.
+        GASBOX
     </h1>
 
+    <div class="hero-sub">
 
-    <div class="hero-description">
+        <div class="hero-desc">
 
-        常用直播软件、OBS 插件、音频工具、虚拟屏以及直播调试资源整理。
+            直播软件、插件、工具与资源整理。
 
-        <br>
+            <br>
 
-        一个简单、直接、持续更新的直播工具索引。
+            找到需要的东西，然后直接下载。
+
+        </div>
+
+        <div>
+            LIVE STREAM TOOL ARCHIVE
+        </div>
 
     </div>
-
-</div>
-
-
-
-<div class="hero-right">
-
-
-<div class="hero-right-inner">
-
-
-<div class="hero-right-text">
-
-    软件 / 插件 / 工具 / 资源集中索引。
-
-    <br>
-
-    不做复杂跳转，只保留真正需要的下载入口。
-
-</div>
-
-
-
-<pre class="ascii">
-┌─────────────────────────┐
-│ GASBOX TOOL SYSTEM      │
-│                         │
-│ STATUS ........ ONLINE  │
-│ INDEX ......... READY   │
-│ DOWNLOAD ...... ENABLED │
-│                         │
-└─────────────────────────┘
-</pre>
-
-
-
-<div class="hero-meta">
-
-    DIRECT ACCESS / NO ACCOUNT / LIVE TOOL INDEX
-
-</div>
-
-
-</div>
-
-</div>
-
 
 </section>
 
 
 
 <!-- =====================================================
-     NAV
+     STACK
 ===================================================== -->
 
-<nav class="nav">
+<main class="stack">
 
-    <a
-        href="#software"
-        data-section="software"
-    >
-        软件 / SOFTWARE
-    </a>
 
-    <a
-        href="#plugins"
-        data-section="plugins"
-    >
-        插件 / PLUGINS
-    </a>
+<!-- SOFTWARE -->
 
-    <a
-        href="#tools"
-        data-section="tools"
-    >
-        工具 / TOOLS
-    </a>
+<div class="category-label">
 
-    <a
-        href="#resources"
-        data-section="resources"
-    >
-        资源 / RESOURCES
-    </a>
-
-</nav>
-
-
-
-<!-- =====================================================
-     BOARD
-===================================================== -->
-
-<section class="board">
-
-
-<div class="quick">
-
-
-<div class="panel-label">
-
-    <span>
-        QUICK ACCESS
-    </span>
-
-    <span>
-        01 / 06
-    </span>
-
-</div>
-
-
-
-<div class="quick-grid">
-
-
-<a
-    class="quick-item"
-    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/OBS-Setup.exe"
->
-
-    <div class="quick-index">
-        [A]
-    </div>
-
-    <div class="quick-name">
-        OBS
-    </div>
-
-    <div class="quick-type">
-        SOFTWARE
-    </div>
-
-    <div class="quick-download">
-        DOWNLOAD
-    </div>
-
-</a>
-
-
-
-<a
-    class="quick-item"
-    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Studio-One-7.exe"
->
-
-    <div class="quick-index">
-        [B]
-    </div>
-
-    <div class="quick-name">
-        STUDIO ONE 7
-    </div>
-
-    <div class="quick-type">
-        AUDIO
-    </div>
-
-    <div class="quick-download">
-        DOWNLOAD
-    </div>
-
-</a>
-
-
-
-<a
-    class="quick-item"
-    href="OBS-3D.exe"
->
-
-    <div class="quick-index">
-        [C]
-    </div>
-
-    <div class="quick-name">
-        OBS 3D 插件
-    </div>
-
-    <div class="quick-type">
-        PLUGIN
-    </div>
-
-    <div class="quick-download">
-        DOWNLOAD
-    </div>
-
-</a>
-
-
-
-<a
-    class="quick-item"
-    href="OBS-RGB.lua"
->
-
-    <div class="quick-index">
-        [D]
-    </div>
-
-    <div class="quick-name">
-        OBS RGB 插件
-    </div>
-
-    <div class="quick-type">
-        SCRIPT
-    </div>
-
-    <div class="quick-download">
-        DOWNLOAD
-    </div>
-
-</a>
-
-
-
-<a
-    class="quick-item"
-    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/VST-Plugins.exe"
->
-
-    <div class="quick-index">
-        [E]
-    </div>
-
-    <div class="quick-name">
-        VST 插件包
-    </div>
-
-    <div class="quick-type">
-        AUDIO
-    </div>
-
-    <div class="quick-download">
-        DOWNLOAD
-    </div>
-
-</a>
-
-
-
-<a
-    class="quick-item"
-    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Audio-Toolbox.exe"
->
-
-    <div class="quick-index">
-        [F]
-    </div>
-
-    <div class="quick-name">
-        调音师工具箱
-    </div>
-
-    <div class="quick-type">
-        TOOLBOX
-    </div>
-
-    <div class="quick-download">
-        DOWNLOAD
-    </div>
-
-</a>
-
-
-</div>
-
-</div>
-
-
-
-<!-- FEATURE -->
-
-<div class="feature">
-
-
-<div class="feature-inner">
-
-
-<div class="feature-small">
-
-    [01] LIVE STREAM TOOLBOARD
-
-</div>
-
-
-
-<div style="margin-top:auto;">
-
-
-<div class="feature-title">
-
-    LIVE<br>
-    TOOLBOX
-
-</div>
-
-
-<div class="feature-description">
-
-    收录直播常用的软件、插件、音频工具和调试资源。
-
-    <br>
-
-    没有账户，没有复杂导航，也没有无关功能。
-
-    <br>
-
-    找到工具，直接下载。
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-<div class="feature-label">
-
-    FEATURES
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-<!-- =====================================================
-     SOFTWARE
-===================================================== -->
-
-<section
-    class="catalog"
-    id="software"
->
-
-
-<div class="catalog-header">
-
-
-<div class="catalog-title">
-
-    <h2>
-        软件
-    </h2>
+    软件
 
     <span>
         SOFTWARE
@@ -2185,45 +791,29 @@ body::after {
 </div>
 
 
-<div class="catalog-count">
-    02 ITEMS
-</div>
-
-
-</div>
-
-
-
-<div class="catalog-grid">
-
-
 <a
-    class="download-card"
+    class="card blue"
     href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/OBS-Setup.exe"
 >
 
-    <div class="download-index">
-        [A01]
+    <div class="card-index">
+        001
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         OBS
     </div>
 
-    <div class="download-sub">
+    <div class="card-desc">
         直播推流与录制
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            SOFTWARE
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        Streaming software
     </div>
 
 </a>
@@ -2231,61 +821,39 @@ body::after {
 
 
 <a
-    class="download-card"
+    class="card green"
     href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Studio-One-7.exe"
 >
 
-    <div class="download-index">
-        [A02]
+    <div class="card-index">
+        002
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         Studio One 7
     </div>
 
-    <div class="download-sub">
+    <div class="card-desc">
         音频录制与调音
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            AUDIO
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        Audio software
     </div>
 
 </a>
 
 
-</div>
 
-</section>
+<!-- PLUGINS -->
 
+<div class="category-label">
 
-
-<!-- =====================================================
-     PLUGINS
-===================================================== -->
-
-<section
-    class="catalog"
-    id="plugins"
->
-
-
-<div class="catalog-header">
-
-
-<div class="catalog-title">
-
-    <h2>
-        插件
-    </h2>
+    插件
 
     <span>
         PLUGINS
@@ -2294,45 +862,29 @@ body::after {
 </div>
 
 
-<div class="catalog-count">
-    06 ITEMS
-</div>
-
-
-</div>
-
-
-
-<div class="catalog-grid">
-
-
 <a
-    class="download-card"
+    class="card yellow"
     href="OBS-3D.exe"
 >
 
-    <div class="download-index">
-        [B01]
+    <div class="card-index">
+        003
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         OBS 3D 插件
     </div>
 
-    <div class="download-sub">
-        OBS PLUGIN
+    <div class="card-desc">
+        OBS 三维相关扩展
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            PLUGIN
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        OBS Plugin
     </div>
 
 </a>
@@ -2340,32 +892,28 @@ body::after {
 
 
 <a
-    class="download-card"
+    class="card white"
     href="OBS-RGB.lua"
 >
 
-    <div class="download-index">
-        [B02]
+    <div class="card-index">
+        004
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         OBS RGB 插件
     </div>
 
-    <div class="download-sub">
-        OBS SCRIPT
+    <div class="card-desc">
+        OBS RGB 效果脚本
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            SCRIPT
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        OBS Script
     </div>
 
 </a>
@@ -2373,32 +921,28 @@ body::after {
 
 
 <a
-    class="download-card"
+    class="card lavender"
     href="OBS-Move.exe"
 >
 
-    <div class="download-index">
-        [B03]
+    <div class="card-index">
+        005
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         OBS 移动插件
     </div>
 
-    <div class="download-sub">
-        OBS PLUGIN
+    <div class="card-desc">
+        OBS Move 扩展
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            PLUGIN
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        OBS Plugin
     </div>
 
 </a>
@@ -2406,32 +950,28 @@ body::after {
 
 
 <a
-    class="download-card"
+    class="card cyan"
     href="OBS-Mask.exe"
 >
 
-    <div class="download-index">
-        [B04]
+    <div class="card-index">
+        006
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         OBS 蒙版插件
     </div>
 
-    <div class="download-sub">
-        OBS PLUGIN
+    <div class="card-desc">
+        OBS 蒙版与遮罩扩展
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            PLUGIN
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        OBS Plugin
     </div>
 
 </a>
@@ -2439,32 +979,28 @@ body::after {
 
 
 <a
-    class="download-card"
+    class="card pink"
     href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/VST-Plugins.exe"
 >
 
-    <div class="download-index">
-        [B05]
+    <div class="card-index">
+        007
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         VST 插件包
     </div>
 
-    <div class="download-sub">
-        AUDIO PLUGINS
+    <div class="card-desc">
+        直播调音常用插件
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            VST
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        Audio Plugins
     </div>
 
 </a>
@@ -2472,61 +1008,39 @@ body::after {
 
 
 <a
-    class="download-card"
+    class="card orange"
     href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Audio-Toolbox.exe"
 >
 
-    <div class="download-index">
-        [B06]
+    <div class="card-index">
+        008
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         调音师工具箱
     </div>
 
-    <div class="download-sub">
-        AUDIO TOOLBOX
+    <div class="card-desc">
+        音频处理与调试工具
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            AUDIO
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        Audio Toolbox
     </div>
 
 </a>
 
 
-</div>
 
-</section>
+<!-- TOOLS -->
 
+<div class="category-label">
 
-
-<!-- =====================================================
-     TOOLS
-===================================================== -->
-
-<section
-    class="catalog"
-    id="tools"
->
-
-
-<div class="catalog-header">
-
-
-<div class="catalog-title">
-
-    <h2>
-        工具
-    </h2>
+    工具
 
     <span>
         TOOLS
@@ -2535,74 +1049,40 @@ body::after {
 </div>
 
 
-<div class="catalog-count">
-    01 ITEM
-</div>
-
-
-</div>
-
-
-
-<div class="catalog-grid">
-
-
 <a
-    class="download-card"
+    class="card gray"
     href="Virtual-Screen.exe"
 >
 
-    <div class="download-index">
-        [C01]
+    <div class="card-index">
+        009
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         虚拟屏软件
     </div>
 
-    <div class="download-sub">
-        VIRTUAL SCREEN
+    <div class="card-desc">
+        直播相关虚拟显示工具
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            TOOL
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        Utility
     </div>
 
 </a>
 
 
-</div>
 
-</section>
+<!-- RESOURCES -->
 
+<div class="category-label resources-label">
 
-
-<!-- =====================================================
-     RESOURCES
-===================================================== -->
-
-<section
-    class="catalog"
-    id="resources"
->
-
-
-<div class="catalog-header">
-
-
-<div class="catalog-title">
-
-    <h2>
-        资源
-    </h2>
+    资源
 
     <span>
         RESOURCES
@@ -2611,53 +1091,35 @@ body::after {
 </div>
 
 
-<div class="catalog-count">
-    01 ITEM
-</div>
-
-
-</div>
-
-
-
-<div class="catalog-grid">
-
-
 <a
-    class="download-card"
+    class="card green"
     href="Live-LUT.rar"
 >
 
-    <div class="download-index">
-        [D01]
+    <div class="card-index">
+        010
     </div>
 
-    <div class="download-name">
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
         直播调试 LUT
     </div>
 
-    <div class="download-sub">
-        LIVE STREAM LUT
+    <div class="card-desc">
+        直播画面调试资源
     </div>
 
-    <div class="download-bottom">
-
-        <span>
-            RESOURCE
-        </span>
-
-        <span>
-            DOWNLOAD →
-        </span>
-
+    <div class="card-meta">
+        Resource
     </div>
 
 </a>
 
 
-</div>
-
-</section>
+</main>
 
 
 
@@ -2667,43 +1129,34 @@ body::after {
 
 <footer class="footer">
 
+    <div class="footer-big">
 
-<div class="footer-title">
+        找工具，
+        <br>
+        别找麻烦。
 
-    GASBOX / LIVE TOOL INDEX
-
-</div>
-
-
-<div>
-
-    本站为非官方软件导航站，
-    软件版权归原作者及开发商所有。
-
-    <br>
-
-    下载和安装前请自行核实来源与安全性。
-
-</div>
+    </div>
 
 
-<div>
+    <div class="footer-side">
 
-    <a onclick="openDisclaimer()">
+        <p>
+            GASBOX 用来整理直播、音频、视频及相关常用软件和资源。
+        </p>
 
-        [ 查看完整免责声明 ]
+        <p>
 
-    </a>
+            <a onclick="openDisclaimer()">
+                查看完整免责声明 →
+            </a>
 
-</div>
+        </p>
 
+        <p>
+            © 2026 GASBOX
+        </p>
 
-<div style="margin-top:12px;">
-
-    © 2026 GASBOX
-
-</div>
-
+    </div>
 
 </footer>
 
@@ -2721,78 +1174,63 @@ body::after {
     id="disclaimerModal"
 >
 
+    <div class="modal-content">
 
-<div class="modal-content">
+        <h2>
+            免责声明
+        </h2>
 
+        <p>
+            本站仅用于整理和分享直播、音频、视频及相关常用软件工具，
+            方便用户快速查找和访问。
+        </p>
 
-<h2>
-    免责声明
-</h2>
+        <p>
+            本站与所收录软件的开发商、发行商及品牌方不存在任何官方合作或隶属关系。
+            所有软件名称、商标、图标及相关版权均归其原权利人所有。
+        </p>
 
+        <p>
+            本站优先提供软件官方网站、官方发布页面或公开下载地址。
+            若本站提供第三方下载或文件镜像，
+            仅用于学习、交流和下载便利，
+            不代表本站对软件的安全性、稳定性、兼容性及后续更新作出任何保证。
+        </p>
 
-<p>
-本站仅用于整理和分享直播、音频、视频及相关常用软件工具，
-方便用户快速查找和访问。
-</p>
+        <p>
+            用户在下载、安装和使用相关软件前，
+            应自行核实软件来源、版本及系统兼容性，
+            并自行承担因安装或使用软件所产生的风险，
+            包括但不限于数据丢失、系统异常、软件冲突等问题。
+        </p>
 
+        <p>
+            如本站收录内容涉及版权、商标或其他合法权益问题，
+            请联系本站处理，
+            核实后将及时修改或移除相关内容。
+        </p>
 
-<p>
-本站与所收录软件的开发商、发行商及品牌方不存在任何官方合作或隶属关系。
-所有软件名称、商标、图标及相关版权均归其原权利人所有。
-</p>
-
-
-<p>
-本站优先提供软件官方网站、官方发布页面或公开下载地址。
-若本站提供第三方下载或文件镜像，
-仅用于学习、交流和下载便利，
-不代表本站对软件的安全性、稳定性、兼容性及后续更新作出任何保证。
-</p>
-
-
-<p>
-用户在下载、安装和使用相关软件前，
-应自行核实软件来源、版本及系统兼容性，
-并自行承担因安装或使用软件所产生的风险，
-包括但不限于数据丢失、系统异常、软件冲突等问题。
-</p>
-
-
-<p>
-如本站收录内容涉及版权、商标或其他合法权益问题，
-请联系本站处理，
-核实后将及时修改或移除相关内容。
-</p>
-
-
-<p>
-<strong>
-使用本站即视为已阅读并理解以上说明。
-</strong>
-</p>
+        <p>
+            <strong>
+                使用本站即视为已阅读并理解以上说明。
+            </strong>
+        </p>
 
 
-<button
-    class="close-button"
-    onclick="closeDisclaimer()"
->
+        <button
+            class="close-button"
+            onclick="closeDisclaimer()"
+        >
+            关闭
+        </button>
 
-    CLOSE / 关闭
-
-</button>
-
-
-</div>
+    </div>
 
 </div>
 
 
 
 <script>
-
-/* =========================================================
-   DISCLAIMER
-========================================================= */
 
 function openDisclaimer() {
 
@@ -2836,179 +1274,6 @@ window.addEventListener(
         }
 
     }
-);
-
-
-/* =========================================================
-   CLOCK
-========================================================= */
-
-function updateClock() {
-
-    const now =
-        new Date();
-
-    const time =
-        now
-        .toLocaleTimeString(
-            "zh-CN",
-            {
-                hour12: false
-            }
-        );
-
-    document
-        .getElementById(
-            "clock"
-        )
-        .textContent =
-        "TIME " + time;
-
-}
-
-updateClock();
-
-setInterval(
-    updateClock,
-    1000
-);
-
-
-/* =========================================================
-   SCROLL %
-========================================================= */
-
-function updateScroll() {
-
-    const max =
-        document.documentElement
-        .scrollHeight -
-        window.innerHeight;
-
-    const current =
-        window.scrollY;
-
-    const percent =
-        max > 0
-        ? Math.round(
-            current / max * 100
-        )
-        : 0;
-
-    document
-        .getElementById(
-            "scrollValue"
-        )
-        .textContent =
-        "SCROLL " +
-        String(percent)
-        .padStart(
-            2,
-            "0"
-        ) +
-        "%";
-
-}
-
-window.addEventListener(
-    "scroll",
-    updateScroll
-);
-
-updateScroll();
-
-
-/* =========================================================
-   ACTIVE CATEGORY
-========================================================= */
-
-const navLinks =
-    document.querySelectorAll(
-        ".nav a"
-    );
-
-const sections =
-    document.querySelectorAll(
-        ".catalog"
-    );
-
-
-const observer =
-    new IntersectionObserver(
-
-        (entries) => {
-
-            entries.forEach(
-
-                (entry) => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        const id =
-                            entry.target.id;
-
-                        navLinks.forEach(
-
-                            (link) => {
-
-                                link.classList
-                                    .remove(
-                                        "active"
-                                    );
-
-                                if (
-                                    link.dataset
-                                    .section ===
-                                    id
-                                ) {
-
-                                    link.classList
-                                        .add(
-                                            "active"
-                                        );
-
-                                }
-
-                            }
-
-                        );
-
-                    }
-
-                }
-
-            );
-
-        },
-
-        {
-
-            root:
-                null,
-
-            rootMargin:
-                "-20% 0px -65% 0px",
-
-            threshold:
-                0
-
-        }
-
-    );
-
-
-sections.forEach(
-
-    (section) => {
-
-        observer.observe(
-            section
-        );
-
-    }
-
 );
 
 </script>
