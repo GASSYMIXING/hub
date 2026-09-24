@@ -1486,6 +1486,14 @@ body.intro-start .intro-card-2 {
         </p>
 
         <p>
+
+            <a onclick="openContact()">
+                点击此处联系作者
+            </a>
+
+        </p>
+
+        <p>
             © 2026 GASBOX
         </p>
 
@@ -1563,6 +1571,57 @@ body.intro-start .intro-card-2 {
 
 
 
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<div
+    class="modal"
+    id="contactModal"
+>
+
+    <div class="modal-content">
+
+        <h2>
+            联系作者
+        </h2>
+
+        <p>
+            如果你在使用 GASBOX 的过程中遇到资源失效、下载异常、
+            软件版本问题，或者有新的软件、插件和工具推荐，
+            都可以通过以下方式联系我。
+        </p>
+
+        <p>
+            <strong>
+                邮箱
+            </strong>
+            <br>
+            mikpan@foxmail.com
+        </p>
+
+        <p>
+            <strong>
+                微信
+            </strong>
+            <br>
+            Gassymixing
+        </p>
+
+
+        <button
+            class="close-button"
+            onclick="closeContact()"
+        >
+            关闭
+        </button>
+
+    </div>
+
+</div>
+
+
+
 <script>
 
 function openDisclaimer() {
@@ -1589,20 +1648,67 @@ function closeDisclaimer() {
 }
 
 
+/* =========================================================
+   CONTACT
+========================================================= */
+
+function openContact() {
+
+    document
+        .getElementById(
+            "contactModal"
+        )
+        .style.display =
+        "flex";
+
+}
+
+
+function closeContact() {
+
+    document
+        .getElementById(
+            "contactModal"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   MODAL BACKGROUND CLICK
+========================================================= */
+
 window.addEventListener(
     "click",
     function(event) {
 
-        const modal =
+        const disclaimerModal =
             document.getElementById(
                 "disclaimerModal"
             );
 
+        const contactModal =
+            document.getElementById(
+                "contactModal"
+            );
+
+
         if (
-            event.target === modal
+            event.target === disclaimerModal
         ) {
 
             closeDisclaimer();
+
+        }
+
+
+        if (
+            event.target === contactModal
+        ) {
+
+            closeContact();
 
         }
 
