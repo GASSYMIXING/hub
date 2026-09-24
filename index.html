@@ -284,6 +284,8 @@ body::before {
     flex-shrink: 0;
 
     min-width: max-content;
+
+    padding-right: 4px;
 }
 
 
@@ -941,21 +943,33 @@ body.intro-start .intro-card-2 {
     }
 
     .hero-meta {
-        gap: 18px;
+        gap: 14px;
 
         margin-top: 22px;
 
-        padding-right: 20px;
+        padding-right: 18px;
 
         font-size: 10px;
     }
 
+    .hero-meta-left {
+        flex: 1 1 auto;
+
+        min-width: 0;
+    }
+
     .hero-meta-right {
+        display: inline-block;
+
         white-space: nowrap;
 
-        flex-shrink: 0;
+        flex: 0 0 auto;
 
         min-width: max-content;
+
+        padding-right: 6px;
+
+        margin-right: 2px;
     }
 
     .card {
@@ -1017,7 +1031,7 @@ body.intro-start .intro-card-2 {
 >
     <img
         id="musicIcon"
-        src="/speakeroff.png"
+        src="/speakeron.png"
         alt=""
     >
 </button>
@@ -1620,11 +1634,51 @@ const bgm =
         "bgm"
     );
 
-let musicLoaded =
+let musicPrepared =
     false;
 
 
-/* 只有 PC 第一次点击时才加载音乐 */
+/* PC 打开网页后立刻在后台预加载音乐 */
+
+function prepareDesktopMusic() {
+
+    if (
+        !desktopMedia.matches
+    ) {
+        return;
+    }
+
+    if (
+        musicPrepared
+    ) {
+        return;
+    }
+
+    bgm.src =
+        "/bgm.mp3";
+
+    bgm.preload =
+        "auto";
+
+    bgm.load();
+
+    musicPrepared =
+        true;
+}
+
+
+/* 默认不播放，默认显示 speakeron */
+
+musicIcon.src =
+    "/speakeron.png";
+
+musicToggle.setAttribute(
+    "aria-label",
+    "播放背景音乐"
+);
+
+
+/* 点击播放 / 暂停 */
 
 async function toggleMusic() {
 
@@ -1635,18 +1689,7 @@ async function toggleMusic() {
     }
 
 
-    if (
-        !musicLoaded
-    ) {
-
-        bgm.src =
-            "/bgm.mp3";
-
-        bgm.load();
-
-        musicLoaded =
-            true;
-    }
+    prepareDesktopMusic();
 
 
     if (
@@ -1657,8 +1700,11 @@ async function toggleMusic() {
 
             await bgm.play();
 
+
+            /* 播放后切换为 OFF 图标 */
+
             musicIcon.src =
-                "/speakeron.png";
+                "/speakeroff.png";
 
             musicToggle.setAttribute(
                 "aria-label",
@@ -1669,8 +1715,21 @@ async function toggleMusic() {
 
         catch (error) {
 
+            console.error(
+                "背景音乐播放失败：",
+                error
+            );
+
+
+            /* 播放失败则保持 ON */
+
             musicIcon.src =
-                "/speakeroff.png";
+                "/speakeron.png";
+
+            musicToggle.setAttribute(
+                "aria-label",
+                "播放背景音乐"
+            );
 
         }
 
@@ -1680,8 +1739,11 @@ async function toggleMusic() {
 
         bgm.pause();
 
+
+        /* 暂停后恢复 ON */
+
         musicIcon.src =
-            "/speakeroff.png";
+            "/speakeron.png";
 
         musicToggle.setAttribute(
             "aria-label",
@@ -1699,13 +1761,26 @@ musicToggle.addEventListener(
 );
 
 
-/* 如果从 PC 缩小到手机宽度，停止音乐并卸载 */
+/* PC 页面一打开就后台加载 */
+
+prepareDesktopMusic();
+
+
+/* =========================================================
+   PC / MOBILE MUSIC SWITCH
+========================================================= */
 
 function syncMusicViewport() {
 
     if (
-        !desktopMedia.matches
+        desktopMedia.matches
     ) {
+
+        prepareDesktopMusic();
+
+    }
+
+    else {
 
         bgm.pause();
 
@@ -1713,13 +1788,16 @@ function syncMusicViewport() {
             "src"
         );
 
+        bgm.preload =
+            "none";
+
         bgm.load();
 
-        musicLoaded =
+        musicPrepared =
             false;
 
         musicIcon.src =
-            "/speakeroff.png";
+            "/speakeron.png";
 
         musicToggle.setAttribute(
             "aria-label",
