@@ -138,11 +138,17 @@ body::before {
         var(--line);
 }
 
+
+/*
+   顶部内容宽度扩大到 1620px
+   与下面放大后的 product-stage 左边缘统一
+*/
+
 .header {
     width:
         min(
             calc(100% - 56px),
-            1500px
+            1620px
         );
 
     height: 54px;
@@ -175,6 +181,12 @@ body::before {
     object-fit: contain;
 
     object-position: left bottom;
+
+    /*
+       GASBOX 大标题自身有 -8px
+       这里同步补偿，使两个左边缘视觉对齐
+    */
+    margin-left: -8px;
 }
 
 .header-slogan {
@@ -197,7 +209,6 @@ body::before {
 
 /* =========================================================
    PRODUCT HERO
-   整体约放大 10%
 ========================================================= */
 
 .product-stage {
@@ -447,20 +458,17 @@ body::before {
 
 .product-image-back {
     left: 0;
-
     top: 13%;
 }
 
 .product-image-front {
     right: 0;
-
     top: 4%;
 }
 
 
 /* =========================================================
    DEFAULT STATE
-   gbui-2 在前
 ========================================================= */
 
 .product-stack.state-front .product-image-back {
@@ -484,7 +492,6 @@ body::before {
 
 /* =========================================================
    SWITCHED STATE
-   gbui-1 在前
 ========================================================= */
 
 .product-stack.state-back .product-image-back {
@@ -507,7 +514,7 @@ body::before {
 
 
 /* =========================================================
-   HOVER FEEDBACK
+   HOVER
 ========================================================= */
 
 .product-image:hover {
@@ -520,18 +527,12 @@ body::before {
         );
 }
 
-
-/* 当前 gbui-2 在前 */
-
 .product-stack.state-front .product-image-front:hover {
     transform:
         translate(1%, -3%)
         rotate(.15deg)
         scale(1.02);
 }
-
-
-/* 当前 gbui-1 在前 */
 
 .product-stack.state-back .product-image-back:hover {
     transform:
@@ -622,13 +623,11 @@ body::before {
 @keyframes marqueeMove {
 
     from {
-        transform:
-            translateX(0);
+        transform: translateX(0);
     }
 
     to {
-        transform:
-            translateX(-50%);
+        transform: translateX(-50%);
     }
 
 }
@@ -821,10 +820,18 @@ body.ready .marquee-wrap {
 
 
 /* =========================================================
-   LARGE / MEDIUM DESKTOP SAFETY
+   LARGE / MEDIUM DESKTOP
 ========================================================= */
 
 @media (max-width: 1450px) and (min-width: 1251px) {
+
+    .header {
+        width:
+            min(
+                calc(100% - 56px),
+                1560px
+            );
+    }
 
     .product-stage {
         width:
@@ -868,10 +875,20 @@ body.ready .marquee-wrap {
 
 /* =========================================================
    MEDIUM DESKTOP
-   防止标题与产品图发生遮挡
 ========================================================= */
 
 @media (max-width: 1250px) and (min-width: 821px) {
+
+    .header {
+        width:
+            calc(
+                100% - 56px
+            );
+    }
+
+    .header-logo {
+        margin-left: 0;
+    }
 
     .product-stage {
         width: 100%;
@@ -958,7 +975,6 @@ body.ready .marquee-wrap {
             );
     }
 
-
     .header-bar {
         width: 100vw;
 
@@ -990,6 +1006,8 @@ body.ready .marquee-wrap {
             );
 
         height: 40px;
+
+        margin-left: 0;
     }
 
     .header-slogan {
@@ -1063,7 +1081,6 @@ body.ready .marquee-wrap {
         font-size: 16px;
     }
 
-
     .product-actions {
         margin-top: 30px;
     }
@@ -1100,9 +1117,6 @@ body.ready .marquee-wrap {
     .product-image {
         width: 95%;
     }
-
-
-    /* 手机端固定稳定层叠 */
 
     .product-stack.state-front .product-image-back {
         z-index: 1;
@@ -1209,10 +1223,6 @@ body.ready .marquee-wrap {
 <div class="page">
 
 
-<!-- =====================================================
-     HERO
-===================================================== -->
-
 <section class="hero">
 
 
@@ -1242,8 +1252,6 @@ body.ready .marquee-wrap {
 
     <div class="product-stage">
 
-
-        <!-- 左侧 -->
 
         <div class="product-copy">
 
@@ -1275,7 +1283,7 @@ body.ready .marquee-wrap {
 
 
 
-        <!-- 右侧产品界面 -->
+        <!-- 产品界面 -->
 
         <div class="product-visual">
 
@@ -1284,17 +1292,12 @@ body.ready .marquee-wrap {
                 id="productStack"
             >
 
-                <!-- gbui-1 -->
-
                 <img
                     class="product-image product-image-back"
                     id="productOne"
                     src="/gbui-1.png"
                     alt="GASBOX 产品界面 1"
                 >
-
-
-                <!-- gbui-2 -->
 
                 <img
                     class="product-image product-image-front"
@@ -1318,35 +1321,27 @@ body.ready .marquee-wrap {
 
         <div class="marquee">
 
-
             <div class="marquee-track">
 
                 <div class="marquee-text">
 
                     GASBOX 是一款模块化直播音频处理软件，提供独立程序和 VST3 插件两种使用方式。
 
-                    <span class="marquee-separator">
-                        ◆
-                    </span>
+                    <span class="marquee-separator">◆</span>
 
                     你可以按需要组合增益、音色塑形、压缩、降噪、齿音处理、混响和限幅等模块，处理麦克风声音；
 
-                    <span class="marquee-separator">
-                        ◆
-                    </span>
+                    <span class="marquee-separator">◆</span>
 
                     独立程序还可配合兼容的虚拟音频设备，将处理后的声音送入直播软件。
 
-                    <span class="marquee-separator">
-                        ◆
-                    </span>
+                    <span class="marquee-separator">◆</span>
 
                     适合直播主播、播客创作者、配音工作者，以及需要改善麦克风声音的内容创作者。
 
                 </div>
 
             </div>
-
 
 
             <div
@@ -1358,21 +1353,15 @@ body.ready .marquee-wrap {
 
                     GASBOX 是一款模块化直播音频处理软件，提供独立程序和 VST3 插件两种使用方式。
 
-                    <span class="marquee-separator">
-                        ◆
-                    </span>
+                    <span class="marquee-separator">◆</span>
 
                     你可以按需要组合增益、音色塑形、压缩、降噪、齿音处理、混响和限幅等模块，处理麦克风声音；
 
-                    <span class="marquee-separator">
-                        ◆
-                    </span>
+                    <span class="marquee-separator">◆</span>
 
                     独立程序还可配合兼容的虚拟音频设备，将处理后的声音送入直播软件。
 
-                    <span class="marquee-separator">
-                        ◆
-                    </span>
+                    <span class="marquee-separator">◆</span>
 
                     适合直播主播、播客创作者、配音工作者，以及需要改善麦克风声音的内容创作者。
 
@@ -1390,10 +1379,6 @@ body.ready .marquee-wrap {
 
 
 
-<!-- =====================================================
-     EMPTY PAGE
-===================================================== -->
-
 <section class="empty-section">
 
     <div class="empty-marker">
@@ -1403,10 +1388,6 @@ body.ready .marquee-wrap {
 </section>
 
 
-
-<!-- =====================================================
-     BOTTOM
-===================================================== -->
 
 <section class="bottom-area">
 
@@ -1445,7 +1426,6 @@ window.addEventListener(
 
 /* =========================================================
    PRODUCT STACK
-   最后经过哪张，哪张持续保持最上层
 ========================================================= */
 
 const productStack =
