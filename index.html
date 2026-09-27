@@ -144,17 +144,19 @@ body::before {
             1500px
         );
 
-    height: 104px;
+    height: 88px;
 
     margin: 0 auto;
 
     display: flex;
 
-    align-items: center;
+    align-items: flex-end;
 
     justify-content: flex-start;
 
     gap: 16px;
+
+    padding-bottom: 10px;
 }
 
 .header-logo {
@@ -171,7 +173,7 @@ body::before {
 
     object-fit: contain;
 
-    object-position: left center;
+    object-position: left bottom;
 }
 
 .header-slogan {
@@ -187,6 +189,8 @@ body::before {
     letter-spacing: .01em;
 
     white-space: nowrap;
+
+    padding-bottom: 6px;
 }
 
 
@@ -200,14 +204,14 @@ body::before {
     display: grid;
 
     grid-template-columns:
-        minmax(390px, .76fr)
-        minmax(0, 1.24fr);
+        minmax(445px, .78fr)
+        minmax(0, 1.22fr);
 
     align-items: center;
 
-    gap: 72px;
+    gap: 50px;
 
-    min-height: 660px;
+    min-height: 690px;
 
     padding:
         64px
@@ -225,8 +229,6 @@ body::before {
     z-index: 3;
 
     min-width: 0;
-
-    padding-left: 4px;
 }
 
 .product-name {
@@ -234,9 +236,9 @@ body::before {
 
     font-size:
         clamp(
-            82px,
-            7.4vw,
-            126px
+            94px,
+            8.5vw,
+            145px
         );
 
     line-height: .84;
@@ -246,18 +248,21 @@ body::before {
     font-weight: 900;
 
     white-space: nowrap;
+
+    transform:
+        translateX(-10px);
 }
 
 .product-line-main {
-    max-width: 520px;
+    max-width: 585px;
 
-    margin-top: 42px;
+    margin-top: 48px;
 
     font-size:
         clamp(
-            30px,
-            2.75vw,
-            47px
+            34px,
+            3.15vw,
+            54px
         );
 
     line-height: 1.04;
@@ -268,15 +273,15 @@ body::before {
 }
 
 .product-line-sub {
-    max-width: 500px;
+    max-width: 575px;
 
-    margin-top: 18px;
+    margin-top: 21px;
 
     font-size:
         clamp(
-            16px,
-            1.2vw,
-            20px
+            18px,
+            1.38vw,
+            23px
         );
 
     line-height: 1.65;
@@ -290,7 +295,7 @@ body::before {
 ========================================================= */
 
 .product-actions {
-    margin-top: 32px;
+    margin-top: 37px;
 }
 
 .primary-button {
@@ -299,11 +304,11 @@ body::before {
     align-items: center;
     justify-content: center;
 
-    min-width: 152px;
+    min-width: 175px;
 
     padding:
-        15px
-        26px;
+        17px
+        30px;
 
     border:
         1px solid
@@ -317,7 +322,7 @@ body::before {
 
     text-decoration: none;
 
-    font-size: 14px;
+    font-size: 16px;
 
     font-weight: 700;
 
@@ -362,10 +367,10 @@ body::before {
 
     position: absolute;
 
-    right: 3%;
+    right: 2%;
 
-    width: 84%;
-    height: 84%;
+    width: 88%;
+    height: 88%;
 
     border-radius: 50%;
 
@@ -376,7 +381,7 @@ body::before {
             transparent 70%
         );
 
-    filter: blur(52px);
+    filter: blur(54px);
 }
 
 .product-image {
@@ -388,11 +393,13 @@ body::before {
 
     width:
         min(
-            100%,
-            980px
+            108%,
+            1125px
         );
 
-    max-height: 680px;
+    max-width: none;
+
+    max-height: 780px;
 
     object-fit: contain;
 
@@ -401,8 +408,8 @@ body::before {
     filter:
         drop-shadow(
             0
-            30px
-            34px
+            32px
+            36px
             rgba(0,0,0,.18)
         );
 
@@ -703,6 +710,46 @@ body.ready .marquee-wrap {
 
 
 /* =========================================================
+   MEDIUM DESKTOP
+   防止中等宽度屏幕放大后互相遮挡
+========================================================= */
+
+@media (max-width: 1250px) and (min-width: 821px) {
+
+    .product-stage {
+        grid-template-columns:
+            minmax(390px, .78fr)
+            minmax(0, 1.22fr);
+
+        gap: 34px;
+    }
+
+    .product-name {
+        font-size:
+            clamp(
+                82px,
+                8vw,
+                112px
+            );
+    }
+
+    .product-line-main {
+        font-size:
+            clamp(
+                30px,
+                3vw,
+                44px
+            );
+    }
+
+    .product-image {
+        width: 103%;
+    }
+
+}
+
+
+/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -722,9 +769,11 @@ body.ready .marquee-wrap {
                 100% - 26px
             );
 
-        height: 82px;
+        height: 76px;
 
         gap: 10px;
+
+        padding-bottom: 8px;
     }
 
     .header-logo {
@@ -742,6 +791,8 @@ body.ready .marquee-wrap {
         font-size: 12px;
 
         white-space: nowrap;
+
+        padding-bottom: 4px;
     }
 
 
@@ -752,12 +803,12 @@ body.ready .marquee-wrap {
 
         align-items: stretch;
 
-        gap: 36px;
+        gap: 42px;
 
         min-height: 0;
 
         padding:
-            54px
+            62px
             0;
     }
 
@@ -771,46 +822,49 @@ body.ready .marquee-wrap {
     .product-name {
         font-size:
             clamp(
-                70px,
-                21vw,
-                106px
+                78px,
+                23vw,
+                116px
             );
 
         white-space: normal;
+
+        transform:
+            translateX(-4px);
     }
 
     .product-line-main {
-        margin-top: 34px;
+        margin-top: 39px;
 
         font-size:
             clamp(
-                28px,
-                7.4vw,
-                39px
+                31px,
+                8vw,
+                44px
             );
     }
 
     .product-line-sub {
-        max-width: 92%;
+        max-width: 94%;
 
-        margin-top: 16px;
+        margin-top: 18px;
 
-        font-size: 15px;
+        font-size: 17px;
     }
 
 
     .product-actions {
-        margin-top: 26px;
+        margin-top: 30px;
     }
 
     .primary-button {
-        min-width: 140px;
+        min-width: 160px;
 
         padding:
-            14px
-            23px;
+            16px
+            26px;
 
-        font-size: 13px;
+        font-size: 15px;
     }
 
 
@@ -821,18 +875,18 @@ body.ready .marquee-wrap {
     }
 
     .product-image {
-        width: 108%;
+        width: 112%;
 
         max-width: none;
 
         transform:
-            translateX(-4%)
+            translateX(-5%)
             rotate(.7deg);
     }
 
     .product-visual:hover .product-image {
         transform:
-            translateX(-4%)
+            translateX(-5%)
             rotate(.7deg);
     }
 
