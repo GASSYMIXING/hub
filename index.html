@@ -11,7 +11,8 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 
 <link rel="preload" as="image" href="/mainlogo-b.png">
-<link rel="preload" as="image" href="/gasboxui.png">
+<link rel="preload" as="image" href="/gbui-1.png">
+<link rel="preload" as="image" href="/gbui-2.png">
 
 <style>
 
@@ -349,7 +350,7 @@ body::before {
 
 
 /* =========================================================
-   PRODUCT IMAGE
+   PRODUCT IMAGE STACK
 ========================================================= */
 
 .product-visual {
@@ -386,12 +387,11 @@ body::before {
     filter: blur(54px);
 }
 
-.product-image {
+
+/* 两张产品图的容器 */
+
+.product-stack {
     position: relative;
-
-    z-index: 2;
-
-    display: block;
 
     width:
         min(
@@ -399,34 +399,120 @@ body::before {
             1010px
         );
 
-    max-height: 720px;
+    aspect-ratio: 16 / 10;
+
+    isolation: isolate;
+}
+
+
+/* 共用产品图样式 */
+
+.product-image {
+    position: absolute;
+
+    width: 94%;
+
+    height: auto;
 
     object-fit: contain;
-
-    object-position: right center;
 
     filter:
         drop-shadow(
             0
-            32px
-            36px
+            30px
+            34px
             rgba(0,0,0,.18)
         );
 
-    transform:
-        rotate(.55deg);
+    cursor: pointer;
 
     transition:
-        transform
-        .7s
-        cubic-bezier(.22,1,.36,1);
+        transform .72s cubic-bezier(.22,1,.36,1),
+        filter .55s ease,
+        opacity .4s ease;
+
+    will-change:
+        transform,
+        filter;
 }
 
-.product-visual:hover .product-image {
+
+/* =========================================================
+   后层：gbui-1
+========================================================= */
+
+.product-image-back {
+    z-index: 1;
+
+    left: 0;
+
+    top: 13%;
+
     transform:
-        rotate(.05deg)
-        translateY(-7px)
-        scale(1.008);
+        translate(-3%, 5%)
+        rotate(-2deg)
+        scale(.94);
+}
+
+
+/* =========================================================
+   前层：gbui-2
+========================================================= */
+
+.product-image-front {
+    z-index: 2;
+
+    right: 0;
+
+    top: 4%;
+
+    transform:
+        translate(1%, 0)
+        rotate(.7deg)
+        scale(1);
+}
+
+
+/* =========================================================
+   通用 hover
+========================================================= */
+
+.product-image:hover {
+    filter:
+        drop-shadow(
+            0
+            38px
+            42px
+            rgba(0,0,0,.22)
+        );
+}
+
+
+/* =========================================================
+   gbui-1 hover：滑到前层
+========================================================= */
+
+.product-image-back:hover {
+    z-index: 4;
+
+    transform:
+        translate(5%, -3%)
+        rotate(.2deg)
+        scale(1.015);
+}
+
+
+/* =========================================================
+   gbui-2 hover
+========================================================= */
+
+.product-image-front:hover {
+    z-index: 3;
+
+    transform:
+        translate(1%, -2%)
+        rotate(.15deg)
+        scale(1.012);
 }
 
 
@@ -711,7 +797,6 @@ body.ready .marquee-wrap {
 
 /* =========================================================
    MEDIUM DESKTOP
-   防止中等宽度重新发生遮挡
 ========================================================= */
 
 @media (max-width: 1250px) and (min-width: 821px) {
@@ -742,7 +827,7 @@ body.ready .marquee-wrap {
             );
     }
 
-    .product-image {
+    .product-stack {
         width: 100%;
     }
 
@@ -879,26 +964,69 @@ body.ready .marquee-wrap {
     }
 
 
+    /* ============================
+       MOBILE PRODUCT STACK
+    ============================ */
+
     .product-visual {
         width: 100%;
 
         justify-content: center;
     }
 
-    .product-image {
+    .product-stack {
         width: 108%;
 
-        max-width: none;
+        margin-left: -4%;
 
-        transform:
-            translateX(-4%)
-            rotate(.7deg);
+        aspect-ratio: 16 / 11;
     }
 
-    .product-visual:hover .product-image {
+    .product-image {
+        width: 94%;
+    }
+
+    .product-image-back {
+        left: 0;
+
+        top: 14%;
+
         transform:
-            translateX(-4%)
-            rotate(.7deg);
+            translate(-2%, 4%)
+            rotate(-2deg)
+            scale(.94);
+    }
+
+    .product-image-front {
+        right: 0;
+
+        top: 4%;
+
+        transform:
+            translate(1%, 0)
+            rotate(.7deg)
+            scale(1);
+    }
+
+
+    /* 手机无真正 hover，保持稳定层级 */
+
+    .product-image-back:hover {
+        z-index: 1;
+
+        transform:
+            translate(-2%, 4%)
+            rotate(-2deg)
+            scale(.94);
+    }
+
+    .product-image-front:hover {
+        z-index: 2;
+
+        transform:
+            translate(1%, 0)
+            rotate(.7deg)
+            scale(1);
     }
 
 
@@ -1040,11 +1168,26 @@ body.ready .marquee-wrap {
 
         <div class="product-visual">
 
-            <img
-                class="product-image"
-                src="/gasboxui.png"
-                alt="GASBOX 产品界面"
-            >
+            <div class="product-stack">
+
+                <!-- 后层 -->
+
+                <img
+                    class="product-image product-image-back"
+                    src="/gbui-1.png"
+                    alt="GASBOX 产品界面 1"
+                >
+
+
+                <!-- 前层 -->
+
+                <img
+                    class="product-image product-image-front"
+                    src="/gbui-2.png"
+                    alt="GASBOX 产品界面 2"
+                >
+
+            </div>
 
         </div>
 
