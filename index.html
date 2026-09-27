@@ -6,14 +6,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GASBOX直播工具盒</title>
+<title>GASBOX · 直播音频处理模块</title>
 
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=11">
-<link rel="shortcut icon" type="image/png" href="/favicon-192.png?v=11">
-<link rel="apple-touch-icon" href="/favicon-192.png?v=11">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
 
-<!-- 优先加载顶部 Logo -->
 <link rel="preload" as="image" href="/hero-logo.png">
+<link rel="preload" as="image" href="/gasboxui.png">
 
 <style>
 
@@ -32,14 +30,8 @@ html {
 :root {
     --paper: #f4f2ec;
     --ink: #0a0a0a;
-    --blue: #98a9f5;
-    --green: #b4f487;
-    --yellow: #ffd978;
-    --pink: #ff9ac6;
-    --lavender: #c9b6ff;
-    --cyan: #9ce3e6;
-    --orange: #ffb26d;
-    --gray: #ecebe7;
+    --soft-ink: rgba(10,10,10,.54);
+    --line: rgba(10,10,10,.18);
 }
 
 body {
@@ -48,8 +40,8 @@ body {
     background:
         radial-gradient(
             circle at 30% 15%,
-            rgba(0,0,0,0.025),
-            transparent 28%
+            rgba(0,0,0,.025),
+            transparent 30%
         ),
         var(--paper);
 
@@ -61,6 +53,8 @@ body {
         Helvetica,
         "Microsoft YaHei",
         sans-serif;
+
+    overflow-x: hidden;
 }
 
 
@@ -74,18 +68,18 @@ body::before {
     position: fixed;
     inset: 0;
 
-    pointer-events: none;
-
     z-index: 9999;
 
-    opacity: 0.12;
+    pointer-events: none;
+
+    opacity: .10;
 
     background-image:
         repeating-radial-gradient(
             circle at 0 0,
-            rgba(0,0,0,0.20) 0px,
-            rgba(0,0,0,0.20) 0.45px,
-            transparent 0.6px,
+            rgba(0,0,0,.18) 0,
+            rgba(0,0,0,.18) .45px,
+            transparent .6px,
             transparent 3px
         );
 
@@ -98,61 +92,13 @@ body::before {
 ========================================================= */
 
 .page {
-    width: min(calc(100% - 48px), 1320px);
+    width:
+        min(
+            calc(100% - 56px),
+            1500px
+        );
+
     margin: 0 auto;
-}
-
-
-/* =========================================================
-   PC MUSIC CONTROL
-========================================================= */
-
-.music-control {
-    position: fixed;
-
-    top: 22px;
-    right: 24px;
-
-    z-index: 10000;
-
-    width: 44px;
-    height: 44px;
-
-    padding: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 0;
-
-    background: transparent;
-
-    cursor: pointer;
-
-    opacity: 0.82;
-
-    transition:
-        opacity 0.25s ease,
-        transform 0.25s ease;
-}
-
-.music-control:hover {
-    opacity: 1;
-
-    transform:
-        scale(1.08);
-}
-
-.music-control img {
-    display: block;
-
-    width: 30px;
-    height: 30px;
-
-    object-fit: contain;
-
-    pointer-events: none;
 }
 
 
@@ -161,754 +107,513 @@ body::before {
 ========================================================= */
 
 .hero {
-    padding: 0 0 8px;
-    overflow: visible;
+    position: relative;
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
 }
 
 
 /* =========================================================
-   LOGO INTRO
+   HEADER
 ========================================================= */
 
-.hero-logo {
+.header {
+    display: flex;
+    align-items: flex-end;
+
+    gap: 28px;
+
+    padding-top: 12px;
+}
+
+.header-logo {
     display: block;
 
-    width: 90%;
-    max-width: 1520px;
+    width: clamp(
+        260px,
+        31vw,
+        520px
+    );
 
-    height: 450px;
+    height: 170px;
 
     object-fit: contain;
-    object-position: left bottom;
+    object-position: left center;
 
-    margin: -36px 0 0 0;
-
-    transform: translateX(20px);
-
-    opacity: 0;
-
-    translate: -120vw 0;
-
-    will-change:
-        translate,
-        opacity;
+    transform: translateX(-10px);
 }
 
-
-/* Logo 完整加载后开始入场 */
-
-.hero-logo.loaded {
-    animation:
-        logoEnter
-        0.95s
-        cubic-bezier(0.22, 1, 0.36, 1)
-        forwards;
-}
-
-
-@keyframes logoEnter {
-
-    0% {
-        opacity: 0;
-        translate: -120vw 0;
-    }
-
-    68% {
-        opacity: 1;
-        translate: 12px 0;
-    }
-
-    100% {
-        opacity: 1;
-        translate: 0 0;
-    }
-
-}
-
-
-/* =========================================================
-   HERO 第一行信息
-========================================================= */
-
-.hero-sub {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 30px;
-
-    margin-top: 8px;
+.header-slogan {
+    padding-bottom: 30px;
 
     font-size: 13px;
-}
 
-.hero-desc {
-    line-height: 1.6;
-}
+    letter-spacing: .08em;
 
-.hero-update {
     white-space: nowrap;
 }
 
 
 /* =========================================================
-   HERO 第二行信息
+   PRODUCT HERO
 ========================================================= */
 
-.hero-meta {
-    display: flex;
+.product-stage {
+    flex: 1;
 
-    justify-content: space-between;
+    display: grid;
+
+    grid-template-columns:
+        minmax(330px, .8fr)
+        minmax(520px, 1.35fr);
+
     align-items: center;
 
-    gap: 30px;
+    gap: 60px;
 
-    margin-top: 30px;
-    margin-bottom: 6px;
+    min-height: 640px;
+
+    padding:
+        20px
+        0
+        64px;
+}
+
+
+/* =========================================================
+   PRODUCT COPY
+========================================================= */
+
+.product-copy {
+    position: relative;
+
+    z-index: 3;
+
+    padding-left: 4px;
+}
+
+.product-kicker {
+    margin-bottom: 18px;
 
     font-size: 11px;
 
     text-transform: uppercase;
+
+    letter-spacing: .13em;
+
+    color: var(--soft-ink);
 }
 
-.hero-meta-left {
+.product-name {
+    margin: 0;
+
+    font-size:
+        clamp(
+            78px,
+            10vw,
+            168px
+        );
+
+    line-height: .82;
+
+    letter-spacing: -.075em;
+
+    font-weight: 900;
+}
+
+.product-line-main {
+    max-width: 600px;
+
+    margin-top: 46px;
+
+    font-size:
+        clamp(
+            26px,
+            3vw,
+            46px
+        );
+
+    line-height: 1.08;
+
+    letter-spacing: -.035em;
+
+    font-weight: 700;
+}
+
+.product-line-sub {
+    max-width: 540px;
+
+    margin-top: 18px;
+
+    font-size:
+        clamp(
+            15px,
+            1.3vw,
+            20px
+        );
+
+    line-height: 1.65;
+
+    color: var(--soft-ink);
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.product-visual {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     min-width: 0;
 }
 
-.hero-meta-right {
-    text-align: right;
+.product-visual::before {
+    content: "";
 
-    white-space: nowrap;
+    position: absolute;
 
-    flex-shrink: 0;
+    width: 80%;
+    height: 80%;
 
-    min-width: max-content;
+    border-radius: 50%;
 
-    padding-right: 4px;
-}
-
-
-/* =========================================================
-   TEXT INTRO
-========================================================= */
-
-.type-reveal {
-    clip-path:
-        inset(
-            0
-            100%
-            0
-            0
+    background:
+        radial-gradient(
+            circle,
+            rgba(0,0,0,.09),
+            transparent 70%
         );
 
-    opacity: 0;
+    filter: blur(50px);
 
-    will-change:
-        clip-path,
-        opacity;
+    transform: translateY(30px);
 }
 
-
-/* 第一排左侧 */
-
-body.intro-start .hero-desc.type-reveal {
-    animation:
-        typeReveal
-        0.62s
-        steps(16, end)
-        0.38s
-        forwards;
-}
-
-
-/* 第一排右侧 */
-
-body.intro-start .hero-update.type-reveal {
-    animation:
-        typeReveal
-        0.50s
-        steps(8, end)
-        0.44s
-        forwards;
-}
-
-
-/* 第二排左侧 */
-
-body.intro-start .hero-meta-left.type-reveal {
-    animation:
-        typeReveal
-        0.55s
-        steps(10, end)
-        0.50s
-        forwards;
-}
-
-
-/* 第二排右侧 */
-
-body.intro-start .hero-meta-right.type-reveal {
-    animation:
-        typeReveal
-        0.42s
-        steps(9, end)
-        0.56s
-        forwards;
-}
-
-
-/* 软件分类 */
-
-body.intro-start .software-label.type-reveal {
-    animation:
-        typeReveal
-        0.38s
-        steps(8, end)
-        0.72s
-        forwards;
-}
-
-
-@keyframes typeReveal {
-
-    0% {
-        opacity: 1;
-
-        clip-path:
-            inset(
-                0
-                100%
-                0
-                0
-            );
-    }
-
-    100% {
-        opacity: 1;
-
-        clip-path:
-            inset(
-                0
-                0
-                0
-                0
-            );
-    }
-
-}
-
-
-/* =========================================================
-   STACK
-========================================================= */
-
-.stack {
+.product-image {
     position: relative;
 
-    padding-top: 18px;
-    padding-bottom: 70px;
-}
-
-
-/* =========================================================
-   CATEGORY
-========================================================= */
-
-.category-label {
-    position: relative;
-
-    margin:
-        38px
-        0
-        12px
-        12px;
-
-    z-index: 100;
-
-    font-size: 11px;
-    text-transform: uppercase;
-}
-
-.category-label span {
-    margin-left: 10px;
-
-    color: rgba(0,0,0,0.40);
-}
-
-
-/*
-   只有「资源」这一类额外留出空间。
-
-   因为它下面的第一张卡片左边向上翘，
-   避免卡片压到 RESOURCES 分类文字。
-*/
-
-.category-label.resources-label {
-    margin-bottom: 30px;
-}
-
-
-/* =========================================================
-   CARD BASE
-========================================================= */
-
-.card {
-    position: relative;
+    z-index: 2;
 
     display: block;
 
-    width: 96%;
+    width: min(
+        100%,
+        920px
+    );
 
-    min-height: 170px;
+    max-height: 640px;
 
-    margin-top: -12px;
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0
+            28px
+            32px
+            rgba(0,0,0,.18)
+        );
+
+    transform:
+        rotate(1deg)
+        translateY(6px);
+
+    transition:
+        transform
+        .7s
+        cubic-bezier(.22,1,.36,1);
+}
+
+.product-visual:hover .product-image {
+    transform:
+        rotate(.2deg)
+        translateY(-5px)
+        scale(1.008);
+}
+
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee-wrap {
+    position: relative;
+
+    width: 100vw;
+
+    margin-left:
+        calc(
+            50% - 50vw
+        );
+
+    overflow: hidden;
+
+    border-top:
+        1px solid
+        var(--line);
+
+    border-bottom:
+        1px solid
+        var(--line);
 
     padding:
-        26px
-        28px
-        24px;
+        19px
+        0;
+}
+
+.marquee {
+    display: flex;
+
+    width: max-content;
+
+    animation:
+        marqueeMove
+        42s
+        linear
+        infinite;
+}
+
+.marquee-track {
+    display: flex;
+
+    flex-shrink: 0;
+
+    align-items: center;
+
+    white-space: nowrap;
+}
+
+.marquee-text {
+    padding-right: 90px;
+
+    font-size:
+        clamp(
+            13px,
+            1.15vw,
+            17px
+        );
+
+    line-height: 1;
+
+    letter-spacing: -.01em;
+}
+
+.marquee-separator {
+    display: inline-block;
+
+    margin:
+        0
+        30px;
+
+    opacity: .32;
+}
+
+@keyframes marqueeMove {
+
+    from {
+        transform:
+            translateX(0);
+    }
+
+    to {
+        transform:
+            translateX(-50%);
+    }
+
+}
+
+
+/* =========================================================
+   EMPTY SECTION
+========================================================= */
+
+.empty-section {
+    min-height: 100vh;
+
+    position: relative;
+}
+
+
+/* 后续内容先放这里 */
+
+.empty-marker {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    font-size: 10px;
+
+    letter-spacing: .14em;
+
+    text-transform: uppercase;
+
+    color: rgba(0,0,0,.13);
+
+    user-select: none;
+}
+
+
+/* =========================================================
+   BOTTOM AREA
+========================================================= */
+
+.bottom-area {
+    min-height: 44vh;
+
+    display: flex;
+    align-items: flex-end;
+
+    padding-bottom: 56px;
+}
+
+.download-entry {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
 
     color: var(--ink);
 
     text-decoration: none;
 
-    border-radius: 17px;
+    font-size:
+        clamp(
+            20px,
+            2.3vw,
+            34px
+        );
 
-    box-shadow:
-        0 3px 0 rgba(0,0,0,0.13),
-        0 8px 20px rgba(0,0,0,0.08);
+    font-weight: 700;
 
-    transform-origin: 50% 72%;
+    letter-spacing: -.035em;
 
     transition:
-        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 0.52s ease,
-        filter 0.40s ease,
-        outline-color 0.22s ease;
+        opacity .25s ease,
+        transform .35s cubic-bezier(.22,1,.36,1);
+}
 
-    will-change: transform;
+.download-entry::after {
+    content: "↗";
+
+    font-size: .75em;
+
+    font-weight: 400;
+}
+
+.download-entry:hover {
+    opacity: .55;
+
+    transform:
+        translateX(6px);
 }
 
 
 /* =========================================================
-   FIRST TWO CARD INTRO
+   INTRO
 ========================================================= */
 
-.intro-card {
+.header,
+.product-copy,
+.product-visual,
+.marquee-wrap {
     opacity: 0;
-
-    translate: 0 120px;
-
-    will-change:
-        translate,
-        opacity;
 }
 
-
-/* 第一张 */
-
-body.intro-start .intro-card-1 {
+body.ready .header {
     animation:
-        cardRise
-        0.50s
-        cubic-bezier(0.22, 1, 0.36, 1)
-        0.95s
+        fadeUp
+        .75s
+        cubic-bezier(.22,1,.36,1)
+        .05s
         forwards;
 }
 
-
-/* 第二张，稍微晚一点 */
-
-body.intro-start .intro-card-2 {
+body.ready .product-copy {
     animation:
-        cardRise
-        0.50s
-        cubic-bezier(0.22, 1, 0.36, 1)
-        1.05s
+        fadeUp
+        .85s
+        cubic-bezier(.22,1,.36,1)
+        .18s
         forwards;
 }
 
+body.ready .product-visual {
+    animation:
+        visualIn
+        1s
+        cubic-bezier(.22,1,.36,1)
+        .28s
+        forwards;
+}
 
-@keyframes cardRise {
+body.ready .marquee-wrap {
+    animation:
+        fadeIn
+        .7s
+        ease
+        .72s
+        forwards;
+}
 
-    0% {
+@keyframes fadeUp {
+
+    from {
         opacity: 0;
 
-        translate:
-            0
-            120px;
+        transform:
+            translateY(26px);
     }
 
-    72% {
+    to {
         opacity: 1;
 
-        translate:
-            0
-            -8px;
+        transform:
+            translateY(0);
     }
 
-    100% {
+}
+
+@keyframes visualIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateX(45px)
+            scale(.97);
+    }
+
+    to {
         opacity: 1;
 
-        translate:
-            0
-            0;
+        transform:
+            translateX(0)
+            scale(1);
     }
 
 }
 
+@keyframes fadeIn {
 
-/* =========================================================
-   CARD POSITIONS
-========================================================= */
+    from {
+        opacity: 0;
+    }
 
-.card:nth-of-type(4n + 1) {
-    width: 95%;
-    margin-left: 0.7%;
+    to {
+        opacity: 1;
+    }
 
-    transform:
-        rotate(-1.5deg);
-}
-
-.card:nth-of-type(4n + 2) {
-    width: 97%;
-    margin-left: 2%;
-
-    transform:
-        rotate(1.5deg);
-}
-
-.card:nth-of-type(4n + 3) {
-    width: 96%;
-    margin-left: 0.4%;
-
-    transform:
-        rotate(-1.5deg);
-}
-
-.card:nth-of-type(4n + 4) {
-    width: 94%;
-    margin-left: 2.8%;
-
-    transform:
-        rotate(1.5deg);
-}
-
-
-/* =========================================================
-   CARD COLORS
-========================================================= */
-
-.card.blue {
-    background: var(--blue);
-}
-
-.card.green {
-    background: var(--green);
-}
-
-.card.yellow {
-    background: var(--yellow);
-}
-
-.card.pink {
-    background: var(--pink);
-}
-
-.card.lavender {
-    background: var(--lavender);
-}
-
-.card.cyan {
-    background: var(--cyan);
-}
-
-.card.orange {
-    background: var(--orange);
-}
-
-.card.white {
-    background: #ffffff;
-}
-
-.card.gray {
-    background: var(--gray);
-}
-
-
-/* =========================================================
-   CARD TEXT
-========================================================= */
-
-.card-index {
-    position: absolute;
-
-    top: 18px;
-    right: 58px;
-
-    font-size: 10px;
-
-    color: rgba(0,0,0,0.20);
-}
-
-.card-name {
-    max-width: 86%;
-
-    margin-top: 4px;
-
-    font-size:
-        clamp(
-            34px,
-            5vw,
-            68px
-        );
-
-    line-height: 0.98;
-
-    letter-spacing: -3px;
-
-    font-weight: 800;
-}
-
-.card-desc {
-    margin-top: 12px;
-
-    font-size: 13px;
-
-    color: rgba(0,0,0,0.55);
-}
-
-.card-meta {
-    position: absolute;
-
-    left: 28px;
-    bottom: 18px;
-
-    font-size: 10px;
-
-    text-transform: uppercase;
-
-    color: rgba(0,0,0,0.42);
-}
-
-
-/* =========================================================
-   ARROW
-========================================================= */
-
-.card-arrow {
-    position: absolute;
-
-    top: 15px;
-    right: 20px;
-
-    width: 30px;
-    height: 30px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    font-size: 21px;
-
-    line-height: 1;
-
-    opacity: 1;
-}
-
-
-/* =========================================================
-   HOVER
-========================================================= */
-
-.card:hover {
-
-    outline:
-        2px dashed
-        var(--ink);
-
-    outline-offset:
-        -7px;
-
-    box-shadow:
-        0 6px 0 rgba(0,0,0,0.11),
-        0 18px 34px rgba(0,0,0,0.13);
-
-    filter:
-        saturate(1.025);
-}
-
-
-/* 左高右低 → 再多翘 1° */
-
-.card:nth-of-type(4n + 1):hover {
-    transform:
-        rotate(-2.5deg)
-        translateY(-2px);
-}
-
-
-/* 右高左低 → 再多翘 1° */
-
-.card:nth-of-type(4n + 2):hover {
-    transform:
-        rotate(2.5deg)
-        translateY(-2px);
-}
-
-
-/* 左高右低 */
-
-.card:nth-of-type(4n + 3):hover {
-    transform:
-        rotate(-2.5deg)
-        translateY(-2px);
-}
-
-
-/* 右高左低 */
-
-.card:nth-of-type(4n + 4):hover {
-    transform:
-        rotate(2.5deg)
-        translateY(-2px);
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.footer {
-    padding:
-        40px
-        0
-        60px;
-
-    display: grid;
-
-    grid-template-columns:
-        1.2fr
-        1fr;
-
-    gap: 60px;
-
-    border-top:
-        1px solid
-        rgba(0,0,0,0.2);
-}
-
-.footer-big {
-    font-size:
-        clamp(
-            34px,
-            5vw,
-            70px
-        );
-
-    line-height: 0.95;
-
-    letter-spacing: -3px;
-
-    font-weight: 800;
-}
-
-.footer-side {
-    font-size: 13px;
-
-    line-height: 1.8;
-}
-
-.footer a {
-    color: inherit;
-
-    text-decoration: none;
-
-    cursor: pointer;
-}
-
-.footer a:hover {
-    text-decoration: underline;
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-.modal {
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 99999;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-
-    background:
-        rgba(0,0,0,0.50);
-}
-
-.modal-content {
-    width: 100%;
-    max-width: 680px;
-
-    max-height: 82vh;
-
-    overflow-y: auto;
-
-    padding: 32px;
-
-    background: var(--paper);
-
-    border-radius: 16px;
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,0.26);
-}
-
-.modal-content h2 {
-    margin-top: 0;
-
-    font-size: 30px;
-}
-
-.modal-content p {
-    font-size: 14px;
-
-    line-height: 1.9;
-
-    color: rgba(0,0,0,0.70);
-}
-
-.close-button {
-    width: 100%;
-
-    margin-top: 20px;
-
-    padding: 14px;
-
-    border: 1px solid #111;
-
-    background: #111;
-
-    color: white;
-
-    cursor: pointer;
-
-    font: inherit;
-}
-
-.close-button:hover {
-    background: transparent;
-    color: #111;
 }
 
 
@@ -916,97 +621,161 @@ body.intro-start .intro-card-2 {
    MOBILE
 ========================================================= */
 
-@media (max-width: 760px) {
+@media (max-width: 820px) {
 
     .page {
-        width: calc(100% - 24px);
+        width:
+            calc(
+                100% - 26px
+            );
     }
 
-    .music-control {
-        display: none;
+
+    .header {
+        display: block;
+
+        padding-top: 0;
     }
 
-    .hero-logo {
+    .header-logo {
         width: 100%;
 
-        height: 230px;
+        height: 220px;
 
-        margin-top: -42px;
-
-        transform: translateX(10px);
+        transform:
+            translateX(6px);
     }
-   
-    .hero-sub {
-        gap: 18px;
 
+    .header-slogan {
+        margin-top: -28px;
+
+        padding:
+            0
+            4px
+            24px;
+
+        font-size: 11px;
+    }
+
+
+    .product-stage {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 35px;
+
+        padding-top: 48px;
+        padding-bottom: 52px;
+
+        min-height: 0;
+    }
+
+
+    .product-copy {
+        padding:
+            0
+            4px;
+    }
+
+    .product-name {
+        font-size:
+            clamp(
+                72px,
+                22vw,
+                112px
+            );
+    }
+
+    .product-line-main {
+        margin-top: 34px;
+
+        font-size:
+            clamp(
+                26px,
+                7vw,
+                37px
+            );
+    }
+
+    .product-line-sub {
+        max-width: 92%;
+
+        margin-top: 16px;
+
+        font-size: 15px;
+    }
+
+
+    .product-visual {
+        width: 100%;
+
+        padding-top: 10px;
+    }
+
+    .product-image {
+        width: 108%;
+
+        max-width: none;
+
+        transform:
+            translateX(-4%)
+            rotate(.7deg);
+    }
+
+    .product-visual:hover .product-image {
+        transform:
+            translateX(-4%)
+            rotate(.7deg);
+    }
+
+
+    .marquee-wrap {
+        padding:
+            17px
+            0;
+    }
+
+    .marquee-text {
         font-size: 12px;
     }
 
-    .hero-meta {
-        gap: 14px;
 
-        margin-top: 22px;
+    .bottom-area {
+        min-height: 34vh;
 
-        padding-right: 18px;
-
-        font-size: 10px;
+        padding-bottom: 32px;
     }
 
-    .hero-meta-left {
-        flex: 1 1 auto;
-
-        min-width: 0;
+    .download-entry {
+        font-size: 22px;
     }
 
-    .hero-meta-right {
-        display: inline-block;
+}
 
-        white-space: nowrap;
 
-        flex: 0 0 auto;
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
 
-        min-width: max-content;
+@media (
+    prefers-reduced-motion:
+    reduce
+) {
 
-        padding-right: 6px;
+    *,
+    *::before,
+    *::after {
+        animation-duration:
+            .01ms !important;
 
-        margin-right: 2px;
-    }
+        animation-iteration-count:
+            1 !important;
 
-    .card {
-        min-height: 145px;
-
-        padding:
-            22px
-            20px;
-
-        margin-top: -6px;
-
-        border-radius: 14px;
-    }
-
-    .card-name {
-        font-size: 34px;
-
-        letter-spacing: -2px;
-    }
-
-    .card-meta {
-        left: 20px;
-    }
-
-    .card-arrow {
-        top: 13px;
-        right: 16px;
-    }
-
-    .card-index {
-        top: 17px;
-        right: 52px;
-    }
-
-    .footer {
-        grid-template-columns: 1fr;
-        gap: 34px;
+        transition-duration:
+            .01ms !important;
     }
 
 }
@@ -1019,31 +788,6 @@ body.intro-start .intro-card-2 {
 <body>
 
 
-<!-- =====================================================
-     PC MUSIC
-===================================================== -->
-
-<button
-    class="music-control"
-    id="musicToggle"
-    type="button"
-    aria-label="播放背景音乐"
->
-    <img
-        id="musicIcon"
-        src="/speakeron.png"
-        alt=""
-    >
-</button>
-
-<audio
-    id="bgm"
-    loop
-    preload="none"
-></audio>
-
-
-
 <div class="page">
 
 
@@ -1054,47 +798,142 @@ body.intro-start .intro-card-2 {
 <section class="hero">
 
 
-    <!-- 顶部大 Logo -->
+    <!-- 顶部 Logo -->
 
-    <img
-        class="hero-logo"
-        src="/hero-logo.png"
-        alt="GASBOX"
-        fetchpriority="high"
-        onload="
-            this.classList.add('loaded');
-            document.body.classList.add('intro-start');
-        "
-    >
+    <header class="header">
+
+        <img
+            class="header-logo"
+            src="/hero-logo.png"
+            alt="GASBOX"
+        >
+
+        <div class="header-slogan">
+            直播音频处理模块
+        </div>
+
+    </header>
 
 
-    <!-- 第一行 -->
 
-    <div class="hero-sub">
+    <!-- 主推产品 -->
 
-        <div class="hero-desc type-reveal">
-            直播软件、插件、工具与资源整理。
+    <div class="product-stage">
+
+
+        <!-- 左侧文字 -->
+
+        <div class="product-copy">
+
+            <div class="product-kicker">
+                Featured Product / 01
+            </div>
+
+            <h1 class="product-name">
+                GASBOX
+            </h1>
+
+            <div class="product-line-main">
+                从开口之前，<br>
+                就把声音准备好。
+            </div>
+
+            <div class="product-line-sub">
+                一条清晰、顺手、属于你的直播音频链。
+            </div>
+
         </div>
 
 
-        <div class="hero-update type-reveal">
-            持续更新中...
+
+        <!-- 右侧产品界面 -->
+
+        <div class="product-visual">
+
+            <img
+                class="product-image"
+                src="/gasboxui.png"
+                alt="GASBOX 产品界面"
+            >
+
         </div>
+
 
     </div>
 
 
-    <!-- 第二行 -->
 
-    <div class="hero-meta">
+    <!-- 横向滚动说明 -->
 
-        <div class="hero-meta-left type-reveal">
-            所有资源均来自于网络
-        </div>
+    <div class="marquee-wrap">
+
+        <div class="marquee">
 
 
-        <div class="hero-meta-right type-reveal">
-            GASBOX.CN
+            <div class="marquee-track">
+
+                <div class="marquee-text">
+
+                    GASBOX 是一款模块化直播音频处理软件，提供独立程序和 VST3 插件两种使用方式。
+
+                    <span class="marquee-separator">
+                        ◆
+                    </span>
+
+                    你可以按需要组合增益、音色塑形、压缩、降噪、齿音处理、混响和限幅等模块，处理麦克风声音；
+
+                    <span class="marquee-separator">
+                        ◆
+                    </span>
+
+                    独立程序还可配合兼容的虚拟音频设备，将处理后的声音送入直播软件。
+
+                    <span class="marquee-separator">
+                        ◆
+                    </span>
+
+                    适合直播主播、播客创作者、配音工作者，以及需要改善麦克风声音的内容创作者。
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 完全复制一次，保证无缝循环 -->
+
+            <div
+                class="marquee-track"
+                aria-hidden="true"
+            >
+
+                <div class="marquee-text">
+
+                    GASBOX 是一款模块化直播音频处理软件，提供独立程序和 VST3 插件两种使用方式。
+
+                    <span class="marquee-separator">
+                        ◆
+                    </span>
+
+                    你可以按需要组合增益、音色塑形、压缩、降噪、齿音处理、混响和限幅等模块，处理麦克风声音；
+
+                    <span class="marquee-separator">
+                        ◆
+                    </span>
+
+                    独立程序还可配合兼容的虚拟音频设备，将处理后的声音送入直播软件。
+
+                    <span class="marquee-separator">
+                        ◆
+                    </span>
+
+                    适合直播主播、播客创作者、配音工作者，以及需要改善麦克风声音的内容创作者。
+
+                </div>
+
+            </div>
+
+
         </div>
 
     </div>
@@ -1105,518 +944,35 @@ body.intro-start .intro-card-2 {
 
 
 <!-- =====================================================
-     STACK
+     EMPTY PAGE
+     下一轮我们就在这里继续做产品功能展示
 ===================================================== -->
 
-<main class="stack">
+<section class="empty-section">
 
-
-<!-- SOFTWARE -->
-
-<div class="category-label software-label type-reveal">
-
-    软件
-
-    <span>
-        SOFTWARE
-    </span>
-
-</div>
-
-
-<a
-    class="card blue intro-card intro-card-1"
-    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/OBS-Setup.exe"
->
-
-    <div class="card-index">
-        001
+    <div class="empty-marker">
+        NEXT SECTION
     </div>
 
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        OBS Studio
-    </div>
-
-    <div class="card-desc">
-        直播推流与录制
-    </div>
-
-    <div class="card-meta">
-        Streaming software
-    </div>
-
-</a>
-
-
-
-<a
-    class="card green intro-card intro-card-2"
-    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Studio-One-7.exe"
->
-
-    <div class="card-index">
-        002
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        Studio One 7
-    </div>
-
-    <div class="card-desc">
-        音频录制与调音
-    </div>
-
-    <div class="card-meta">
-        Audio software
-    </div>
-
-</a>
-
-
-
-<!-- PLUGINS -->
-
-<div class="category-label">
-
-    插件
-
-    <span>
-        PLUGINS
-    </span>
-
-</div>
-
-
-<a
-    class="card yellow"
-    href="OBS-3D.exe"
->
-
-    <div class="card-index">
-        003
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        OBS 3D 插件
-    </div>
-
-    <div class="card-desc">
-        OBS 三维相关扩展
-    </div>
-
-    <div class="card-meta">
-        OBS Plugin
-    </div>
-
-</a>
-
-
-
-<a
-    class="card white"
-    href="OBS-RGB.lua"
->
-
-    <div class="card-index">
-        004
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        OBS RGB 插件
-    </div>
-
-    <div class="card-desc">
-        OBS RGB 效果脚本
-    </div>
-
-    <div class="card-meta">
-        OBS Script
-    </div>
-
-</a>
-
-
-
-<a
-    class="card lavender"
-    href="OBS-Move.exe"
->
-
-    <div class="card-index">
-        005
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        OBS 移动插件
-    </div>
-
-    <div class="card-desc">
-        OBS Move 扩展
-    </div>
-
-    <div class="card-meta">
-        OBS Plugin
-    </div>
-
-</a>
-
-
-
-<a
-    class="card cyan"
-    href="OBS-Mask.exe"
->
-
-    <div class="card-index">
-        006
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        OBS 蒙版插件
-    </div>
-
-    <div class="card-desc">
-        OBS 蒙版与遮罩扩展
-    </div>
-
-    <div class="card-meta">
-        OBS Plugin
-    </div>
-
-</a>
-
-
-
-<a
-    class="card pink"
-    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/VST-Plugins.exe"
->
-
-    <div class="card-index">
-        007
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        VST 插件包
-    </div>
-
-    <div class="card-desc">
-        直播调音常用插件
-    </div>
-
-    <div class="card-meta">
-        Audio Plugins
-    </div>
-
-</a>
-
-
-
-<a
-    class="card orange"
-    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Audio-Toolbox.exe"
->
-
-    <div class="card-index">
-        008
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        调音师工具箱
-    </div>
-
-    <div class="card-desc">
-        音频处理与调试工具
-    </div>
-
-    <div class="card-meta">
-        Audio Toolbox
-    </div>
-
-</a>
-
-
-
-<!-- TOOLS -->
-
-<div class="category-label">
-
-    工具
-
-    <span>
-        TOOLS
-    </span>
-
-</div>
-
-
-<a
-    class="card gray"
-    href="Virtual-Screen.exe"
->
-
-    <div class="card-index">
-        009
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        虚拟屏软件
-    </div>
-
-    <div class="card-desc">
-        直播相关虚拟显示工具
-    </div>
-
-    <div class="card-meta">
-        Utility
-    </div>
-
-</a>
-
-
-
-<!-- RESOURCES -->
-
-<div class="category-label resources-label">
-
-    资源
-
-    <span>
-        RESOURCES
-    </span>
-
-</div>
-
-
-<a
-    class="card green"
-    href="Live-LUT.rar"
->
-
-    <div class="card-index">
-        010
-    </div>
-
-    <div class="card-arrow">
-        ↗
-    </div>
-
-    <div class="card-name">
-        直播调试 LUT
-    </div>
-
-    <div class="card-desc">
-        直播画面调试资源
-    </div>
-
-    <div class="card-meta">
-        Resource
-    </div>
-
-</a>
-
-
-</main>
+</section>
 
 
 
 <!-- =====================================================
-     FOOTER
+     BOTTOM
 ===================================================== -->
 
-<footer class="footer">
+<section class="bottom-area">
 
-    <div class="footer-big">
+    <a
+        class="download-entry"
+        href="/downloads/"
+    >
+        其他软件下载
+    </a>
 
-        找工具，
-        <br>
-        别找麻烦!
+</section>
 
-    </div>
-
-
-    <div class="footer-side">
-
-        <p>
-            GASBOX 用来整理直播、音频、视频及相关常用软件和资源。
-        </p>
-
-        <p>
-
-            <a onclick="openDisclaimer()">
-                查看完整免责声明 →
-            </a>
-
-        </p>
-
-        <p>
-
-            <a onclick="openContact()">
-                点击此处联系作者 →
-            </a>
-
-        </p>
-
-        <p>
-            © 2026 GASBOX
-        </p>
-
-    </div>
-
-</footer>
-
-
-</div>
-
-
-
-<!-- =====================================================
-     DISCLAIMER
-===================================================== -->
-
-<div
-    class="modal"
-    id="disclaimerModal"
->
-
-    <div class="modal-content">
-
-        <h2>
-            免责声明
-        </h2>
-
-        <p>
-            本站仅用于整理和分享直播、音频、视频及相关常用软件工具，
-            方便用户快速查找和访问。
-        </p>
-
-        <p>
-            本站与所收录软件的开发商、发行商及品牌方不存在任何官方合作或隶属关系。
-            所有软件名称、商标、图标及相关版权均归其原权利人所有。
-        </p>
-
-        <p>
-            本站优先提供软件官方网站、官方发布页面或公开下载地址。
-            若本站提供第三方下载或文件镜像，
-            仅用于学习、交流和下载便利，
-            不代表本站对软件的安全性、稳定性、兼容性及后续更新作出任何保证。
-        </p>
-
-        <p>
-            用户在下载、安装和使用相关软件前，
-            应自行核实软件来源、版本及系统兼容性，
-            并自行承担因安装或使用软件所产生的风险，
-            包括但不限于数据丢失、系统异常、软件冲突等问题。
-        </p>
-
-        <p>
-            如本站收录内容涉及版权、商标或其他合法权益问题，
-            请联系本站处理，
-            核实后将及时修改或移除相关内容。
-        </p>
-
-        <p>
-            <strong>
-                使用本站即视为已阅读并理解以上说明。
-            </strong>
-        </p>
-
-
-        <button
-            class="close-button"
-            onclick="closeDisclaimer()"
-        >
-            关闭
-        </button>
-
-    </div>
-
-</div>
-
-
-
-<!-- =====================================================
-     CONTACT
-===================================================== -->
-
-<div
-    class="modal"
-    id="contactModal"
->
-
-    <div class="modal-content">
-
-        <h2>
-            联系作者
-        </h2>
-
-        <p>
-            如果你在使用 GASBOX 的过程中遇到资源失效、下载异常、
-            软件版本问题，或者有新的软件、插件和工具推荐，
-            都可以通过以下方式联系我。
-        </p>
-
-        <p>
-            <strong>
-                邮箱
-            </strong>
-            <br>
-            mikpan@foxmail.com
-        </p>
-
-        <p>
-            <strong>
-                微信
-            </strong>
-            <br>
-            Gassymixing
-        </p>
-
-
-        <button
-            class="close-button"
-            onclick="closeContact()"
-        >
-            关闭
-        </button>
-
-    </div>
 
 </div>
 
@@ -1624,300 +980,18 @@ body.intro-start .intro-card-2 {
 
 <script>
 
-function openDisclaimer() {
-
-    document
-        .getElementById(
-            "disclaimerModal"
-        )
-        .style.display =
-        "flex";
-
-}
-
-
-function closeDisclaimer() {
-
-    document
-        .getElementById(
-            "disclaimerModal"
-        )
-        .style.display =
-        "none";
-
-}
-
-
-/* =========================================================
-   CONTACT
-========================================================= */
-
-function openContact() {
-
-    document
-        .getElementById(
-            "contactModal"
-        )
-        .style.display =
-        "flex";
-
-}
-
-
-function closeContact() {
-
-    document
-        .getElementById(
-            "contactModal"
-        )
-        .style.display =
-        "none";
-
-}
-
-
-/* =========================================================
-   MODAL BACKGROUND CLICK
-========================================================= */
+/* 页面资源加载后入场 */
 
 window.addEventListener(
-    "click",
-    function(event) {
+    "load",
+    function () {
 
-        const disclaimerModal =
-            document.getElementById(
-                "disclaimerModal"
-            );
-
-        const contactModal =
-            document.getElementById(
-                "contactModal"
-            );
-
-
-        if (
-            event.target === disclaimerModal
-        ) {
-
-            closeDisclaimer();
-
-        }
-
-
-        if (
-            event.target === contactModal
-        ) {
-
-            closeContact();
-
-        }
+        document
+            .body
+            .classList
+            .add("ready");
 
     }
-);
-
-
-/* =========================================================
-   PC BACKGROUND MUSIC
-========================================================= */
-
-const desktopMedia =
-    window.matchMedia(
-        "(min-width: 761px)"
-    );
-
-const musicToggle =
-    document.getElementById(
-        "musicToggle"
-    );
-
-const musicIcon =
-    document.getElementById(
-        "musicIcon"
-    );
-
-const bgm =
-    document.getElementById(
-        "bgm"
-    );
-
-let musicPrepared =
-    false;
-
-
-/* PC 打开网页后立刻在后台预加载音乐 */
-
-function prepareDesktopMusic() {
-
-    if (
-        !desktopMedia.matches
-    ) {
-        return;
-    }
-
-    if (
-        musicPrepared
-    ) {
-        return;
-    }
-
-    bgm.src =
-        "/bgm.mp3";
-
-    bgm.preload =
-        "auto";
-
-    bgm.load();
-
-    musicPrepared =
-        true;
-}
-
-
-/* 默认不播放，默认显示 speakeron */
-
-musicIcon.src =
-    "/speakeron.png";
-
-musicToggle.setAttribute(
-    "aria-label",
-    "播放背景音乐"
-);
-
-
-/* 点击播放 / 暂停 */
-
-async function toggleMusic() {
-
-    if (
-        !desktopMedia.matches
-    ) {
-        return;
-    }
-
-
-    prepareDesktopMusic();
-
-
-    if (
-        bgm.paused
-    ) {
-
-        try {
-
-            await bgm.play();
-
-
-            /* 播放后切换为 OFF 图标 */
-
-            musicIcon.src =
-                "/speakeroff.png";
-
-            musicToggle.setAttribute(
-                "aria-label",
-                "暂停背景音乐"
-            );
-
-        }
-
-        catch (error) {
-
-            console.error(
-                "背景音乐播放失败：",
-                error
-            );
-
-
-            /* 播放失败则保持 ON */
-
-            musicIcon.src =
-                "/speakeron.png";
-
-            musicToggle.setAttribute(
-                "aria-label",
-                "播放背景音乐"
-            );
-
-        }
-
-    }
-
-    else {
-
-        bgm.pause();
-
-
-        /* 暂停后恢复 ON */
-
-        musicIcon.src =
-            "/speakeron.png";
-
-        musicToggle.setAttribute(
-            "aria-label",
-            "播放背景音乐"
-        );
-
-    }
-
-}
-
-
-musicToggle.addEventListener(
-    "click",
-    toggleMusic
-);
-
-
-/* PC 页面一打开就后台加载 */
-
-prepareDesktopMusic();
-
-
-/* =========================================================
-   PC / MOBILE MUSIC SWITCH
-========================================================= */
-
-function syncMusicViewport() {
-
-    if (
-        desktopMedia.matches
-    ) {
-
-        prepareDesktopMusic();
-
-    }
-
-    else {
-
-        bgm.pause();
-
-        bgm.removeAttribute(
-            "src"
-        );
-
-        bgm.preload =
-            "none";
-
-        bgm.load();
-
-        musicPrepared =
-            false;
-
-        musicIcon.src =
-            "/speakeron.png";
-
-        musicToggle.setAttribute(
-            "aria-label",
-            "播放背景音乐"
-        );
-
-    }
-
-}
-
-
-desktopMedia.addEventListener(
-    "change",
-    syncMusicViewport
 );
 
 </script>
