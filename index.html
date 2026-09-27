@@ -121,11 +121,10 @@ body::before {
 ========================================================= */
 
 .header-bar {
-    width: 100vw;
-
-    margin-left:
-        calc(
-            50% - 50vw
+    width:
+        min(
+            60vw,
+            900px
         );
 
     border-top:
@@ -135,18 +134,14 @@ body::before {
     border-bottom:
         1px solid
         var(--line);
+
+    margin-top: 0;
 }
 
 .header {
-    width:
-        min(
-            calc(100% - 56px),
-            1500px
-        );
+    width: 100%;
 
-    height: 88px;
-
-    margin: 0 auto;
+    height: 72px;
 
     display: flex;
 
@@ -154,9 +149,12 @@ body::before {
 
     justify-content: flex-start;
 
-    gap: 16px;
+    gap: 10px;
 
-    padding-bottom: 10px;
+    padding:
+        0
+        0
+        8px;
 }
 
 .header-logo {
@@ -164,12 +162,12 @@ body::before {
 
     width:
         clamp(
-            185px,
-            17vw,
-            300px
+            150px,
+            13vw,
+            230px
         );
 
-    height: 78px;
+    height: 58px;
 
     object-fit: contain;
 
@@ -179,9 +177,9 @@ body::before {
 .header-slogan {
     font-size:
         clamp(
-            15px,
-            1.05vw,
-            18px
+            13px,
+            .92vw,
+            16px
         );
 
     font-weight: 800;
@@ -190,7 +188,7 @@ body::before {
 
     white-space: nowrap;
 
-    padding-bottom: 6px;
+    padding-bottom: 4px;
 }
 
 
@@ -204,17 +202,17 @@ body::before {
     display: grid;
 
     grid-template-columns:
-        minmax(445px, .78fr)
+        minmax(430px, 0.78fr)
         minmax(0, 1.22fr);
 
     align-items: center;
 
-    gap: 50px;
+    gap: 72px;
 
-    min-height: 690px;
+    min-height: 700px;
 
     padding:
-        64px
+        72px
         0;
 }
 
@@ -229,6 +227,8 @@ body::before {
     z-index: 3;
 
     min-width: 0;
+
+    max-width: 560px;
 }
 
 .product-name {
@@ -236,9 +236,9 @@ body::before {
 
     font-size:
         clamp(
-            94px,
-            8.5vw,
-            145px
+            88px,
+            7.4vw,
+            128px
         );
 
     line-height: .84;
@@ -250,19 +250,19 @@ body::before {
     white-space: nowrap;
 
     transform:
-        translateX(-10px);
+        translateX(-8px);
 }
 
 .product-line-main {
-    max-width: 585px;
+    max-width: 530px;
 
-    margin-top: 48px;
+    margin-top: 46px;
 
     font-size:
         clamp(
-            34px,
-            3.15vw,
-            54px
+            32px,
+            2.85vw,
+            49px
         );
 
     line-height: 1.04;
@@ -273,15 +273,15 @@ body::before {
 }
 
 .product-line-sub {
-    max-width: 575px;
+    max-width: 520px;
 
-    margin-top: 21px;
+    margin-top: 19px;
 
     font-size:
         clamp(
-            18px,
-            1.38vw,
-            23px
+            17px,
+            1.25vw,
+            21px
         );
 
     line-height: 1.65;
@@ -295,7 +295,7 @@ body::before {
 ========================================================= */
 
 .product-actions {
-    margin-top: 37px;
+    margin-top: 34px;
 }
 
 .primary-button {
@@ -304,11 +304,11 @@ body::before {
     align-items: center;
     justify-content: center;
 
-    min-width: 175px;
+    min-width: 160px;
 
     padding:
-        17px
-        30px;
+        16px
+        28px;
 
     border:
         1px solid
@@ -322,7 +322,7 @@ body::before {
 
     text-decoration: none;
 
-    font-size: 16px;
+    font-size: 15px;
 
     font-weight: 700;
 
@@ -360,6 +360,8 @@ body::before {
     align-items: center;
 
     justify-content: flex-end;
+
+    overflow: visible;
 }
 
 .product-visual::before {
@@ -369,8 +371,8 @@ body::before {
 
     right: 2%;
 
-    width: 88%;
-    height: 88%;
+    width: 86%;
+    height: 86%;
 
     border-radius: 50%;
 
@@ -393,13 +395,11 @@ body::before {
 
     width:
         min(
-            108%,
-            1125px
+            100%,
+            1040px
         );
 
-    max-width: none;
-
-    max-height: 780px;
+    max-height: 730px;
 
     object-fit: contain;
 
@@ -414,7 +414,7 @@ body::before {
         );
 
     transform:
-        rotate(.65deg);
+        rotate(.55deg);
 
     transition:
         transform
@@ -437,11 +437,10 @@ body::before {
 .marquee-wrap {
     position: relative;
 
-    width: 100vw;
-
-    margin-left:
-        calc(
-            50% - 50vw
+    width:
+        min(
+            60vw,
+            900px
         );
 
     overflow: hidden;
@@ -711,39 +710,38 @@ body.ready .marquee-wrap {
 
 /* =========================================================
    MEDIUM DESKTOP
-   防止中等宽度屏幕放大后互相遮挡
 ========================================================= */
 
 @media (max-width: 1250px) and (min-width: 821px) {
 
     .product-stage {
         grid-template-columns:
-            minmax(390px, .78fr)
-            minmax(0, 1.22fr);
+            minmax(360px, .82fr)
+            minmax(0, 1.18fr);
 
-        gap: 34px;
+        gap: 46px;
     }
 
     .product-name {
         font-size:
             clamp(
-                82px,
-                8vw,
-                112px
+                78px,
+                7.2vw,
+                104px
             );
     }
 
     .product-line-main {
         font-size:
             clamp(
-                30px,
-                3vw,
-                44px
+                29px,
+                2.8vw,
+                41px
             );
     }
 
     .product-image {
-        width: 103%;
+        width: 100%;
     }
 
 }
@@ -763,36 +761,37 @@ body.ready .marquee-wrap {
     }
 
 
+    .header-bar {
+        width: 78vw;
+    }
+
     .header {
-        width:
-            calc(
-                100% - 26px
-            );
+        width: 100%;
 
-        height: 76px;
+        height: 64px;
 
-        gap: 10px;
+        gap: 8px;
 
-        padding-bottom: 8px;
+        padding-bottom: 6px;
     }
 
     .header-logo {
         width:
             clamp(
-                145px,
-                47vw,
-                205px
+                125px,
+                40vw,
+                175px
             );
 
-        height: 62px;
+        height: 52px;
     }
 
     .header-slogan {
-        font-size: 12px;
+        font-size: 11px;
 
         white-space: nowrap;
 
-        padding-bottom: 4px;
+        padding-bottom: 3px;
     }
 
 
@@ -803,17 +802,19 @@ body.ready .marquee-wrap {
 
         align-items: stretch;
 
-        gap: 42px;
+        gap: 40px;
 
         min-height: 0;
 
         padding:
-            62px
+            58px
             0;
     }
 
 
     .product-copy {
+        max-width: none;
+
         padding:
             0
             4px;
@@ -822,9 +823,9 @@ body.ready .marquee-wrap {
     .product-name {
         font-size:
             clamp(
-                78px,
-                23vw,
-                116px
+                74px,
+                21vw,
+                108px
             );
 
         white-space: normal;
@@ -834,37 +835,37 @@ body.ready .marquee-wrap {
     }
 
     .product-line-main {
-        margin-top: 39px;
+        margin-top: 36px;
 
         font-size:
             clamp(
-                31px,
-                8vw,
-                44px
+                29px,
+                7.5vw,
+                40px
             );
     }
 
     .product-line-sub {
         max-width: 94%;
 
-        margin-top: 18px;
+        margin-top: 17px;
 
-        font-size: 17px;
+        font-size: 16px;
     }
 
 
     .product-actions {
-        margin-top: 30px;
+        margin-top: 28px;
     }
 
     .primary-button {
-        min-width: 160px;
+        min-width: 150px;
 
         padding:
-            16px
-            26px;
+            15px
+            24px;
 
-        font-size: 15px;
+        font-size: 14px;
     }
 
 
@@ -875,23 +876,25 @@ body.ready .marquee-wrap {
     }
 
     .product-image {
-        width: 112%;
+        width: 108%;
 
         max-width: none;
 
         transform:
-            translateX(-5%)
+            translateX(-4%)
             rotate(.7deg);
     }
 
     .product-visual:hover .product-image {
         transform:
-            translateX(-5%)
+            translateX(-4%)
             rotate(.7deg);
     }
 
 
     .marquee-wrap {
+        width: 78vw;
+
         padding:
             23px
             0;
