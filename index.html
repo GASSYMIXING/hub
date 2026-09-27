@@ -117,48 +117,79 @@ body::before {
 
 
 /* =========================================================
-   HEADER
+   HEADER BAR
 ========================================================= */
 
+.header-bar {
+    width: 100vw;
+
+    margin-left:
+        calc(
+            50% - 50vw
+        );
+
+    border-top:
+        1px solid
+        var(--line);
+
+    border-bottom:
+        1px solid
+        var(--line);
+}
+
 .header {
+    width:
+        min(
+            calc(100% - 56px),
+            1500px
+        );
+
+    min-height: 112px;
+
+    margin: 0 auto;
+
     display: flex;
-    align-items: flex-end;
 
-    gap: 42px;
+    align-items: center;
 
-    padding-top: 12px;
+    gap: 34px;
+
+    padding:
+        8px
+        0;
 }
 
 .header-logo {
     display: block;
 
-    width: clamp(
-        260px,
-        31vw,
-        520px
-    );
+    width:
+        clamp(
+            220px,
+            24vw,
+            390px
+        );
 
-    height: 170px;
+    height: 96px;
 
     object-fit: contain;
+
     object-position: left center;
 
-    transform: translateX(-10px);
+    transform:
+        translateX(-6px);
 }
 
 .header-slogan {
-    padding-bottom: 27px;
-
     font-size:
         clamp(
-            17px,
-            1.35vw,
-            22px
+            15px,
+            1.15vw,
+            19px
         );
 
     font-weight: 800;
 
-    letter-spacing: .02em;
+    letter-spacing: .015em;
 
     white-space: nowrap;
 }
@@ -174,19 +205,19 @@ body::before {
     display: grid;
 
     grid-template-columns:
-        minmax(340px, .72fr)
-        minmax(0, 1.28fr);
+        minmax(390px, .76fr)
+        minmax(0, 1.35fr);
 
     align-items: center;
 
-    gap: 54px;
+    gap: 44px;
 
-    min-height: 640px;
+    min-height: 650px;
 
     padding:
         0
         0
-        64px;
+        34px;
 }
 
 
@@ -202,7 +233,7 @@ body::before {
     padding-left: 4px;
 
     transform:
-        translateY(-54px);
+        translateY(-76px);
 }
 
 .product-name {
@@ -210,14 +241,14 @@ body::before {
 
     font-size:
         clamp(
-            68px,
-            7.1vw,
-            118px
+            82px,
+            8.5vw,
+            144px
         );
 
-    line-height: .86;
+    line-height: .84;
 
-    letter-spacing: -.07em;
+    letter-spacing: -.072em;
 
     font-weight: 900;
 
@@ -225,34 +256,34 @@ body::before {
 }
 
 .product-line-main {
-    max-width: 520px;
+    max-width: 540px;
 
-    margin-top: 40px;
+    margin-top: 42px;
 
     font-size:
         clamp(
-            28px,
-            2.65vw,
-            44px
+            30px,
+            2.8vw,
+            48px
         );
 
-    line-height: 1.06;
+    line-height: 1.04;
 
-    letter-spacing: -.04em;
+    letter-spacing: -.045em;
 
     font-weight: 800;
 }
 
 .product-line-sub {
-    max-width: 500px;
+    max-width: 520px;
 
     margin-top: 18px;
 
     font-size:
         clamp(
-            15px,
-            1.2vw,
-            19px
+            16px,
+            1.25vw,
+            20px
         );
 
     line-height: 1.65;
@@ -275,7 +306,7 @@ body::before {
     align-items: center;
     justify-content: center;
 
-    min-width: 150px;
+    min-width: 152px;
 
     padding:
         15px
@@ -325,10 +356,15 @@ body::before {
     position: relative;
 
     display: flex;
+
     align-items: center;
+
     justify-content: flex-end;
 
     min-width: 0;
+
+    transform:
+        translateY(-55px);
 }
 
 .product-visual::before {
@@ -336,10 +372,10 @@ body::before {
 
     position: absolute;
 
-    right: 5%;
+    right: 3%;
 
-    width: 82%;
-    height: 82%;
+    width: 86%;
+    height: 86%;
 
     border-radius: 50%;
 
@@ -350,7 +386,8 @@ body::before {
             transparent 70%
         );
 
-    filter: blur(50px);
+    filter:
+        blur(52px);
 
     transform:
         translateY(30px);
@@ -365,11 +402,13 @@ body::before {
 
     width:
         min(
-            100%,
-            930px
+            108%,
+            1040px
         );
 
-    max-height: 650px;
+    max-width: none;
+
+    max-height: 690px;
 
     object-fit: contain;
 
@@ -378,14 +417,13 @@ body::before {
     filter:
         drop-shadow(
             0
-            28px
-            32px
+            30px
+            34px
             rgba(0,0,0,.18)
         );
 
     transform:
-        rotate(.8deg)
-        translateY(-8px);
+        rotate(.7deg);
 
     transition:
         transform
@@ -395,8 +433,8 @@ body::before {
 
 .product-visual:hover .product-image {
     transform:
-        rotate(.1deg)
-        translateY(-16px)
+        rotate(.05deg)
+        translateY(-8px)
         scale(1.008);
 }
 
@@ -426,7 +464,7 @@ body::before {
         var(--line);
 
     padding:
-        23px
+        27px
         0;
 }
 
@@ -453,20 +491,20 @@ body::before {
 }
 
 .marquee-text {
-    padding-right: 90px;
+    padding-right: 100px;
 
     font-size:
         clamp(
-            16px,
-            1.35vw,
-            21px
+            19px,
+            1.6vw,
+            25px
         );
 
-    font-weight: 700;
+    font-weight: 800;
 
     line-height: 1;
 
-    letter-spacing: -.015em;
+    letter-spacing: -.02em;
 }
 
 .marquee-separator {
@@ -474,7 +512,7 @@ body::before {
 
     margin:
         0
-        34px;
+        38px;
 
     opacity: .32;
 }
@@ -503,9 +541,6 @@ body::before {
 
     position: relative;
 }
-
-
-/* 后续内容先放这里 */
 
 .empty-marker {
     position: absolute;
@@ -536,6 +571,7 @@ body::before {
     min-height: 44vh;
 
     display: flex;
+
     align-items: flex-end;
 
     padding-bottom: 56px;
@@ -543,6 +579,7 @@ body::before {
 
 .download-entry {
     display: inline-flex;
+
     align-items: center;
 
     gap: 12px;
@@ -636,7 +673,7 @@ body.ready .marquee-wrap {
         opacity: 0;
 
         transform:
-            translateY(26px);
+            translateY(20px);
     }
 
     to {
@@ -654,14 +691,14 @@ body.ready .marquee-wrap {
         opacity: 0;
 
         transform:
-            translateY(-20px);
+            translateY(-40px);
     }
 
     to {
         opacity: 1;
 
         transform:
-            translateY(-54px);
+            translateY(-76px);
     }
 
 }
@@ -673,6 +710,7 @@ body.ready .marquee-wrap {
 
         transform:
             translateX(45px)
+            translateY(-30px)
             scale(.97);
     }
 
@@ -681,6 +719,7 @@ body.ready .marquee-wrap {
 
         transform:
             translateX(0)
+            translateY(-55px)
             scale(1);
     }
 
@@ -713,32 +752,39 @@ body.ready .marquee-wrap {
     }
 
 
-    .header {
-        display: block;
+    .header-bar {
+        width: 100vw;
+    }
 
-        padding-top: 0;
+    .header {
+        width:
+            calc(
+                100% - 26px
+            );
+
+        min-height: 86px;
+
+        gap: 18px;
+
+        padding:
+            5px
+            0;
     }
 
     .header-logo {
-        width: 100%;
+        width: 58%;
 
-        height: 220px;
+        height: 74px;
 
-        transform:
-            translateX(6px);
+        transform: none;
     }
 
     .header-slogan {
-        margin-top: -28px;
-
-        padding:
-            0
-            4px
-            24px;
-
-        font-size: 16px;
+        font-size: 13px;
 
         font-weight: 800;
+
+        white-space: nowrap;
     }
 
 
@@ -749,10 +795,10 @@ body.ready .marquee-wrap {
 
         align-items: stretch;
 
-        gap: 34px;
+        gap: 30px;
 
-        padding-top: 34px;
-        padding-bottom: 52px;
+        padding-top: 48px;
+        padding-bottom: 46px;
 
         min-height: 0;
     }
@@ -770,9 +816,9 @@ body.ready .marquee-wrap {
     .product-name {
         font-size:
             clamp(
-                66px,
-                21vw,
-                102px
+                72px,
+                22vw,
+                108px
             );
 
         white-space: normal;
@@ -783,9 +829,9 @@ body.ready .marquee-wrap {
 
         font-size:
             clamp(
-                27px,
-                7vw,
-                37px
+                28px,
+                7.4vw,
+                39px
             );
     }
 
@@ -797,12 +843,13 @@ body.ready .marquee-wrap {
         font-size: 15px;
     }
 
+
     .product-actions {
         margin-top: 26px;
     }
 
     .primary-button {
-        min-width: 138px;
+        min-width: 140px;
 
         padding:
             14px
@@ -815,38 +862,41 @@ body.ready .marquee-wrap {
     .product-visual {
         width: 100%;
 
-        padding-top: 8px;
+        padding-top: 6px;
 
         justify-content: center;
+
+        transform:
+            translateY(0);
     }
 
     .product-image {
-        width: 108%;
+        width: 112%;
 
         max-width: none;
 
         transform:
-            translateX(-4%)
+            translateX(-5%)
             rotate(.7deg);
     }
 
     .product-visual:hover .product-image {
         transform:
-            translateX(-4%)
+            translateX(-5%)
             rotate(.7deg);
     }
 
 
     .marquee-wrap {
         padding:
-            20px
+            23px
             0;
     }
 
     .marquee-text {
-        font-size: 15px;
+        font-size: 17px;
 
-        font-weight: 700;
+        font-weight: 800;
     }
 
 
@@ -870,6 +920,16 @@ body.ready .marquee-wrap {
             forwards;
     }
 
+    body.ready .product-visual {
+        animation:
+            mobileVisualIn
+            .95s
+            cubic-bezier(.22,1,.36,1)
+            .28s
+            forwards;
+    }
+
+
     @keyframes mobileCopyIn {
 
         from {
@@ -884,6 +944,27 @@ body.ready .marquee-wrap {
 
             transform:
                 translateY(0);
+        }
+
+    }
+
+
+    @keyframes mobileVisualIn {
+
+        from {
+            opacity: 0;
+
+            transform:
+                translateY(24px)
+                scale(.97);
+        }
+
+        to {
+            opacity: 1;
+
+            transform:
+                translateY(0)
+                scale(1);
         }
 
     }
@@ -933,21 +1014,25 @@ body.ready .marquee-wrap {
 <section class="hero">
 
 
-    <!-- 顶部 Logo -->
+    <!-- 顶部品牌条 -->
 
-    <header class="header">
+    <div class="header-bar">
 
-        <img
-            class="header-logo"
-            src="/hero-logo.png"
-            alt="GASBOX"
-        >
+        <header class="header">
 
-        <div class="header-slogan">
-            直播音频处理模块
-        </div>
+            <img
+                class="header-logo"
+                src="/hero-logo.png"
+                alt="GASBOX"
+            >
 
-    </header>
+            <div class="header-slogan">
+                直播音频处理模块
+            </div>
+
+        </header>
+
+    </div>
 
 
 
@@ -1042,8 +1127,6 @@ body.ready .marquee-wrap {
 
 
 
-            <!-- 完全复制一次，保证无缝循环 -->
-
             <div
                 class="marquee-track"
                 aria-hidden="true"
@@ -1120,8 +1203,6 @@ body.ready .marquee-wrap {
 
 
 <script>
-
-/* 页面资源加载后入场 */
 
 window.addEventListener(
     "load",
