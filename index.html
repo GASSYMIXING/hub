@@ -124,7 +124,7 @@ body::before {
     display: flex;
     align-items: flex-end;
 
-    gap: 28px;
+    gap: 42px;
 
     padding-top: 12px;
 }
@@ -147,11 +147,18 @@ body::before {
 }
 
 .header-slogan {
-    padding-bottom: 30px;
+    padding-bottom: 27px;
 
-    font-size: 13px;
+    font-size:
+        clamp(
+            17px,
+            1.35vw,
+            22px
+        );
 
-    letter-spacing: .08em;
+    font-weight: 800;
+
+    letter-spacing: .02em;
 
     white-space: nowrap;
 }
@@ -167,17 +174,17 @@ body::before {
     display: grid;
 
     grid-template-columns:
-        minmax(330px, .8fr)
-        minmax(520px, 1.35fr);
+        minmax(340px, .72fr)
+        minmax(0, 1.28fr);
 
     align-items: center;
 
-    gap: 60px;
+    gap: 54px;
 
     min-height: 640px;
 
     padding:
-        20px
+        0
         0
         64px;
 }
@@ -193,18 +200,9 @@ body::before {
     z-index: 3;
 
     padding-left: 4px;
-}
 
-.product-kicker {
-    margin-bottom: 18px;
-
-    font-size: 11px;
-
-    text-transform: uppercase;
-
-    letter-spacing: .13em;
-
-    color: var(--soft-ink);
+    transform:
+        translateY(-54px);
 }
 
 .product-name {
@@ -212,52 +210,110 @@ body::before {
 
     font-size:
         clamp(
-            78px,
-            10vw,
-            168px
+            68px,
+            7.1vw,
+            118px
         );
 
-    line-height: .82;
+    line-height: .86;
 
-    letter-spacing: -.075em;
+    letter-spacing: -.07em;
 
     font-weight: 900;
+
+    white-space: nowrap;
 }
 
 .product-line-main {
-    max-width: 600px;
+    max-width: 520px;
 
-    margin-top: 46px;
+    margin-top: 40px;
 
     font-size:
         clamp(
-            26px,
-            3vw,
-            46px
+            28px,
+            2.65vw,
+            44px
         );
 
-    line-height: 1.08;
+    line-height: 1.06;
 
-    letter-spacing: -.035em;
+    letter-spacing: -.04em;
 
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .product-line-sub {
-    max-width: 540px;
+    max-width: 500px;
 
     margin-top: 18px;
 
     font-size:
         clamp(
             15px,
-            1.3vw,
-            20px
+            1.2vw,
+            19px
         );
 
     line-height: 1.65;
 
     color: var(--soft-ink);
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.product-actions {
+    margin-top: 32px;
+}
+
+.primary-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 150px;
+
+    padding:
+        15px
+        26px;
+
+    border:
+        1px solid
+        var(--ink);
+
+    background:
+        var(--ink);
+
+    color:
+        var(--paper);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: .02em;
+
+    transition:
+        transform .35s cubic-bezier(.22,1,.36,1),
+        background .25s ease,
+        color .25s ease;
+}
+
+.primary-button:hover {
+    transform:
+        translateY(-3px);
+
+    background:
+        transparent;
+
+    color:
+        var(--ink);
 }
 
 
@@ -270,7 +326,7 @@ body::before {
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
 
     min-width: 0;
 }
@@ -280,8 +336,10 @@ body::before {
 
     position: absolute;
 
-    width: 80%;
-    height: 80%;
+    right: 5%;
+
+    width: 82%;
+    height: 82%;
 
     border-radius: 50%;
 
@@ -294,7 +352,8 @@ body::before {
 
     filter: blur(50px);
 
-    transform: translateY(30px);
+    transform:
+        translateY(30px);
 }
 
 .product-image {
@@ -304,14 +363,17 @@ body::before {
 
     display: block;
 
-    width: min(
-        100%,
-        920px
-    );
+    width:
+        min(
+            100%,
+            930px
+        );
 
-    max-height: 640px;
+    max-height: 650px;
 
     object-fit: contain;
+
+    object-position: right center;
 
     filter:
         drop-shadow(
@@ -322,8 +384,8 @@ body::before {
         );
 
     transform:
-        rotate(1deg)
-        translateY(6px);
+        rotate(.8deg)
+        translateY(-8px);
 
     transition:
         transform
@@ -333,8 +395,8 @@ body::before {
 
 .product-visual:hover .product-image {
     transform:
-        rotate(.2deg)
-        translateY(-5px)
+        rotate(.1deg)
+        translateY(-16px)
         scale(1.008);
 }
 
@@ -364,7 +426,7 @@ body::before {
         var(--line);
 
     padding:
-        19px
+        23px
         0;
 }
 
@@ -395,14 +457,16 @@ body::before {
 
     font-size:
         clamp(
-            13px,
-            1.15vw,
-            17px
+            16px,
+            1.35vw,
+            21px
         );
+
+    font-weight: 700;
 
     line-height: 1;
 
-    letter-spacing: -.01em;
+    letter-spacing: -.015em;
 }
 
 .marquee-separator {
@@ -410,7 +474,7 @@ body::before {
 
     margin:
         0
-        30px;
+        34px;
 
     opacity: .32;
 }
@@ -541,7 +605,7 @@ body.ready .header {
 
 body.ready .product-copy {
     animation:
-        fadeUp
+        copyIn
         .85s
         cubic-bezier(.22,1,.36,1)
         .18s
@@ -580,6 +644,24 @@ body.ready .marquee-wrap {
 
         transform:
             translateY(0);
+    }
+
+}
+
+@keyframes copyIn {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(-54px);
     }
 
 }
@@ -654,7 +736,9 @@ body.ready .marquee-wrap {
             4px
             24px;
 
-        font-size: 11px;
+        font-size: 16px;
+
+        font-weight: 800;
     }
 
 
@@ -665,9 +749,9 @@ body.ready .marquee-wrap {
 
         align-items: stretch;
 
-        gap: 35px;
+        gap: 34px;
 
-        padding-top: 48px;
+        padding-top: 34px;
         padding-bottom: 52px;
 
         min-height: 0;
@@ -678,23 +762,28 @@ body.ready .marquee-wrap {
         padding:
             0
             4px;
+
+        transform:
+            translateY(0);
     }
 
     .product-name {
         font-size:
             clamp(
-                72px,
-                22vw,
-                112px
+                66px,
+                21vw,
+                102px
             );
+
+        white-space: normal;
     }
 
     .product-line-main {
-        margin-top: 34px;
+        margin-top: 32px;
 
         font-size:
             clamp(
-                26px,
+                27px,
                 7vw,
                 37px
             );
@@ -708,11 +797,27 @@ body.ready .marquee-wrap {
         font-size: 15px;
     }
 
+    .product-actions {
+        margin-top: 26px;
+    }
+
+    .primary-button {
+        min-width: 138px;
+
+        padding:
+            14px
+            23px;
+
+        font-size: 13px;
+    }
+
 
     .product-visual {
         width: 100%;
 
-        padding-top: 10px;
+        padding-top: 8px;
+
+        justify-content: center;
     }
 
     .product-image {
@@ -734,12 +839,14 @@ body.ready .marquee-wrap {
 
     .marquee-wrap {
         padding:
-            17px
+            20px
             0;
     }
 
     .marquee-text {
-        font-size: 12px;
+        font-size: 15px;
+
+        font-weight: 700;
     }
 
 
@@ -751,6 +858,34 @@ body.ready .marquee-wrap {
 
     .download-entry {
         font-size: 22px;
+    }
+
+
+    body.ready .product-copy {
+        animation:
+            mobileCopyIn
+            .85s
+            cubic-bezier(.22,1,.36,1)
+            .18s
+            forwards;
+    }
+
+    @keyframes mobileCopyIn {
+
+        from {
+            opacity: 0;
+
+            transform:
+                translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
     }
 
 }
@@ -825,10 +960,6 @@ body.ready .marquee-wrap {
 
         <div class="product-copy">
 
-            <div class="product-kicker">
-                Featured Product / 01
-            </div>
-
             <h1 class="product-name">
                 GASBOX
             </h1>
@@ -840,6 +971,17 @@ body.ready .marquee-wrap {
 
             <div class="product-line-sub">
                 一条清晰、顺手、属于你的直播音频链。
+            </div>
+
+            <div class="product-actions">
+
+                <a
+                    class="primary-button"
+                    href="/gasbox/"
+                >
+                    立即下载
+                </a>
+
             </div>
 
         </div>
@@ -945,7 +1087,6 @@ body.ready .marquee-wrap {
 
 <!-- =====================================================
      EMPTY PAGE
-     下一轮我们就在这里继续做产品功能展示
 ===================================================== -->
 
 <section class="empty-section">
