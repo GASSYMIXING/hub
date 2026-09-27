@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GASBOX直播工具盒</title>
+
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=11">
+<link rel="shortcut icon" type="image/png" href="/favicon-192.png?v=11">
+<link rel="apple-touch-icon" href="/favicon-192.png?v=11">
+
+<!-- 优先加载顶部 Logo -->
+<link rel="preload" as="image" href="/hero-logo.png">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    --paper: #f4f2ec;
+    --ink: #0a0a0a;
+    --blue: #98a9f5;
+    --green: #b4f487;
+    --yellow: #ffd978;
+    --pink: #ff9ac6;
+    --lavender: #c9b6ff;
+    --cyan: #9ce3e6;
+    --orange: #ffb26d;
+    --gray: #ecebe7;
+}
+
+body {
+    margin: 0;
+
+    background:
+        radial-gradient(
+            circle at 30% 15%,
+            rgba(0,0,0,0.025),
+            transparent 28%
+        ),
+        var(--paper);
+
+    color: var(--ink);
+
+    font-family:
+        Arial,
+        "Helvetica Neue",
+        Helvetica,
+        "Microsoft YaHei",
+        sans-serif;
+}
+
+
+/* =========================================================
+   PAPER TEXTURE
+========================================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 9999;
+
+    opacity: 0.12;
+
+    background-image:
+        repeating-radial-gradient(
+            circle at 0 0,
+            rgba(0,0,0,0.20) 0px,
+            rgba(0,0,0,0.20) 0.45px,
+            transparent 0.6px,
+            transparent 3px
+        );
+
+    mix-blend-mode: multiply;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page {
+    width: min(calc(100% - 48px), 1320px);
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   PC MUSIC CONTROL
+========================================================= */
+
+.music-control {
+    position: fixed;
+
+    top: 22px;
+    right: 24px;
+
+    z-index: 10000;
+
+    width: 44px;
+    height: 44px;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    opacity: 0.82;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.music-control:hover {
+    opacity: 1;
+
+    transform:
+        scale(1.08);
+}
+
+.music-control img {
+    display: block;
+
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    padding: 0 0 8px;
+    overflow: visible;
+}
+
+
+/* =========================================================
+   LOGO INTRO
+========================================================= */
+
+.hero-logo {
+    display: block;
+
+    width: 90%;
+    max-width: 1520px;
+
+    height: 450px;
+
+    object-fit: contain;
+    object-position: left bottom;
+
+    margin: -36px 0 0 0;
+
+    transform: translateX(20px);
+
+    opacity: 0;
+
+    translate: -120vw 0;
+
+    will-change:
+        translate,
+        opacity;
+}
+
+
+/* Logo 完整加载后开始入场 */
+
+.hero-logo.loaded {
+    animation:
+        logoEnter
+        0.95s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        forwards;
+}
+
+
+@keyframes logoEnter {
+
+    0% {
+        opacity: 0;
+        translate: -120vw 0;
+    }
+
+    68% {
+        opacity: 1;
+        translate: 12px 0;
+    }
+
+    100% {
+        opacity: 1;
+        translate: 0 0;
+    }
+
+}
+
+
+/* =========================================================
+   HERO 第一行信息
+========================================================= */
+
+.hero-sub {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    margin-top: 8px;
+
+    font-size: 13px;
+}
+
+.hero-desc {
+    line-height: 1.6;
+}
+
+.hero-update {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   HERO 第二行信息
+========================================================= */
+
+.hero-meta {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    margin-top: 30px;
+    margin-bottom: 6px;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+}
+
+.hero-meta-left {
+    min-width: 0;
+}
+
+.hero-meta-right {
+    text-align: right;
+
+    white-space: nowrap;
+
+    flex-shrink: 0;
+
+    min-width: max-content;
+
+    padding-right: 4px;
+}
+
+
+/* =========================================================
+   TEXT INTRO
+========================================================= */
+
+.type-reveal {
+    clip-path:
+        inset(
+            0
+            100%
+            0
+            0
+        );
+
+    opacity: 0;
+
+    will-change:
+        clip-path,
+        opacity;
+}
+
+
+/* 第一排左侧 */
+
+body.intro-start .hero-desc.type-reveal {
+    animation:
+        typeReveal
+        0.62s
+        steps(16, end)
+        0.38s
+        forwards;
+}
+
+
+/* 第一排右侧 */
+
+body.intro-start .hero-update.type-reveal {
+    animation:
+        typeReveal
+        0.50s
+        steps(8, end)
+        0.44s
+        forwards;
+}
+
+
+/* 第二排左侧 */
+
+body.intro-start .hero-meta-left.type-reveal {
+    animation:
+        typeReveal
+        0.55s
+        steps(10, end)
+        0.50s
+        forwards;
+}
+
+
+/* 第二排右侧 */
+
+body.intro-start .hero-meta-right.type-reveal {
+    animation:
+        typeReveal
+        0.42s
+        steps(9, end)
+        0.56s
+        forwards;
+}
+
+
+/* 软件分类 */
+
+body.intro-start .software-label.type-reveal {
+    animation:
+        typeReveal
+        0.38s
+        steps(8, end)
+        0.72s
+        forwards;
+}
+
+
+@keyframes typeReveal {
+
+    0% {
+        opacity: 1;
+
+        clip-path:
+            inset(
+                0
+                100%
+                0
+                0
+            );
+    }
+
+    100% {
+        opacity: 1;
+
+        clip-path:
+            inset(
+                0
+                0
+                0
+                0
+            );
+    }
+
+}
+
+
+/* =========================================================
+   STACK
+========================================================= */
+
+.stack {
+    position: relative;
+
+    padding-top: 18px;
+    padding-bottom: 70px;
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.category-label {
+    position: relative;
+
+    margin:
+        38px
+        0
+        12px
+        12px;
+
+    z-index: 100;
+
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.category-label span {
+    margin-left: 10px;
+
+    color: rgba(0,0,0,0.40);
+}
+
+
+/*
+   只有「资源」这一类额外留出空间。
+
+   因为它下面的第一张卡片左边向上翘，
+   避免卡片压到 RESOURCES 分类文字。
+*/
+
+.category-label.resources-label {
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   CARD BASE
+========================================================= */
+
+.card {
+    position: relative;
+
+    display: block;
+
+    width: 96%;
+
+    min-height: 170px;
+
+    margin-top: -12px;
+
+    padding:
+        26px
+        28px
+        24px;
+
+    color: var(--ink);
+
+    text-decoration: none;
+
+    border-radius: 17px;
+
+    box-shadow:
+        0 3px 0 rgba(0,0,0,0.13),
+        0 8px 20px rgba(0,0,0,0.08);
+
+    transform-origin: 50% 72%;
+
+    transition:
+        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.52s ease,
+        filter 0.40s ease,
+        outline-color 0.22s ease;
+
+    will-change: transform;
+}
+
+
+/* =========================================================
+   FIRST TWO CARD INTRO
+========================================================= */
+
+.intro-card {
+    opacity: 0;
+
+    translate: 0 120px;
+
+    will-change:
+        translate,
+        opacity;
+}
+
+
+/* 第一张 */
+
+body.intro-start .intro-card-1 {
+    animation:
+        cardRise
+        0.50s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        0.95s
+        forwards;
+}
+
+
+/* 第二张，稍微晚一点 */
+
+body.intro-start .intro-card-2 {
+    animation:
+        cardRise
+        0.50s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        1.05s
+        forwards;
+}
+
+
+@keyframes cardRise {
+
+    0% {
+        opacity: 0;
+
+        translate:
+            0
+            120px;
+    }
+
+    72% {
+        opacity: 1;
+
+        translate:
+            0
+            -8px;
+    }
+
+    100% {
+        opacity: 1;
+
+        translate:
+            0
+            0;
+    }
+
+}
+
+
+/* =========================================================
+   CARD POSITIONS
+========================================================= */
+
+.card:nth-of-type(4n + 1) {
+    width: 95%;
+    margin-left: 0.7%;
+
+    transform:
+        rotate(-1.5deg);
+}
+
+.card:nth-of-type(4n + 2) {
+    width: 97%;
+    margin-left: 2%;
+
+    transform:
+        rotate(1.5deg);
+}
+
+.card:nth-of-type(4n + 3) {
+    width: 96%;
+    margin-left: 0.4%;
+
+    transform:
+        rotate(-1.5deg);
+}
+
+.card:nth-of-type(4n + 4) {
+    width: 94%;
+    margin-left: 2.8%;
+
+    transform:
+        rotate(1.5deg);
+}
+
+
+/* =========================================================
+   CARD COLORS
+========================================================= */
+
+.card.blue {
+    background: var(--blue);
+}
+
+.card.green {
+    background: var(--green);
+}
+
+.card.yellow {
+    background: var(--yellow);
+}
+
+.card.pink {
+    background: var(--pink);
+}
+
+.card.lavender {
+    background: var(--lavender);
+}
+
+.card.cyan {
+    background: var(--cyan);
+}
+
+.card.orange {
+    background: var(--orange);
+}
+
+.card.white {
+    background: #ffffff;
+}
+
+.card.gray {
+    background: var(--gray);
+}
+
+
+/* =========================================================
+   CARD TEXT
+========================================================= */
+
+.card-index {
+    position: absolute;
+
+    top: 18px;
+    right: 58px;
+
+    font-size: 10px;
+
+    color: rgba(0,0,0,0.20);
+}
+
+.card-name {
+    max-width: 86%;
+
+    margin-top: 4px;
+
+    font-size:
+        clamp(
+            34px,
+            5vw,
+            68px
+        );
+
+    line-height: 0.98;
+
+    letter-spacing: -3px;
+
+    font-weight: 800;
+}
+
+.card-desc {
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    color: rgba(0,0,0,0.55);
+}
+
+.card-meta {
+    position: absolute;
+
+    left: 28px;
+    bottom: 18px;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    color: rgba(0,0,0,0.42);
+}
+
+
+/* =========================================================
+   ARROW
+========================================================= */
+
+.card-arrow {
+    position: absolute;
+
+    top: 15px;
+    right: 20px;
+
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+
+    line-height: 1;
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.card:hover {
+
+    outline:
+        2px dashed
+        var(--ink);
+
+    outline-offset:
+        -7px;
+
+    box-shadow:
+        0 6px 0 rgba(0,0,0,0.11),
+        0 18px 34px rgba(0,0,0,0.13);
+
+    filter:
+        saturate(1.025);
+}
+
+
+/* 左高右低 → 再多翘 1° */
+
+.card:nth-of-type(4n + 1):hover {
+    transform:
+        rotate(-2.5deg)
+        translateY(-2px);
+}
+
+
+/* 右高左低 → 再多翘 1° */
+
+.card:nth-of-type(4n + 2):hover {
+    transform:
+        rotate(2.5deg)
+        translateY(-2px);
+}
+
+
+/* 左高右低 */
+
+.card:nth-of-type(4n + 3):hover {
+    transform:
+        rotate(-2.5deg)
+        translateY(-2px);
+}
+
+
+/* 右高左低 */
+
+.card:nth-of-type(4n + 4):hover {
+    transform:
+        rotate(2.5deg)
+        translateY(-2px);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    padding:
+        40px
+        0
+        60px;
+
+    display: grid;
+
+    grid-template-columns:
+        1.2fr
+        1fr;
+
+    gap: 60px;
+
+    border-top:
+        1px solid
+        rgba(0,0,0,0.2);
+}
+
+.footer-big {
+    font-size:
+        clamp(
+            34px,
+            5vw,
+            70px
+        );
+
+    line-height: 0.95;
+
+    letter-spacing: -3px;
+
+    font-weight: 800;
+}
+
+.footer-side {
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+.footer a {
+    color: inherit;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,0.50);
+}
+
+.modal-content {
+    width: 100%;
+    max-width: 680px;
+
+    max-height: 82vh;
+
+    overflow-y: auto;
+
+    padding: 32px;
+
+    background: var(--paper);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.26);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+
+    font-size: 30px;
+}
+
+.modal-content p {
+    font-size: 14px;
+
+    line-height: 1.9;
+
+    color: rgba(0,0,0,0.70);
+}
+
+.close-button {
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border: 1px solid #111;
+
+    background: #111;
+
+    color: white;
+
+    cursor: pointer;
+
+    font: inherit;
+}
+
+.close-button:hover {
+    background: transparent;
+    color: #111;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .page {
+        width: calc(100% - 24px);
+    }
+
+    .music-control {
+        display: none;
+    }
+
+    .hero-logo {
+        width: 100%;
+
+        height: 230px;
+
+        margin-top: -42px;
+
+        transform: translateX(10px);
+    }
+   
+    .hero-sub {
+        gap: 18px;
+
+        font-size: 12px;
+    }
+
+    .hero-meta {
+        gap: 14px;
+
+        margin-top: 22px;
+
+        padding-right: 18px;
+
+        font-size: 10px;
+    }
+
+    .hero-meta-left {
+        flex: 1 1 auto;
+
+        min-width: 0;
+    }
+
+    .hero-meta-right {
+        display: inline-block;
+
+        white-space: nowrap;
+
+        flex: 0 0 auto;
+
+        min-width: max-content;
+
+        padding-right: 6px;
+
+        margin-right: 2px;
+    }
+
+    .card {
+        min-height: 145px;
+
+        padding:
+            22px
+            20px;
+
+        margin-top: -6px;
+
+        border-radius: 14px;
+    }
+
+    .card-name {
+        font-size: 34px;
+
+        letter-spacing: -2px;
+    }
+
+    .card-meta {
+        left: 20px;
+    }
+
+    .card-arrow {
+        top: 13px;
+        right: 16px;
+    }
+
+    .card-index {
+        top: 17px;
+        right: 52px;
+    }
+
+    .footer {
+        grid-template-columns: 1fr;
+        gap: 34px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     PC MUSIC
+===================================================== -->
+
+<button
+    class="music-control"
+    id="musicToggle"
+    type="button"
+    aria-label="播放背景音乐"
+>
+    <img
+        id="musicIcon"
+        src="/speakeron.png"
+        alt=""
+    >
+</button>
+
+<audio
+    id="bgm"
+    loop
+    preload="none"
+></audio>
+
+
+
+<div class="page">
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+
+    <!-- 顶部大 Logo -->
+
+    <img
+        class="hero-logo"
+        src="/hero-logo.png"
+        alt="GASBOX"
+        fetchpriority="high"
+        onload="
+            this.classList.add('loaded');
+            document.body.classList.add('intro-start');
+        "
+    >
+
+
+    <!-- 第一行 -->
+
+    <div class="hero-sub">
+
+        <div class="hero-desc type-reveal">
+            直播软件、插件、工具与资源整理。
+        </div>
+
+
+        <div class="hero-update type-reveal">
+            持续更新中...
+        </div>
+
+    </div>
+
+
+    <!-- 第二行 -->
+
+    <div class="hero-meta">
+
+        <div class="hero-meta-left type-reveal">
+            所有资源均来自于网络
+        </div>
+
+
+        <div class="hero-meta-right type-reveal">
+            GASBOX.CN
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     STACK
+===================================================== -->
+
+<main class="stack">
+
+
+<!-- SOFTWARE -->
+
+<div class="category-label software-label type-reveal">
+
+    软件
+
+    <span>
+        SOFTWARE
+    </span>
+
+</div>
+
+
+<a
+    class="card blue intro-card intro-card-1"
+    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/OBS-Setup.exe"
+>
+
+    <div class="card-index">
+        001
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        OBS Studio
+    </div>
+
+    <div class="card-desc">
+        直播推流与录制
+    </div>
+
+    <div class="card-meta">
+        Streaming software
+    </div>
+
+</a>
+
+
+
+<a
+    class="card green intro-card intro-card-2"
+    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Studio-One-7.exe"
+>
+
+    <div class="card-index">
+        002
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        Studio One 7
+    </div>
+
+    <div class="card-desc">
+        音频录制与调音
+    </div>
+
+    <div class="card-meta">
+        Audio software
+    </div>
+
+</a>
+
+
+
+<!-- PLUGINS -->
+
+<div class="category-label">
+
+    插件
+
+    <span>
+        PLUGINS
+    </span>
+
+</div>
+
+
+<a
+    class="card yellow"
+    href="/OBS-3D.exe"
+>
+
+    <div class="card-index">
+        003
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        OBS 3D 插件
+    </div>
+
+    <div class="card-desc">
+        OBS 三维相关扩展
+    </div>
+
+    <div class="card-meta">
+        OBS Plugin
+    </div>
+
+</a>
+
+
+
+<a
+    class="card white"
+    href="/OBS-RGB.lua"
+>
+
+    <div class="card-index">
+        004
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        OBS RGB 插件
+    </div>
+
+    <div class="card-desc">
+        OBS RGB 效果脚本
+    </div>
+
+    <div class="card-meta">
+        OBS Script
+    </div>
+
+</a>
+
+
+
+<a
+    class="card lavender"
+    href="/OBS-Move.exe"
+>
+
+    <div class="card-index">
+        005
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        OBS 移动插件
+    </div>
+
+    <div class="card-desc">
+        OBS Move 扩展
+    </div>
+
+    <div class="card-meta">
+        OBS Plugin
+    </div>
+
+</a>
+
+
+
+<a
+    class="card cyan"
+    href="/OBS-Mask.exe"
+>
+
+    <div class="card-index">
+        006
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        OBS 蒙版插件
+    </div>
+
+    <div class="card-desc">
+        OBS 蒙版与遮罩扩展
+    </div>
+
+    <div class="card-meta">
+        OBS Plugin
+    </div>
+
+</a>
+
+
+
+<a
+    class="card pink"
+    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/VST-Plugins.exe"
+>
+
+    <div class="card-index">
+        007
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        VST 插件包
+    </div>
+
+    <div class="card-desc">
+        直播调音常用插件
+    </div>
+
+    <div class="card-meta">
+        Audio Plugins
+    </div>
+
+</a>
+
+
+
+<a
+    class="card orange"
+    href="https://github.com/GASSYMIXING/hub/releases/download/v1.0/Audio-Toolbox.exe"
+>
+
+    <div class="card-index">
+        008
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        调音师工具箱
+    </div>
+
+    <div class="card-desc">
+        音频处理与调试工具
+    </div>
+
+    <div class="card-meta">
+        Audio Toolbox
+    </div>
+
+</a>
+
+
+
+<!-- TOOLS -->
+
+<div class="category-label">
+
+    工具
+
+    <span>
+        TOOLS
+    </span>
+
+</div>
+
+
+<a
+    class="card gray"
+    href="/Virtual-Screen.exe"
+>
+
+    <div class="card-index">
+        009
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        虚拟屏软件
+    </div>
+
+    <div class="card-desc">
+        直播相关虚拟显示工具
+    </div>
+
+    <div class="card-meta">
+        Utility
+    </div>
+
+</a>
+
+
+
+<!-- RESOURCES -->
+
+<div class="category-label resources-label">
+
+    资源
+
+    <span>
+        RESOURCES
+    </span>
+
+</div>
+
+
+<a
+    class="card green"
+    href="/Live-LUT.rar"
+>
+
+    <div class="card-index">
+        010
+    </div>
+
+    <div class="card-arrow">
+        ↗
+    </div>
+
+    <div class="card-name">
+        直播调试 LUT
+    </div>
+
+    <div class="card-desc">
+        直播画面调试资源
+    </div>
+
+    <div class="card-meta">
+        Resource
+    </div>
+
+</a>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div class="footer-big">
+
+        找工具，
+        <br>
+        别找麻烦!
+
+    </div>
+
+
+    <div class="footer-side">
+
+        <p>
+            GASBOX 用来整理直播、音频、视频及相关常用软件和资源。
+        </p>
+
+        <p>
+
+            <a onclick="openDisclaimer()">
+                查看完整免责声明 →
+            </a>
+
+        </p>
+
+        <p>
+
+            <a onclick="openContact()">
+                点击此处联系作者 →
+            </a>
+
+        </p>
+
+        <p>
+            © 2026 GASBOX
+        </p>
+
+    </div>
+
+</footer>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     DISCLAIMER
+===================================================== -->
+
+<div
+    class="modal"
+    id="disclaimerModal"
+>
+
+    <div class="modal-content">
+
+        <h2>
+            免责声明
+        </h2>
+
+        <p>
+            本站仅用于整理和分享直播、音频、视频及相关常用软件工具，
+            方便用户快速查找和访问。
+        </p>
+
+        <p>
+            本站与所收录软件的开发商、发行商及品牌方不存在任何官方合作或隶属关系。
+            所有软件名称、商标、图标及相关版权均归其原权利人所有。
+        </p>
+
+        <p>
+            本站优先提供软件官方网站、官方发布页面或公开下载地址。
+            若本站提供第三方下载或文件镜像，
+            仅用于学习、交流和下载便利，
+            不代表本站对软件的安全性、稳定性、兼容性及后续更新作出任何保证。
+        </p>
+
+        <p>
+            用户在下载、安装和使用相关软件前，
+            应自行核实软件来源、版本及系统兼容性，
+            并自行承担因安装或使用软件所产生的风险，
+            包括但不限于数据丢失、系统异常、软件冲突等问题。
+        </p>
+
+        <p>
+            如本站收录内容涉及版权、商标或其他合法权益问题，
+            请联系本站处理，
+            核实后将及时修改或移除相关内容。
+        </p>
+
+        <p>
+            <strong>
+                使用本站即视为已阅读并理解以上说明。
+            </strong>
+        </p>
+
+
+        <button
+            class="close-button"
+            onclick="closeDisclaimer()"
+        >
+            关闭
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<div
+    class="modal"
+    id="contactModal"
+>
+
+    <div class="modal-content">
+
+        <h2>
+            联系作者
+        </h2>
+
+        <p>
+            如果你在使用 GASBOX 的过程中遇到资源失效、下载异常、
+            软件版本问题，或者有新的软件、插件和工具推荐，
+            都可以通过以下方式联系我。
+        </p>
+
+        <p>
+            <strong>
+                邮箱
+            </strong>
+            <br>
+            mikpan@foxmail.com
+        </p>
+
+        <p>
+            <strong>
+                微信
+            </strong>
+            <br>
+            Gassymixing
+        </p>
+
+
+        <button
+            class="close-button"
+            onclick="closeContact()"
+        >
+            关闭
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+function openDisclaimer() {
+
+    document
+        .getElementById(
+            "disclaimerModal"
+        )
+        .style.display =
+        "flex";
+
+}
+
+
+function closeDisclaimer() {
+
+    document
+        .getElementById(
+            "disclaimerModal"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+function openContact() {
+
+    document
+        .getElementById(
+            "contactModal"
+        )
+        .style.display =
+        "flex";
+
+}
+
+
+function closeContact() {
+
+    document
+        .getElementById(
+            "contactModal"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   MODAL BACKGROUND CLICK
+========================================================= */
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+        const disclaimerModal =
+            document.getElementById(
+                "disclaimerModal"
+            );
+
+        const contactModal =
+            document.getElementById(
+                "contactModal"
+            );
+
+
+        if (
+            event.target === disclaimerModal
+        ) {
+
+            closeDisclaimer();
+
+        }
+
+
+        if (
+            event.target === contactModal
+        ) {
+
+            closeContact();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   PC BACKGROUND MUSIC
+========================================================= */
+
+const desktopMedia =
+    window.matchMedia(
+        "(min-width: 761px)"
+    );
+
+const musicToggle =
+    document.getElementById(
+        "musicToggle"
+    );
+
+const musicIcon =
+    document.getElementById(
+        "musicIcon"
+    );
+
+const bgm =
+    document.getElementById(
+        "bgm"
+    );
+
+let musicPrepared =
+    false;
+
+
+/* PC 打开网页后立刻在后台预加载音乐 */
+
+function prepareDesktopMusic() {
+
+    if (
+        !desktopMedia.matches
+    ) {
+        return;
+    }
+
+    if (
+        musicPrepared
+    ) {
+        return;
+    }
+
+    bgm.src =
+        "/bgm.mp3";
+
+    bgm.preload =
+        "auto";
+
+    bgm.load();
+
+    musicPrepared =
+        true;
+}
+
+
+/* 默认不播放，默认显示 speakeron */
+
+musicIcon.src =
+    "/speakeron.png";
+
+musicToggle.setAttribute(
+    "aria-label",
+    "播放背景音乐"
+);
+
+
+/* 点击播放 / 暂停 */
+
+async function toggleMusic() {
+
+    if (
+        !desktopMedia.matches
+    ) {
+        return;
+    }
+
+
+    prepareDesktopMusic();
+
+
+    if (
+        bgm.paused
+    ) {
+
+        try {
+
+            await bgm.play();
+
+
+            /* 播放后切换为 OFF 图标 */
+
+            musicIcon.src =
+                "/speakeroff.png";
+
+            musicToggle.setAttribute(
+                "aria-label",
+                "暂停背景音乐"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "背景音乐播放失败：",
+                error
+            );
+
+
+            /* 播放失败则保持 ON */
+
+            musicIcon.src =
+                "/speakeron.png";
+
+            musicToggle.setAttribute(
+                "aria-label",
+                "播放背景音乐"
+            );
+
+        }
+
+    }
+
+    else {
+
+        bgm.pause();
+
+
+        /* 暂停后恢复 ON */
+
+        musicIcon.src =
+            "/speakeron.png";
+
+        musicToggle.setAttribute(
+            "aria-label",
+            "播放背景音乐"
+        );
+
+    }
+
+}
+
+
+musicToggle.addEventListener(
+    "click",
+    toggleMusic
+);
+
+
+/* PC 页面一打开就后台加载 */
+
+prepareDesktopMusic();
+
+
+/* =========================================================
+   PC / MOBILE MUSIC SWITCH
+========================================================= */
+
+function syncMusicViewport() {
+
+    if (
+        desktopMedia.matches
+    ) {
+
+        prepareDesktopMusic();
+
+    }
+
+    else {
+
+        bgm.pause();
+
+        bgm.removeAttribute(
+            "src"
+        );
+
+        bgm.preload =
+            "none";
+
+        bgm.load();
+
+        musicPrepared =
+            false;
+
+        musicIcon.src =
+            "/speakeron.png";
+
+        musicToggle.setAttribute(
+            "aria-label",
+            "播放背景音乐"
+        );
+
+    }
+
+}
+
+
+desktopMedia.addEventListener(
+    "change",
+    syncMusicViewport
+);
+
+</script>
+
+
+</body>
+
+</html>
