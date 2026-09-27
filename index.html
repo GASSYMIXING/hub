@@ -121,10 +121,11 @@ body::before {
 ========================================================= */
 
 .header-bar {
-    width:
-        min(
-            60vw,
-            900px
+    width: 100vw;
+
+    margin-left:
+        calc(
+            50% - 50vw
         );
 
     border-top:
@@ -134,14 +135,18 @@ body::before {
     border-bottom:
         1px solid
         var(--line);
-
-    margin-top: 0;
 }
 
 .header {
-    width: 100%;
+    width:
+        min(
+            calc(100% - 56px),
+            1500px
+        );
 
-    height: 72px;
+    height: 54px;
+
+    margin: 0 auto;
 
     display: flex;
 
@@ -151,10 +156,7 @@ body::before {
 
     gap: 10px;
 
-    padding:
-        0
-        0
-        8px;
+    padding-bottom: 5px;
 }
 
 .header-logo {
@@ -162,12 +164,12 @@ body::before {
 
     width:
         clamp(
-            150px,
-            13vw,
-            230px
+            135px,
+            11vw,
+            195px
         );
 
-    height: 58px;
+    height: 46px;
 
     object-fit: contain;
 
@@ -177,9 +179,9 @@ body::before {
 .header-slogan {
     font-size:
         clamp(
-            13px,
-            .92vw,
-            16px
+            12px,
+            .85vw,
+            15px
         );
 
     font-weight: 800;
@@ -188,7 +190,7 @@ body::before {
 
     white-space: nowrap;
 
-    padding-bottom: 4px;
+    padding-bottom: 3px;
 }
 
 
@@ -202,17 +204,17 @@ body::before {
     display: grid;
 
     grid-template-columns:
-        minmax(430px, 0.78fr)
-        minmax(0, 1.22fr);
+        minmax(400px, .76fr)
+        minmax(0, 1.24fr);
 
     align-items: center;
 
-    gap: 72px;
+    gap: 70px;
 
-    min-height: 700px;
+    min-height: 690px;
 
     padding:
-        72px
+        68px
         0;
 }
 
@@ -236,9 +238,9 @@ body::before {
 
     font-size:
         clamp(
-            88px,
-            7.4vw,
-            128px
+            86px,
+            7.2vw,
+            124px
         );
 
     line-height: .84;
@@ -256,7 +258,7 @@ body::before {
 .product-line-main {
     max-width: 530px;
 
-    margin-top: 46px;
+    margin-top: 44px;
 
     font-size:
         clamp(
@@ -360,8 +362,6 @@ body::before {
     align-items: center;
 
     justify-content: flex-end;
-
-    overflow: visible;
 }
 
 .product-visual::before {
@@ -396,10 +396,10 @@ body::before {
     width:
         min(
             100%,
-            1040px
+            1010px
         );
 
-    max-height: 730px;
+    max-height: 720px;
 
     object-fit: contain;
 
@@ -437,10 +437,11 @@ body::before {
 .marquee-wrap {
     position: relative;
 
-    width:
-        min(
-            60vw,
-            900px
+    width: 100vw;
+
+    margin-left:
+        calc(
+            50% - 50vw
         );
 
     overflow: hidden;
@@ -454,7 +455,7 @@ body::before {
         var(--line);
 
     padding:
-        27px
+        16px
         0;
 }
 
@@ -710,24 +711,25 @@ body.ready .marquee-wrap {
 
 /* =========================================================
    MEDIUM DESKTOP
+   防止中等宽度重新发生遮挡
 ========================================================= */
 
 @media (max-width: 1250px) and (min-width: 821px) {
 
     .product-stage {
         grid-template-columns:
-            minmax(360px, .82fr)
-            minmax(0, 1.18fr);
+            minmax(350px, .80fr)
+            minmax(0, 1.20fr);
 
-        gap: 46px;
+        gap: 42px;
     }
 
     .product-name {
         font-size:
             clamp(
-                78px,
-                7.2vw,
-                104px
+                76px,
+                7vw,
+                102px
             );
     }
 
@@ -762,36 +764,44 @@ body.ready .marquee-wrap {
 
 
     .header-bar {
-        width: 78vw;
+        width: 100vw;
+
+        margin-left:
+            calc(
+                50% - 50vw
+            );
     }
 
     .header {
-        width: 100%;
+        width:
+            calc(
+                100% - 26px
+            );
 
-        height: 64px;
+        height: 48px;
 
         gap: 8px;
 
-        padding-bottom: 6px;
+        padding-bottom: 4px;
     }
 
     .header-logo {
         width:
             clamp(
-                125px,
-                40vw,
-                175px
+                112px,
+                34vw,
+                150px
             );
 
-        height: 52px;
+        height: 40px;
     }
 
     .header-slogan {
-        font-size: 11px;
+        font-size: 10px;
 
         white-space: nowrap;
 
-        padding-bottom: 3px;
+        padding-bottom: 2px;
     }
 
 
@@ -893,10 +903,15 @@ body.ready .marquee-wrap {
 
 
     .marquee-wrap {
-        width: 78vw;
+        width: 100vw;
+
+        margin-left:
+            calc(
+                50% - 50vw
+            );
 
         padding:
-            23px
+            13px
             0;
     }
 
