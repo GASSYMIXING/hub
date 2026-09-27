@@ -387,9 +387,6 @@ body::before {
     filter: blur(54px);
 }
 
-
-/* 两张产品图的容器 */
-
 .product-stack {
     position: relative;
 
@@ -404,9 +401,6 @@ body::before {
     isolation: isolate;
 }
 
-
-/* 共用产品图样式 */
-
 .product-image {
     position: absolute;
 
@@ -416,6 +410,17 @@ body::before {
 
     object-fit: contain;
 
+    cursor: pointer;
+
+    will-change:
+        transform,
+        filter;
+
+    transition:
+        transform .76s cubic-bezier(.22,1,.36,1),
+        filter .55s ease,
+        opacity .4s ease;
+
     filter:
         drop-shadow(
             0
@@ -423,30 +428,35 @@ body::before {
             34px
             rgba(0,0,0,.18)
         );
+}
 
-    cursor: pointer;
 
-    transition:
-        transform .72s cubic-bezier(.22,1,.36,1),
-        filter .55s ease,
-        opacity .4s ease;
+/* 默认后层位置 */
 
-    will-change:
-        transform,
-        filter;
+.product-image-back {
+    left: 0;
+
+    top: 13%;
+}
+
+
+/* 默认前层位置 */
+
+.product-image-front {
+    right: 0;
+
+    top: 4%;
 }
 
 
 /* =========================================================
-   后层：gbui-1
+   STACK STATE
 ========================================================= */
 
-.product-image-back {
+/* 默认：2 在前 */
+
+.product-stack.state-front .product-image-back {
     z-index: 1;
-
-    left: 0;
-
-    top: 13%;
 
     transform:
         translate(-3%, 5%)
@@ -454,17 +464,8 @@ body::before {
         scale(.94);
 }
 
-
-/* =========================================================
-   前层：gbui-2
-========================================================= */
-
-.product-image-front {
-    z-index: 2;
-
-    right: 0;
-
-    top: 4%;
+.product-stack.state-front .product-image-front {
+    z-index: 3;
 
     transform:
         translate(1%, 0)
@@ -473,8 +474,29 @@ body::before {
 }
 
 
+/* 切换后：1 在前 */
+
+.product-stack.state-back .product-image-back {
+    z-index: 3;
+
+    transform:
+        translate(5%, -3%)
+        rotate(.15deg)
+        scale(1.015);
+}
+
+.product-stack.state-back .product-image-front {
+    z-index: 1;
+
+    transform:
+        translate(4%, 5%)
+        rotate(2deg)
+        scale(.94);
+}
+
+
 /* =========================================================
-   通用 hover
+   ACTIVE HOVER FEEDBACK
 ========================================================= */
 
 .product-image:hover {
@@ -488,31 +510,20 @@ body::before {
 }
 
 
-/* =========================================================
-   gbui-1 hover：滑到前层
-========================================================= */
+/* 当前在前的卡片，hover 时只轻微浮起 */
 
-.product-image-back:hover {
-    z-index: 4;
-
-    transform:
-        translate(5%, -3%)
-        rotate(.2deg)
-        scale(1.015);
-}
-
-
-/* =========================================================
-   gbui-2 hover
-========================================================= */
-
-.product-image-front:hover {
-    z-index: 3;
-
+.product-stack.state-front .product-image-front:hover {
     transform:
         translate(1%, -2%)
         rotate(.15deg)
         scale(1.012);
+}
+
+.product-stack.state-back .product-image-back:hover {
+    transform:
+        translate(5%, -5%)
+        rotate(.05deg)
+        scale(1.025);
 }
 
 
@@ -964,10 +975,6 @@ body.ready .marquee-wrap {
     }
 
 
-    /* ============================
-       MOBILE PRODUCT STACK
-    ============================ */
-
     .product-visual {
         width: 100%;
 
@@ -986,43 +993,31 @@ body.ready .marquee-wrap {
         width: 94%;
     }
 
-    .product-image-back {
-        left: 0;
 
-        top: 14%;
+    /* 手机端保持初始层叠，不做经过切换 */
 
+    .product-stack.state-front .product-image-back {
         transform:
             translate(-2%, 4%)
             rotate(-2deg)
             scale(.94);
     }
 
-    .product-image-front {
-        right: 0;
-
-        top: 4%;
-
+    .product-stack.state-front .product-image-front {
         transform:
             translate(1%, 0)
             rotate(.7deg)
             scale(1);
     }
 
-
-    /* 手机无真正 hover，保持稳定层级 */
-
-    .product-image-back:hover {
-        z-index: 1;
-
+    .product-stack.state-back .product-image-back {
         transform:
             translate(-2%, 4%)
             rotate(-2deg)
             scale(.94);
     }
 
-    .product-image-front:hover {
-        z-index: 2;
-
+    .product-stack.state-back .product-image-front {
         transform:
             translate(1%, 0)
             rotate(.7deg)
@@ -1168,21 +1163,26 @@ body.ready .marquee-wrap {
 
         <div class="product-visual">
 
-            <div class="product-stack">
+            <div
+                class="product-stack state-front"
+                id="productStack"
+            >
 
-                <!-- 后层 -->
+                <!-- 后层：1 -->
 
                 <img
                     class="product-image product-image-back"
+                    id="productOne"
                     src="/gbui-1.png"
                     alt="GASBOX 产品界面 1"
                 >
 
 
-                <!-- 前层 -->
+                <!-- 前层：2 -->
 
                 <img
                     class="product-image product-image-front"
+                    id="productTwo"
                     src="/gbui-2.png"
                     alt="GASBOX 产品界面 2"
                 >
@@ -1310,6 +1310,10 @@ body.ready .marquee-wrap {
 
 <script>
 
+/* =========================================================
+   PAGE INTRO
+========================================================= */
+
 window.addEventListener(
     "load",
     function () {
@@ -1320,6 +1324,95 @@ window.addEventListener(
             .add("ready");
 
     }
+);
+
+
+/* =========================================================
+   PRODUCT STACK
+   最后经过哪张，就持续保持在最上层
+========================================================= */
+
+const productStack =
+    document.getElementById(
+        "productStack"
+    );
+
+const productOne =
+    document.getElementById(
+        "productOne"
+    );
+
+const productTwo =
+    document.getElementById(
+        "productTwo"
+    );
+
+
+const desktopHover =
+    window.matchMedia(
+        "(hover: hover) and (pointer: fine)"
+    );
+
+
+function activateProductOne() {
+
+    if (
+        !desktopHover.matches
+    ) {
+        return;
+    }
+
+    productStack
+        .classList
+        .remove(
+            "state-front"
+        );
+
+    productStack
+        .classList
+        .add(
+            "state-back"
+        );
+
+}
+
+
+function activateProductTwo() {
+
+    if (
+        !desktopHover.matches
+    ) {
+        return;
+    }
+
+    productStack
+        .classList
+        .remove(
+            "state-back"
+        );
+
+    productStack
+        .classList
+        .add(
+            "state-front"
+        );
+
+}
+
+
+/* 鼠标碰到 1，它保持前置 */
+
+productOne.addEventListener(
+    "mouseenter",
+    activateProductOne
+);
+
+
+/* 鼠标碰到 2，它保持前置 */
+
+productTwo.addEventListener(
+    "mouseenter",
+    activateProductTwo
 );
 
 </script>
